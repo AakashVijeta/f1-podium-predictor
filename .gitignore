@@ -1,0 +1,29 @@
+cat > .gitignore << 'EOF'
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# FastF1 cache (very large)
+cache/
+fastf1_cache/
+*.sqlite
+
+# Data files
+*.csv
+data/raw/
+data/processed/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environment
+venv/
+env/
+sklearn-env/
+
+# OS
+.DS_Store
+Thumbs.db
+EOF
