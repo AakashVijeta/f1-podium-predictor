@@ -1,3 +1,8 @@
+@keyframes stripIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
 .winner-strip {
   margin-top: 2px;
   background: var(--bg1);
@@ -8,6 +13,8 @@
   gap: 2rem;
   position: relative;
   overflow: hidden;
+  flex-wrap: wrap;
+  animation: stripIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .winner-bg-code {
@@ -77,4 +84,24 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 2rem;
   font-weight: 900;
+}
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .winner-strip {
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+
+  .winner-divider {
+    display: none;
+  }
+
+  .winner-name-ln {
+    font-size: 2rem;
+  }
+
+  .winner-bg-code {
+    font-size: 8rem;
+  }
 }

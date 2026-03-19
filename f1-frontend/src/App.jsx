@@ -8,6 +8,12 @@ import GridTable from "./components/GridTable/GridTable";
 import PostRacePodium from "./components/PostRacePodium/PostRacePodium";
 import InfoStrip from "./components/InfoStrip/InfoStrip";
 import WinnerStrip from "./components/WinnerStrip/WinnerStrip";
+import {
+  InfoStripSkeleton,
+  PodiumCardsSkeleton,
+  GridTableSkeleton,
+} from "./components/SkeletonLoader/SkeletonLoader";
+import Footer from "./components/Footer/Footer";
 import "./App.css";
 
 export default function App() {
@@ -39,9 +45,13 @@ export default function App() {
       <Header race={race} data={data} />
       <RaceHero race={race} round={round} onRoundChange={setRound} />
 
-      {loading && <div className="loading-s">Loading race data...</div>}
+      {/* Info strip */}
+      {loading ? <InfoStripSkeleton /> : <InfoStrip race={race} round={round} />}
+
+      {/* Error */}
       {error && <div className="err-s">{error}</div>}
 
+      {/* Pre-qualifying: no predictions yet */}
       {!loading && data?.status === "pre_quali" && (
         <div className="state-s fade">
           <div className="state-ico">⏱</div>
@@ -50,13 +60,20 @@ export default function App() {
         </div>
       )}
 
-      {!loading && data?.status === "pre_race" && sorted.length > 0 && (
+      {/* Pre-race: show predictions skeleton → then real cards */}
+      {loading ? (
+        <>
+          <PodiumCardsSkeleton />
+          <GridTableSkeleton rows={20} />
+        </>
+      ) : data?.status === "pre_race" && sorted.length > 0 ? (
         <div className="fade">
           <PodiumCards top3={top3} maxProb={maxProb} hovered={hovered} onHover={setHovered} />
           <GridTable sorted={sorted} maxProb={maxProb} hovered={hovered} onHover={setHovered} />
         </div>
-      )}
+      ) : null}
 
+      {/* Post-race: show skeleton → then real results */}
       {!loading && data?.status === "post_race" && raceResults.length > 0 && (
         <div className="postrace-wrap fade">
           <PostRacePodium raceResults={raceResults} race={race} />
@@ -65,7 +82,7 @@ export default function App() {
         </div>
       )}
 
-      <div className="checker" />
+      <Footer />
     </div>
   );
 }

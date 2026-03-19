@@ -1,10 +1,13 @@
 import { ROUNDS_2026 } from "../../constants/rounds";
+import FlagImg from "../FlagImg/FlagImg";
 import "./RaceHero.css";
 
 export default function RaceHero({ race, round, onRoundChange }) {
   return (
     <div className="hero">
-      <div className="hero-flag">{race?.flag}</div>
+      <div className="hero-flag">
+        <FlagImg code={race?.countryCode} size="xl" />
+      </div>
       <div className="hero-info">
         <div className="hero-round">
           Round {String(round).padStart(2, "0")} · 2026 FIA Formula One World Championship

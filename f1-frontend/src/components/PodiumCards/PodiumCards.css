@@ -8,17 +8,27 @@
   gap: 2px;
 }
 
+/* ── Entrance animation ── */
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .pc {
   background: var(--bg1);
   padding: 2rem 1.75rem;
   position: relative;
   overflow: hidden;
   border-top: 3px solid;
-  transition: background 0.15s;
+  transition: background 0.15s, transform 0.15s;
   cursor: default;
+  animation: cardIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.pc:hover { background: var(--bg2); }
+.pc:hover {
+  background: var(--bg2);
+  transform: translateY(-2px);
+}
 
 .pc-bgnum {
   position: absolute;
@@ -106,3 +116,32 @@
 
 .pc-bar  { height: 2px; background: rgba(255,255,255,0.04); margin-top: 1rem; }
 .pc-fill { height: 100%; transition: width 1s cubic-bezier(0.16,1,0.3,1); }
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .podium-wrap {
+    padding: 1.25rem 1rem 0;
+  }
+
+  .podium-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pc {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .pc-ln {
+    font-size: 2rem;
+  }
+
+  .pc-pnum {
+    font-size: 2.4rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  .podium-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -1,0 +1,78 @@
+.footer {
+  margin-top: auto;
+  background: var(--bg1);
+  border-top: 1px solid var(--border);
+  padding: 1.25rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-bar {
+  width: 3px;
+  height: 14px;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
+.footer-built {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.footer-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #e0e0e0;
+  text-transform: uppercase;
+}
+
+.footer-right {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.footer-f1-logo {
+  width: 36px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.footer-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border);
+  flex-shrink: 0;
+  margin: 0 0.25rem;
+}
+img{
+  height: 30px;   /* change this value to resize */
+  width: auto;
+  flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 1rem 1.25rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

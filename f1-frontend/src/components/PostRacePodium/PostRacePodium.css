@@ -1,3 +1,8 @@
+@keyframes rcIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .podium3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -11,6 +16,17 @@
   background: var(--bg1);
   border-top: 4px solid;
   padding: 2.5rem 2rem;
+  animation: rcIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.rc:nth-child(1) { animation-delay: 0.05s; }
+.rc:nth-child(2) { animation-delay: 0.12s; }
+.rc:nth-child(3) { animation-delay: 0.19s; }
+
+.rc:hover {
+  background: var(--bg2);
+  transform: translateY(-2px);
 }
 
 .rc-bgnum {
@@ -43,3 +59,28 @@
 .rc-team2 { font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.4rem; }
 .rc-flag  { font-size: 2.5rem; margin-top: 1.5rem; }
 .rc-bar   { height: 3px; margin-top: 1.5rem; opacity: 0.3; }
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .podium3 {
+    grid-template-columns: 1fr;
+  }
+
+  .rc {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .rc-ln2 {
+    font-size: 2.2rem;
+  }
+
+  .rc-pos {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 900px) {
+  .podium3 {
+    grid-template-columns: 1fr 1fr;
+  }
+}

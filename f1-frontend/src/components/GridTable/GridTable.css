@@ -1,3 +1,8 @@
+@keyframes rowIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
 .grid-wrap {
   padding: 1.75rem 2rem 2rem;
   border-top: 1px solid var(--border);
@@ -8,6 +13,7 @@
 .gr {
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
   transition: background 0.1s;
+  animation: rowIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .gr:hover,
 .gr.hl { background: var(--bg2); }
@@ -33,3 +39,21 @@
 .td-pct.m { color: #666; }
 .td-pct.h { color: #ccc; }
 .td-pct.t { color: var(--text); }
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .grid-wrap {
+    padding: 1.25rem 1rem 1.5rem;
+    overflow-x: auto;
+  }
+
+  /* Hide less critical columns on small screens */
+  .td-team2,
+  .td-num2 {
+    display: none;
+  }
+
+  .td-barcol {
+    width: 18%;
+  }
+}

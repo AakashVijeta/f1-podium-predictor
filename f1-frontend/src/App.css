@@ -100,3 +100,13 @@ html, body {
 .postrace-wrap { padding: 2rem; }
 
 select option { background: #111; }
+
+html, body, #root {
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}

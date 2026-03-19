@@ -111,3 +111,41 @@
   pointer-events: none;
   font-size: 0.6rem;
 }
+
+/* ── Mobile ── */
+@media (max-width: 640px) {
+  .hero {
+    flex-direction: column;
+  }
+
+  .hero-flag {
+    min-width: unset;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+    font-size: 2.5rem;
+  }
+
+  .hero-info {
+    padding: 1rem 1.25rem;
+  }
+
+  .hero-sel {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding: 0.85rem 1.25rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .sel-wrap {
+    width: 100%;
+  }
+
+  .race-sel {
+    width: 100%;
+    min-width: unset;
+    box-sizing: border-box;
+  }
+}

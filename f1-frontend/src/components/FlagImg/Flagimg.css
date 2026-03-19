@@ -1,0 +1,11 @@
+.flag-img {
+  display: inline-block;
+  object-fit: cover;
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+.flag-s  { width: 20px; height: 14px; }
+.flag-m  { width: 32px; height: 22px; }
+.flag-l  { width: 48px; height: 32px; }
+.flag-xl { width: 64px; height: 43px; }

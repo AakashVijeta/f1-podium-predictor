@@ -24,7 +24,6 @@ export default function PostRacePodium({ raceResults, race }) {
               <div className="rc-fn2">{fn(r.FullName)}</div>
               <div className="rc-ln2" style={{ color: drv.color }}>{ln(r.FullName)}</div>
               <div className="rc-team2">{drv.team}</div>
-              <div className="rc-flag">{race?.flag}</div>
               <div className="rc-bar" style={{ background: drv.color }} />
             </div>
           );
