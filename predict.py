@@ -4,7 +4,12 @@ import pandas as pd
 from datetime import datetime, timezone
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-fastf1.Cache.enable_cache(os.path.join(BASE_DIR, 'cache'))
+cache_path = os.path.join(BASE_DIR, 'cache')
+
+if not os.path.exists(cache_path):
+    os.makedirs(cache_path)
+
+fastf1.Cache.enable_cache(cache_path)
 
 track_type = {
     # Street circuits
