@@ -27,3 +27,10 @@ sklearn-env/
 .DS_Store
 Thumbs.db
 EOF
+
+# Model files (large)
+models/*.pkl
+
+# Frontend
+f1-frontend/node_modules/
+f1-frontend/dist/
