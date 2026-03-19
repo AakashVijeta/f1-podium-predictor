@@ -1,0 +1,45 @@
+.podium3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.rc {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg1);
+  border-top: 4px solid;
+  padding: 2.5rem 2rem;
+}
+
+.rc-bgnum {
+  position: absolute;
+  right: -1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 12rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.02);
+  line-height: 1;
+  pointer-events: none;
+  letter-spacing: -0.05em;
+}
+
+.rc-medal {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+
+.rc-pos   { font-family: 'Barlow Condensed', sans-serif; font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; }
+.rc-short { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 900; letter-spacing: 0.1em; margin-bottom: 1rem; }
+.rc-fn2   { font-size: 0.68rem; color: #888; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1; }
+.rc-ln2   { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 900; letter-spacing: 0.03em; text-transform: uppercase; line-height: 0.95; margin-top: 0.1rem; }
+.rc-team2 { font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.4rem; }
+.rc-flag  { font-size: 2.5rem; margin-top: 1.5rem; }
+.rc-bar   { height: 3px; margin-top: 1.5rem; opacity: 0.3; }

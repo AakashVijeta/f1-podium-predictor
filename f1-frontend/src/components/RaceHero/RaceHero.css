@@ -1,0 +1,113 @@
+.hero {
+  display: flex;
+  align-items: stretch;
+  background: var(--bg1);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-flag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  font-size: 3rem;
+  line-height: 1;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.hero-info {
+  flex: 1;
+  padding: 1.1rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.18rem;
+}
+
+.hero-round {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--red);
+  text-transform: uppercase;
+}
+
+.hero-name {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.65rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.hero-circuit {
+  font-size: 0.7rem;
+  color: #3a3a3a;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-top: 0.1rem;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #333;
+  border: 1px solid #1e1e1e;
+  padding: 2px 8px;
+  margin-top: 0.35rem;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.hero-badge-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.hero-sel {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.75rem;
+  border-left: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.sel-wrap {
+  position: relative;
+}
+
+.race-sel {
+  background: var(--bg2);
+  border: 1px solid #1e1e1e;
+  border-left: 3px solid var(--red);
+  color: var(--text);
+  padding: 0.55rem 2.2rem 0.55rem 0.8rem;
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  appearance: none;
+  cursor: pointer;
+  min-width: 260px;
+}
+
+.race-sel:focus { outline: none; }
+
+.sel-arr {
+  position: absolute;
+  right: 0.65rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--red);
+  pointer-events: none;
+  font-size: 0.6rem;
+}

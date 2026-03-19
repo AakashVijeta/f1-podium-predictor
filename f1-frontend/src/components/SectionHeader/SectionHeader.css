@@ -1,0 +1,11 @@
+.sh {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.sh-bar  { width: 3px; height: 16px; background: var(--red); flex-shrink: 0; }
+.sh-lbl  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.25em; color: #333; text-transform: uppercase; white-space: nowrap; }
+.sh-line { flex: 1; height: 1px; background: var(--border); }
+.sh-sub  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; color: #252525; letter-spacing: 0.1em; white-space: nowrap; }

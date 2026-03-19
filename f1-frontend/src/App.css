@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;600;700;900&family=Barlow+Condensed:wght@300;400;500;600;700;800;900&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background: #080808;
+  min-height: 100vh;
+}
+
+:root {
+  --red: #e8000d;
+  --bg: #080808;
+  --bg1: #0e0e0e;
+  --bg2: #131313;
+  --bg3: #181818;
+  --border: rgba(255, 255, 255, 0.055);
+  --text: #f0ede8;
+}
+
+.app {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Titillium Web', sans-serif;
+}
+
+/* ── Shared section header ── */
+.sh {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.sh-bar  { width: 3px; height: 16px; background: var(--red); flex-shrink: 0; }
+.sh-lbl  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.25em; color: #333; text-transform: uppercase; white-space: nowrap; }
+.sh-line { flex: 1; height: 1px; background: var(--border); }
+.sh-sub  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; color: #252525; letter-spacing: 0.1em; white-space: nowrap; }
+
+/* ── Loading / Error / Empty states ── */
+.state-s {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  gap: 1rem;
+}
+.state-ico  { font-size: 3rem; }
+.state-t    { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.22em; color: #252525; text-transform: uppercase; }
+.state-sub2 { font-size: 0.7rem; color: #1e1e1e; letter-spacing: 0.1em; }
+
+.loading-s {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  animation: pulse 1.2s infinite;
+}
+
+.err-s {
+  background: rgba(232, 0, 13, 0.05);
+  border-bottom: 1px solid rgba(232, 0, 13, 0.12);
+  padding: 0.85rem 2rem;
+  font-size: 0.78rem;
+  color: var(--red);
+}
+
+/* ── Checker strip ── */
+.checker {
+  height: 8px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Crect width='8' height='8' fill='%23fff'/%3E%3Crect x='8' y='8' width='8' height='8' fill='%23fff'/%3E%3Crect x='8' width='8' height='8' fill='%23000'/%3E%3Crect y='8' width='8' height='8' fill='%23000'/%3E%3C/svg%3E");
+  background-size: 8px 8px;
+  opacity: 0.06;
+  margin-top: 2px;
+}
+
+/* ── Animations ── */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.2; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade { animation: fadeUp 0.38s ease both; }
+
+.postrace-wrap { padding: 2rem; }
+
+select option { background: #111; }
