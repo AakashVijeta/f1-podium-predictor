@@ -23,7 +23,7 @@ export const DRIVERS = {
 
 export const MEDALS = ["#F5C518", "#A8A9AD", "#CD7F32"];
 export const MEDAL_LABELS = ["WINNER", "2ND PLACE", "3RD PLACE"];
-export const API_BASE = "http://127.0.0.1:8000";
+export const API_BASE = "https://api.aakashvijeta.me";
 
 // Get driver info, fallback for unknowns
 export const gd = (n) =>
