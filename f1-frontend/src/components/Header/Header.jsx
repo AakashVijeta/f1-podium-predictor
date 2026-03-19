@@ -1,5 +1,6 @@
 import "./Header.css";
 import FlagImg from "../FlagImg/FlagImg";
+import f1Logo from "../../../public/logo.png";
 
 export default function Header({ race, data }) {
   const statusColor =
@@ -16,7 +17,7 @@ export default function Header({ race, data }) {
 
   return (
     <div className="hdr">
-      <div className="hdr-logo"><img src="../public/logo.png" alt="F1 Logo" /><div className="header-divider" /></div>
+      <div className="hdr-logo"><img src={f1Logo} alt="F1 Logo" /><div className="header-divider" /></div>
       <div className="hdr-mid">
         <div className="hdr-app">Podium Predictor</div>
         {race && <div className="hdr-race">{<FlagImg code={race?.countryCode} size="s" />} {race.name}</div>}
