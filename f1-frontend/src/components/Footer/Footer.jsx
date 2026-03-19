@@ -1,11 +1,12 @@
 import "./Footer.css";
+import f1Logo from "../../../public/logo.png";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   return (
     <div className="footer">
       <div className="footer-left">
-        <img src="../public/logo.png" alt="F1 Logo" />
+        <img src={f1Logo} alt="F1 Logo" />
         <div className="footer-divider" />
         <div className="footer-bar" />
         <div>
