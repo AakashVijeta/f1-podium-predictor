@@ -52,7 +52,7 @@ html, body {
 }
 .state-ico  { font-size: 3rem; }
 .state-t    { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.22em; color: #252525; text-transform: uppercase; }
-.state-sub2 { font-size: 0.7rem; color: #1e1e1e; letter-spacing: 0.1em; }
+.state-sub2 { font-size: 0.7rem; color: #696969; letter-spacing: 0.1em; }
 
 .loading-s {
   display: flex;
