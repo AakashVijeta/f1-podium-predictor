@@ -47,3 +47,8 @@ async def predict(year: int, round: int):
         if results is None:
             return {"status": "error", "message": "Failed to fetch race results"}
         return {"status": "post_race", "results": results.to_dict(orient="records")}
+    
+@app.head("/health")
+@app.get("/health")
+async def health():
+    return {}
