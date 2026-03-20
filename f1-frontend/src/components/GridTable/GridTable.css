@@ -57,3 +57,261 @@
     width: 18%;
   }
 }
+/* ── Readability fixes ──────────────────────────────────────── */
+
+/* Predicted rank number */
+.td-i {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  min-width: 28px;
+}
+
+/* First name */
+.fn2 {
+  color: rgba(255, 255, 255, 0.55) !important;
+  font-size: 11px !important;
+}
+
+/* Last name */
+.ln2 {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+/* Team name inline */
+.td-team-inline,
+.td-team2 {
+  color: rgba(255, 255, 255, 0.45) !important;
+  font-size: 10px !important;
+}
+
+/* Probability % */
+.td-pct {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  min-width: 48px;
+  text-align: right;
+}
+.td-pct.t { color: #00d2be !important; }
+.td-pct.h { color: rgba(255,255,255,0.85) !important; }
+.td-pct.m { color: rgba(255,255,255,0.65) !important; }
+
+/* Row height — tighter */
+.gr td {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+/* Probability bar track */
+.bt {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-radius: 2px;
+  height: 4px !important;
+}
+.bf {
+  height: 4px !important;
+  border-radius: 2px;
+}
+
+/* ── Section header ─────────────────────────────────────────── */
+.gh-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 0 14px 0;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 12px;
+}
+
+.gh-pipe {
+  width: 3px;
+  height: 28px;
+  background: #e10600;
+  flex-shrink: 0;
+}
+
+.gh-title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.gh-title {
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.gh-sub {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.3);
+  font-weight: 600;
+}
+
+.gh-count {
+  margin-left: auto;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.2);
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ── Accuracy cards ─────────────────────────────────────────── */
+.acc-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.acc-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 0.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.acc-card.correct { border-left: 3px solid #00d166; }
+.acc-card.wrong   { border-left: 3px solid #e10600; }
+.acc-card.partial { border-left: 3px solid #f5a623; }
+
+.acc-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.acc-type {
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
+  font-weight: 600;
+}
+
+.acc-value {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.acc-value.correct { color: #00d166; }
+.acc-value.wrong   { color: #e10600; }
+.acc-value.partial { color: #f5a623; }
+
+.acc-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.acc-badge.correct { background: rgba(0, 209, 102, 0.12); color: #00d166; }
+.acc-badge.wrong   { background: rgba(225, 6, 0, 0.12);   color: #e10600; }
+.acc-badge.partial { background: rgba(245, 166, 35, 0.12); color: #f5a623; }
+
+/* ── Readability fixes ──────────────────────────────────────── */
+.td-i {
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  min-width: 28px;
+}
+
+.fn2 {
+  color: rgba(255, 255, 255, 0.55) !important;
+  font-size: 11px !important;
+}
+
+.ln2 {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+.td-team-inline,
+.td-team2 {
+  color: rgba(255, 255, 255, 0.45) !important;
+  font-size: 10px !important;
+}
+
+.td-pct {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  min-width: 48px;
+  text-align: right;
+}
+.td-pct.t { color: #00d2be !important; }
+.td-pct.h { color: rgba(255, 255, 255, 0.85) !important; }
+.td-pct.m { color: rgba(255, 255, 255, 0.65) !important; }
+
+.gr td {
+  padding-top: 8px !important;
+  padding-bottom: 8px !important;
+}
+
+.bt {
+  background: rgba(255, 255, 255, 0.07) !important;
+  border-radius: 2px;
+  height: 4px !important;
+}
+.bf {
+  height: 4px !important;
+  border-radius: 2px;
+}
+
+/* ── Actual result column ───────────────────────────────────── */
+.td-actual {
+  width: 52px;
+  text-align: center;
+  padding-right: 6px;
+}
+
+.actual-pos {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.03em;
+}
+
+.actual-hit  { color: #00d166; }
+.actual-miss { color: #e10600; }
+
+.actual-dnf {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.25);
+  letter-spacing: 0.08em;
+}
+
+.actual-pending {
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 13px;
+}
+
+/* ── Team inline under driver name ─────────────────────────── */
+.td-team-inline {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 2px;
+  font-weight: 400;
+}

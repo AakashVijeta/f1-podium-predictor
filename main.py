@@ -3,7 +3,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 import joblib
 from fastapi.middleware.cors import CORSMiddleware
-
+from routers import results
+  
 from predict import fetch_qualifying_data, predict_podium, fetch_race_results, get_session_status
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -22,6 +23,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+app.include_router(results.router)
 
 @app.get("/")
 async def root():
@@ -43,11 +45,25 @@ async def predict(year: int, round: int):
         return {"status": "pre_race", "predictions": predictions.to_dict(orient="records")}
 
     elif status == "post_race":
-        results = fetch_race_results(year, round)
-        if results is None:
+        race_results = fetch_race_results(year, round)
+        if race_results is None:
             return {"status": "error", "message": "Failed to fetch race results"}
-        return {"status": "post_race", "results": results.to_dict(orient="records")}
-    
+
+        predictions = None
+        quali_result = fetch_qualifying_data(year, round)
+        if quali_result is not None:
+            quali_data, circuit_name = quali_result
+            predictions = predict_podium(quali_data, circuit_name, model)
+
+        response = {
+            "status": "post_race",
+            "results": race_results.to_dict(orient="records"),
+        }
+        if predictions is not None:
+            response["predictions"] = predictions.to_dict(orient="records")
+
+        return response
+
 @app.head("/health")
 @app.get("/health")
 async def health():
