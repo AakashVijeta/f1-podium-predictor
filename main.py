@@ -5,19 +5,22 @@ from fastapi import FastAPI
 import joblib
 from fastapi.middleware.cors import CORSMiddleware
 from routers import results
-from functools import partial
+from db import init_db, get_prediction, save_prediction
 
 from predict import fetch_qualifying_data, predict_podium, fetch_race_results, get_session_status
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model = None
-_predict_cache = {}  # { "year_round": response_dict }
+_results_cache = {}  # in-memory cache for race results (not predictions)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global model
     model = joblib.load(os.path.join(BASE_DIR, 'models', 'model_v4.pkl'))
+    init_db()  # ensure predictions table exists
     yield
+
 
 app = FastAPI(lifespan=lifespan)
 app.add_middleware(
@@ -28,60 +31,75 @@ app.add_middleware(
 )
 app.include_router(results.router)
 
+
 @app.get("/")
 async def root():
     return {"status": "ok", "message": "F1 Podium Predictor API"}
 
+
 @app.get("/predict/{year}/{round}")
 async def predict(year: int, round: int):
-    cache_key = f"{year}_{round}"
-
     status = get_session_status(year, round)
 
-    # pre_quali is never cached — status can flip to pre_race at any time
     if status == "pre_quali":
         return {"status": "pre_quali", "message": "Qualifying hasn't happened yet"}
 
-    # Return cached response if available
-    if cache_key in _predict_cache:
-        return _predict_cache[cache_key]
+    # Check DB for stored predictions first — locks them against future retraining
+    stored = get_prediction(year, round)
 
     if status == "pre_race":
+        if stored:
+            return {"status": "pre_race", "predictions": stored}
+
         result = fetch_qualifying_data(year, round)
         if result is None:
             return {"status": "error", "message": "Failed to fetch qualifying data"}
         quali_data, circuit_name = result
         predictions = predict_podium(quali_data, circuit_name, model)
-        response = {"status": "pre_race", "predictions": predictions.to_dict(orient="records")}
-        # Cache pre_race too — qualifying data doesn't change once session is done
-        _predict_cache[cache_key] = response
-        return response
+        predictions_list = predictions.to_dict(orient="records")
+
+        save_prediction(year, round, predictions_list)
+        return {"status": "pre_race", "predictions": predictions_list}
 
     elif status == "post_race":
-        loop = asyncio.get_event_loop()
+        # Predictions locked in DB — fetch race results fresh (or from memory cache)
+        cache_key = f"{year}_{round}"
 
-        # Run both FastF1 fetches concurrently in thread pool
-        race_task = loop.run_in_executor(None, fetch_race_results, year, round)
-        quali_task = loop.run_in_executor(None, fetch_qualifying_data, year, round)
-        race_results, quali_result = await asyncio.gather(race_task, quali_task)
+        if stored:
+            predictions_list = stored
+        else:
+            # No stored prediction — generate and save
+            loop = asyncio.get_event_loop()
+            quali_task = loop.run_in_executor(None, fetch_qualifying_data, year, round)
+            quali_result = await quali_task
+            if quali_result is not None:
+                quali_data, circuit_name = quali_result
+                predictions_df = predict_podium(quali_data, circuit_name, model)
+                predictions_list = predictions_df.to_dict(orient="records")
+                save_prediction(year, round, predictions_list)
+            else:
+                predictions_list = None
 
-        if race_results is None:
-            return {"status": "error", "message": "Failed to fetch race results"}
-
-        predictions = None
-        if quali_result is not None:
-            quali_data, circuit_name = quali_result
-            predictions = predict_podium(quali_data, circuit_name, model)
+        # Race results: use in-memory cache or fetch fresh
+        if cache_key in _results_cache:
+            race_results_list = _results_cache[cache_key]
+        else:
+            loop = asyncio.get_event_loop()
+            race_results = await loop.run_in_executor(None, fetch_race_results, year, round)
+            if race_results is None:
+                return {"status": "error", "message": "Failed to fetch race results"}
+            race_results_list = race_results.to_dict(orient="records")
+            _results_cache[cache_key] = race_results_list
 
         response = {
             "status": "post_race",
-            "results": race_results.to_dict(orient="records"),
+            "results": race_results_list,
         }
-        if predictions is not None:
-            response["predictions"] = predictions.to_dict(orient="records")
+        if predictions_list:
+            response["predictions"] = predictions_list
 
-        _predict_cache[cache_key] = response
         return response
+
 
 @app.head("/health")
 @app.get("/health")
