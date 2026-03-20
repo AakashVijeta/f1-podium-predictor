@@ -15,3 +15,4 @@ timple==0.1.8
 RapidFuzz==3.14.3
 signalrcore==1.0.2
 msgpack==1.1.2
+httpx==0.28.1
