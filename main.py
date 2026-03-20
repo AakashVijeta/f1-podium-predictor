@@ -23,6 +23,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root():
+    return {"status": "ok", "message": "F1 Podium Predictor API"}
+
 @app.get("/predict/{year}/{round}")
 async def predict(year: int, round: int):
     status = get_session_status(year, round)
