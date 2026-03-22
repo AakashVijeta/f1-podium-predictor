@@ -116,7 +116,7 @@ export default function App() {
         </div>
       ) : null}
 
-      {/* Post-race */}
+      {/* Post-race Status*/}
       {!loading && data?.status === "post_race" && raceResults.length > 0 && (
         <div className="postrace-wrap fade">
           <PostRacePodium raceResults={raceResults} race={race} />
