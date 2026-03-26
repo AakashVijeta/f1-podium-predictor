@@ -100,34 +100,47 @@ async def predict(year: int, round: int):
 async def fetch_accuracy(year: int):
     predictions = get_all_predictions_by_year(year)
     if not predictions:
-        return {"status": "ok", "year": year, "rounds_analyzed": 0, "podium_correct": 0, "winner_correct": 0, "history": []}
+        return {
+            "status": "ok", 
+            "year": year, 
+            "rounds_analyzed": 0, 
+            "podium_correct": 0, 
+            "winner_correct": 0, 
+            "history": []
+        }
     
+    # 1. Prepare all the concurrent tasks
+    tasks = [results.get_race_results(year, r["round"]) for r in predictions]
+    
+    # 2. Run all requests in parallel
+    # return_exceptions=True prevents one failed race from breaking the whole year
+    all_actual_results = await asyncio.gather(*tasks, return_exceptions=True)
+
     rounds_analyzed = 0
     winner_correct = 0
     podium_correct = 0
     total_podium_slots = 0
     history = []
 
-    for round_data in predictions:
-        r_num = round_data["round"]
-        preds = round_data["predictions"]
-        
-        try:
-            actual = await results.get_race_results(year, r_num)
-        except Exception:
-            continue
-            
-        if not actual.get("available") or not actual.get("results"):
+    # 3. Zip the predictions and the fetched results together for processing
+    for round_data, actual in zip(predictions, all_actual_results):
+        # Error handling for the parallel results
+        if isinstance(actual, Exception) or not actual.get("available") or not actual.get("results"):
             continue
 
+        r_num = round_data["round"]
+        preds = round_data["predictions"]
         actual_results = actual["results"]
+
+        # Sort and slice top 3
         preds_sorted = sorted(preds, key=lambda x: x["PodiumProbability"], reverse=True)
         top3_preds = preds_sorted[:3]
         top3_actual = actual_results[:3]
 
-        if len(top3_preds) == 0 or len(top3_actual) == 0:
+        if not top3_preds or not top3_actual:
             continue
 
+        # Clean name matching logic
         pred_last_names = [p["FullName"].split()[-1].upper() for p in top3_preds]
         actual_last_names = [a["driver_name"].split()[-1].upper() for a in top3_actual]
 
@@ -136,9 +149,10 @@ async def fetch_accuracy(year: int):
             if any(p_name in a_name or a_name in p_name for a_name in actual_last_names):
                 hits += 1
                 
-        is_winner_correct = False
-        if pred_last_names[0] in actual_last_names[0] or actual_last_names[0] in pred_last_names[0]:
-            is_winner_correct = True
+        is_winner_correct = (
+            pred_last_names[0] in actual_last_names[0] or 
+            actual_last_names[0] in pred_last_names[0]
+        )
             
         rounds_analyzed += 1
         podium_correct += hits
@@ -161,7 +175,7 @@ async def fetch_accuracy(year: int):
         "podium_correct": podium_correct,
         "total_podium_slots": total_podium_slots,
         "winner_correct": winner_correct,
-        "history": history
+        "history": sorted(history, key=lambda x: x["round"])
     }
 
 
