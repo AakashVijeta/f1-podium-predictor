@@ -6,10 +6,10 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 if DATABASE_URL:
     import psycopg2
     from psycopg2.extras import RealDictCursor
-    
+
     def get_conn():
         return psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
-        
+
     def init_db():
         with get_conn() as conn:
             with conn.cursor() as cur:
@@ -39,7 +39,7 @@ if DATABASE_URL:
                         round INTEGER,
                         data TEXT,
                         PRIMARY KEY (year, round)
-                    )
+                    );
                 """)
             conn.commit()
 
@@ -53,36 +53,6 @@ if DATABASE_URL:
                 row = cur.fetchone()
                 return row["predictions"] if row else None
 
-    def save_quali_data(year, round, quali_records):
-    with get_conn() as conn:
-        with conn.cursor() as cur:
-            cur.execute("""
-                INSERT INTO qualifying_data (year, round, data)
-                VALUES (%s, %s, %s)
-                ON CONFLICT (year, round) DO UPDATE
-                    SET data = EXCLUDED.data
-            """, (year, round, json.dumps(quali_records)))
-        conn.commit()
-
-    def get_quali_data(year, round):
-        with get_conn() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT data FROM qualifying_data WHERE year=%s AND round=%s",
-                    (year, round)
-                )
-                row = cur.fetchone()
-                return json.loads(row[0]) if row else None        
-
-    def get_all_predictions_by_year(year: int):
-        with get_conn() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT round, predictions FROM predictions WHERE year = %s ORDER BY round ASC",
-                    (year,)
-                )
-                return cur.fetchall()
-
     def save_prediction(year: int, round: int, predictions: list):
         with get_conn() as conn:
             with conn.cursor() as cur:
@@ -92,6 +62,15 @@ if DATABASE_URL:
                     ON CONFLICT (year, round) DO NOTHING
                 """, (year, round, json.dumps(predictions)))
             conn.commit()
+
+    def get_all_predictions_by_year(year: int):
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT round, predictions FROM predictions WHERE year = %s ORDER BY round ASC",
+                    (year,)
+                )
+                return cur.fetchall()
 
     def get_race_result(year: int, round: int):
         with get_conn() as conn:
@@ -113,9 +92,30 @@ if DATABASE_URL:
                 """, (year, round, json.dumps(results)))
             conn.commit()
 
+    def get_quali_data(year: int, round: int):
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT data FROM qualifying_data WHERE year = %s AND round = %s",
+                    (year, round)
+                )
+                row = cur.fetchone()
+                return json.loads(row["data"]) if row else None
+
+    def save_quali_data(year: int, round: int, data: dict):
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO qualifying_data (year, round, data)
+                    VALUES (%s, %s, %s)
+                    ON CONFLICT (year, round) DO UPDATE
+                        SET data = EXCLUDED.data
+                """, (year, round, json.dumps(data)))
+            conn.commit()
+
 else:
     import sqlite3
-    
+
     def get_conn():
         conn = sqlite3.connect("local_predictions.db")
         conn.row_factory = sqlite3.Row
@@ -144,6 +144,14 @@ else:
                     UNIQUE(year, round)
                 );
             """)
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS qualifying_data (
+                    year INTEGER,
+                    round INTEGER,
+                    data TEXT,
+                    PRIMARY KEY (year, round)
+                );
+            """)
             conn.commit()
 
     def get_prediction(year: int, round: int):
@@ -155,37 +163,6 @@ else:
             )
             row = cur.fetchone()
             return json.loads(row["predictions"]) if row else None
-        
-    def save_quali_data(year, round, quali_records):
-    with get_conn() as conn:
-        with conn.cursor() as cur:
-            cur.execute("""
-                INSERT INTO qualifying_data (year, round, data)
-                VALUES (%s, %s, %s)
-                ON CONFLICT (year, round) DO UPDATE
-                    SET data = EXCLUDED.data
-            """, (year, round, json.dumps(quali_records)))
-        conn.commit()
-
-    def get_quali_data(year, round):
-        with get_conn() as conn:
-            with conn.cursor() as cur:
-                cur.execute(
-                    "SELECT data FROM qualifying_data WHERE year=%s AND round=%s",
-                    (year, round)
-                )
-                row = cur.fetchone()
-                return json.loads(row[0]) if row else None    
-
-    def get_all_predictions_by_year(year: int):
-        with get_conn() as conn:
-            cur = conn.cursor()
-            cur.execute(
-                "SELECT round, predictions FROM predictions WHERE year = ? ORDER BY round ASC",
-                (year,)
-            )
-            rows = cur.fetchall()
-            return [{"round": r["round"], "predictions": json.loads(r["predictions"])} for r in rows]
 
     def save_prediction(year: int, round: int, predictions: list):
         with get_conn() as conn:
@@ -196,6 +173,16 @@ else:
                 ON CONFLICT (year, round) DO NOTHING
             """, (year, round, json.dumps(predictions)))
             conn.commit()
+
+    def get_all_predictions_by_year(year: int):
+        with get_conn() as conn:
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT round, predictions FROM predictions WHERE year = ? ORDER BY round ASC",
+                (year,)
+            )
+            rows = cur.fetchall()
+            return [{"round": r["round"], "predictions": json.loads(r["predictions"])} for r in rows]
 
     def get_race_result(year: int, round: int):
         with get_conn() as conn:
@@ -215,4 +202,23 @@ else:
                 VALUES (?, ?, ?)
                 ON CONFLICT (year, round) DO NOTHING
             """, (year, round, json.dumps(results)))
+            conn.commit()
+
+    def get_quali_data(year: int, round: int):
+        with get_conn() as conn:
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT data FROM qualifying_data WHERE year = ? AND round = ?",
+                (year, round)
+            )
+            row = cur.fetchone()
+            return json.loads(row["data"]) if row else None
+
+    def save_quali_data(year: int, round: int, data: dict):
+        with get_conn() as conn:
+            cur = conn.cursor()
+            cur.execute("""
+                INSERT OR REPLACE INTO qualifying_data (year, round, data)
+                VALUES (?, ?, ?)
+            """, (year, round, json.dumps(data)))
             conn.commit()
