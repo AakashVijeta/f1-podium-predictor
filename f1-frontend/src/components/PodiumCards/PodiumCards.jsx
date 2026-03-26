@@ -14,6 +14,17 @@ export default function PodiumCards({ top3, maxProb, hovered, onHover }) {
           const drv = gd(d.FullName);
           const pct = d.PodiumProbability * 100;
           const rel = (pct / (maxProb * 100)) * 100;
+          
+          let confLabel = "LOW CONFIDENCE";
+          let confClass = "conf-low";
+          if (pct >= 60) {
+            confLabel = "HIGH CONFIDENCE";
+            confClass = "conf-high";
+          } else if (pct >= 30) {
+            confLabel = "MODERATE";
+            confClass = "conf-med";
+          }
+
           return (
             <div
               className="pc"
@@ -25,8 +36,9 @@ export default function PodiumCards({ top3, maxProb, hovered, onHover }) {
               <div className="pc-bgnum">0{i + 1}</div>
               <div className="pc-top">
                 <div className="pc-plabel">P{i + 1} Position</div>
-                <div className="pc-short" style={{ color: drv.color }}>{drv.short}</div>
+                <div className={`pc-conf ${confClass}`}>{confLabel}</div>
               </div>
+              <div className="pc-short" style={{ color: drv.color }}>{drv.short}</div>
               <div className="pc-fn">{fn(d.FullName)}</div>
               <div className="pc-ln" style={{ color: drv.color }}>{ln(d.FullName)}</div>
               <div className="pc-team">{drv.team}</div>

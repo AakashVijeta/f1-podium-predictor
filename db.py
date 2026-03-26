@@ -1,51 +1,107 @@
 import os
 import json
-import psycopg2
-from psycopg2.extras import RealDictCursor
 
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
+if DATABASE_URL:
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+    
+    def get_conn():
+        return psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+        
+    def init_db():
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    CREATE TABLE IF NOT EXISTS predictions (
+                        id SERIAL PRIMARY KEY,
+                        year INT NOT NULL,
+                        round INT NOT NULL,
+                        predictions JSONB,
+                        predicted_at TIMESTAMP DEFAULT NOW(),
+                        UNIQUE(year, round)
+                    );
+                """)
+            conn.commit()
 
-def get_conn():
-    return psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+    def get_prediction(year: int, round: int):
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT predictions FROM predictions WHERE year = %s AND round = %s",
+                    (year, round)
+                )
+                row = cur.fetchone()
+                return row["predictions"] if row else None
 
+    def get_all_predictions_by_year(year: int):
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT round, predictions FROM predictions WHERE year = %s ORDER BY round ASC",
+                    (year,)
+                )
+                return cur.fetchall()
 
-def init_db():
-    """Create predictions table if it doesn't exist."""
-    with get_conn() as conn:
-        with conn.cursor() as cur:
+    def save_prediction(year: int, round: int, predictions: list):
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO predictions (year, round, predictions)
+                    VALUES (%s, %s, %s)
+                    ON CONFLICT (year, round) DO NOTHING
+                """, (year, round, json.dumps(predictions)))
+            conn.commit()
+else:
+    import sqlite3
+    
+    def get_conn():
+        conn = sqlite3.connect("local_predictions.db")
+        conn.row_factory = sqlite3.Row
+        return conn
+
+    def init_db():
+        with get_conn() as conn:
+            cur = conn.cursor()
             cur.execute("""
                 CREATE TABLE IF NOT EXISTS predictions (
-                    id SERIAL PRIMARY KEY,
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
                     year INT NOT NULL,
                     round INT NOT NULL,
-                    predictions JSONB,
-                    predicted_at TIMESTAMP DEFAULT NOW(),
+                    predictions TEXT,
+                    predicted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     UNIQUE(year, round)
                 );
             """)
-        conn.commit()
+            conn.commit()
 
-
-def get_prediction(year: int, round: int):
-    """Return stored predictions for a round, or None if not found."""
-    with get_conn() as conn:
-        with conn.cursor() as cur:
+    def get_prediction(year: int, round: int):
+        with get_conn() as conn:
+            cur = conn.cursor()
             cur.execute(
-                "SELECT predictions FROM predictions WHERE year = %s AND round = %s",
+                "SELECT predictions FROM predictions WHERE year = ? AND round = ?",
                 (year, round)
             )
             row = cur.fetchone()
-            return row["predictions"] if row else None
+            return json.loads(row["predictions"]) if row else None
 
+    def get_all_predictions_by_year(year: int):
+        with get_conn() as conn:
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT round, predictions FROM predictions WHERE year = ? ORDER BY round ASC",
+                (year,)
+            )
+            rows = cur.fetchall()
+            return [{"round": r["round"], "predictions": json.loads(r["predictions"])} for r in rows]
 
-def save_prediction(year: int, round: int, predictions: list):
-    """Insert or update predictions for a round."""
-    with get_conn() as conn:
-        with conn.cursor() as cur:
+    def save_prediction(year: int, round: int, predictions: list):
+        with get_conn() as conn:
+            cur = conn.cursor()
             cur.execute("""
                 INSERT INTO predictions (year, round, predictions)
-                VALUES (%s, %s, %s)
+                VALUES (?, ?, ?)
                 ON CONFLICT (year, round) DO NOTHING
             """, (year, round, json.dumps(predictions)))
-        conn.commit()
+            conn.commit()

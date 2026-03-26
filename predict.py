@@ -85,11 +85,29 @@ def fetch_qualifying_data(year, round):
 
 def predict_podium(df, circuit_name, model):
     df['TrackType'] = track_type[circuit_name]
+
+    # ── Regulation-aware relative features ────────────────────────────────────
+    df['QualiGapToPole'] = df['BestQualiTime'] - df['BestQualiTime'].min()
+    df['QualiGapNormalized'] = (df['BestQualiTime'] - df['BestQualiTime'].min()) / df['BestQualiTime'].min() * 100
+    df['GridPositionSquared'] = df['GridPosition'] ** 2
+    df['MidfieldFlag'] = ((df['GridPosition'] >= 8) & (df['GridPosition'] <= 15)).astype(int)
+
+    # Rolling form — neutral defaults at prediction time (no historical context)
+    df['AvgFinishLast3']  = 10.0
+    df['PodiumRateLast5'] = 0.15
+
     df_model = pd.get_dummies(df, columns=['TrackType'], dtype=int)
-    feature_cols = ['BestQualiTime', 'GridPosition', 'TrackType_street', 'TrackType_permanent']
+
+    feature_cols = [
+        'GridPosition', 'GridPositionSquared',
+        'QualiGapToPole', 'QualiGapNormalized',
+        'MidfieldFlag', 'AvgFinishLast3', 'PodiumRateLast5',
+        'TrackType_street', 'TrackType_permanent',
+    ]
     for col in feature_cols:
         if col not in df_model.columns:
             df_model[col] = 0
+
     proba = model.predict_proba(df_model[feature_cols])
     df['PodiumProbability'] = proba[:, 1]
     return df[['FullName', 'PodiumProbability']].sort_values(by='PodiumProbability', ascending=False)

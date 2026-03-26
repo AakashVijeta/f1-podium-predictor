@@ -13,6 +13,7 @@ import {
   PodiumCardsSkeleton,
   GridTableSkeleton,
 } from "./components/SkeletonLoader/SkeletonLoader";
+import SeasonDashboard from "./components/SeasonDashboard/SeasonDashboard";
 import Footer from "./components/Footer/Footer";
 import "./App.css";
 
@@ -119,7 +120,12 @@ export default function App() {
       {/* Post-race Status*/}
       {!loading && data?.status === "post_race" && raceResults.length > 0 && (
         <div className="postrace-wrap fade">
-          <PostRacePodium raceResults={raceResults} race={race} />
+          <PostRacePodium 
+            raceResults={raceResults} 
+            race={race} 
+            top3={top3} 
+            accuracyStats={accuracyStats} 
+          />
           <InfoStrip race={race} round={round} />
           <WinnerStrip winner={raceResults[0]} />
           {/* Prediction vs Actual grid */}
@@ -134,6 +140,9 @@ export default function App() {
           )}
         </div>
       )}
+
+      {/* Season-level tracking */}
+      <SeasonDashboard year={2026} />
 
       <Footer />
     </div>

@@ -32,8 +32,18 @@
 .td-num2   { width: 36px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; color: #1e1e1e; text-align: center; }
 .td-barcol { width: 25%; }
 
+@keyframes barGrow {
+  from { width: 0%; }
+  to   { width: var(--target-width); }
+}
+
 .bt { height: 2px; background: rgba(255, 255, 255, 0.035); }
-.bf { height: 100%; transition: width 1s cubic-bezier(0.16, 1, 0.3, 1); }
+.bf { 
+  height: 100%; 
+  width: var(--target-width);
+  animation: barGrow 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--row-index) * 40ms);
+}
 
 .td-pct   { width: 52px; text-align: right; font-family: 'Barlow Condensed', sans-serif; font-size: 0.88rem; color: #222; }
 .td-pct.m { color: #666; }

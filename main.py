@@ -5,7 +5,7 @@ from fastapi import FastAPI
 import joblib
 from fastapi.middleware.cors import CORSMiddleware
 from routers import results
-from db import init_db, get_prediction, save_prediction
+from db import init_db, get_prediction, save_prediction, get_all_predictions_by_year
 
 from predict import fetch_qualifying_data, predict_podium, fetch_race_results, get_session_status
 
@@ -17,7 +17,7 @@ _results_cache = {}  # in-memory cache for race results (not predictions)
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global model
-    model = joblib.load(os.path.join(BASE_DIR, 'models', 'model_v4.pkl'))
+    model = joblib.load(os.path.join(BASE_DIR, 'models', 'model_v5.pkl'))
     init_db()  # ensure predictions table exists
     yield
 
@@ -99,6 +99,79 @@ async def predict(year: int, round: int):
             response["predictions"] = predictions_list
 
         return response
+
+
+@app.get("/accuracy/{year}")
+async def fetch_accuracy(year: int):
+    predictions = get_all_predictions_by_year(year)
+    if not predictions:
+        return {"status": "ok", "year": year, "rounds_analyzed": 0, "podium_correct": 0, "winner_correct": 0, "history": []}
+    
+    rounds_analyzed = 0
+    winner_correct = 0
+    podium_correct = 0
+    total_podium_slots = 0
+    history = []
+
+    for round_data in predictions:
+        r_num = round_data["round"]
+        preds = round_data["predictions"]
+        
+        # Get actual results from Jolpica
+        try:
+            actual = await results.get_race_results(year, r_num)
+        except Exception:
+            continue
+            
+        if not actual.get("available") or not actual.get("results"):
+            continue
+
+        actual_results = actual["results"]
+        # Sort predictions by probability descending
+        preds_sorted = sorted(preds, key=lambda x: x["PodiumProbability"], reverse=True)
+        top3_preds = preds_sorted[:3]
+        top3_actual = actual_results[:3]
+
+        if len(top3_preds) == 0 or len(top3_actual) == 0:
+            continue
+
+        # Extract last names for safe comparison
+        pred_last_names = [p["FullName"].split()[-1].upper() for p in top3_preds]
+        actual_last_names = [a["driver_name"].split()[-1].upper() for a in top3_actual]
+
+        # Calculate metrics
+        hits = 0
+        for p_name in pred_last_names:
+            if any(p_name in a_name or a_name in p_name for a_name in actual_last_names):
+                hits += 1
+                
+        is_winner_correct = False
+        if pred_last_names[0] in actual_last_names[0] or actual_last_names[0] in pred_last_names[0]:
+            is_winner_correct = True
+            
+        rounds_analyzed += 1
+        podium_correct += hits
+        total_podium_slots += min(3, len(top3_actual))
+        if is_winner_correct:
+            winner_correct += 1
+
+        history.append({
+            "round": r_num,
+            "winner_correct": is_winner_correct,
+            "podium_hits": hits,
+            "predicted_top3": pred_last_names,
+            "actual_top3": actual_last_names
+        })
+
+    return {
+        "status": "ok",
+        "year": year,
+        "rounds_analyzed": rounds_analyzed,
+        "podium_correct": podium_correct,
+        "total_podium_slots": total_podium_slots,
+        "winner_correct": winner_correct,
+        "history": history
+    }
 
 
 @app.head("/health")

@@ -59,6 +59,20 @@
   text-transform: uppercase;
 }
 
+.pc-conf {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 2px 6px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.conf-high { background: rgba(0, 209, 102, 0.12); color: #00d166; }
+.conf-med  { background: rgba(245, 166, 35, 0.12); color: #f5a623; }
+.conf-low  { background: rgba(255, 255, 255, 0.05); color: #666; }
+
 .pc-short {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.95rem;

@@ -1,86 +1,121 @@
-@keyframes rcIn {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.podium3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 2px;
-  margin-bottom: 2px;
-}
-
-.rc {
-  position: relative;
-  overflow: hidden;
+.vs-podium-wrap {
+  display: flex;
+  align-items: stretch;
+  gap: 2rem;
   background: var(--bg1);
-  border-top: 4px solid;
-  padding: 2.5rem 2rem;
-  animation: rcIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
-  transition: background 0.15s, transform 0.15s;
+  padding: 2rem;
+  border-top: 1px solid var(--border);
 }
 
-.rc:nth-child(1) { animation-delay: 0.05s; }
-.rc:nth-child(2) { animation-delay: 0.12s; }
-.rc:nth-child(3) { animation-delay: 0.19s; }
-
-.rc:hover {
-  background: var(--bg2);
-  transform: translateY(-2px);
+.vs-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.rc-bgnum {
-  position: absolute;
-  right: -1rem;
-  top: 50%;
-  transform: translateY(-50%);
+.vs-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 12rem;
+  font-size: 1.5rem;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.02);
-  line-height: 1;
-  pointer-events: none;
-  letter-spacing: -0.05em;
+  color: rgba(255, 255, 255, 0.1);
+  padding: 0 1rem;
 }
 
-.rc-medal {
-  font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.6rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
+.vs-header {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.vs-title {
+  font-size: 0.9rem;
   text-transform: uppercase;
-  margin-bottom: 1.25rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
 }
 
-.rc-pos   { font-family: 'Barlow Condensed', sans-serif; font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 0.5rem; }
-.rc-short { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 900; letter-spacing: 0.1em; margin-bottom: 1rem; }
-.rc-fn2   { font-size: 0.68rem; color: #888; text-transform: uppercase; letter-spacing: 0.14em; line-height: 1; }
-.rc-ln2   { font-family: 'Barlow Condensed', sans-serif; font-size: 3rem; font-weight: 900; letter-spacing: 0.03em; text-transform: uppercase; line-height: 0.95; margin-top: 0.1rem; }
-.rc-team2 { font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 0.12em; margin-top: 0.4rem; }
-.rc-flag  { font-size: 2.5rem; margin-top: 1.5rem; }
-.rc-bar   { height: 3px; margin-top: 1.5rem; opacity: 0.3; }
-
-/* ── Mobile ── */
-@media (max-width: 640px) {
-  .podium3 {
-    grid-template-columns: 1fr;
-  }
-
-  .rc {
-    padding: 1.5rem 1.25rem;
-  }
-
-  .rc-ln2 {
-    font-size: 2.2rem;
-  }
-
-  .rc-pos {
-    font-size: 3rem;
-  }
+.vs-sub {
+  font-size: 0.6rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: 0.2rem;
 }
 
-@media (min-width: 641px) and (max-width: 900px) {
-  .podium3 {
-    grid-template-columns: 1fr 1fr;
+.vs-podium {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.vs-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--bg2);
+  padding: 0.75rem 1rem;
+  border-left: 3px solid;
+  border-radius: 2px;
+}
+
+.vs-row.hit { background: rgba(0, 209, 102, 0.05); }
+.vs-row.partial { background: rgba(245, 166, 35, 0.05); }
+.vs-row.miss { background: rgba(255, 255, 255, 0.02); opacity: 0.6; }
+
+.vs-pos {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  width: 30px;
+}
+
+.vs-code {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 900;
+  width: 40px;
+}
+
+.vs-name {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.vs-fn {
+  font-size: 0.55rem;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.vs-ln {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.vs-status {
+  font-weight: 900;
+  font-size: 1.2rem;
+}
+
+.vs-status.hit { color: #00d166; }
+.vs-status.partial { color: #f5a623; }
+.vs-status.miss { color: #444; }
+
+@media (max-width: 768px) {
+  .vs-podium-wrap {
+    flex-direction: column;
+    padding: 1.5rem 1rem;
+  }
+  
+  .vs-divider {
+    padding: 1rem 0;
   }
 }

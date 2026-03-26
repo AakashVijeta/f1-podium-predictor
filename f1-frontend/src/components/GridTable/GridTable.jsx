@@ -105,7 +105,14 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
                 </td>
                 <td className="td-barcol">
                   <div className="bt">
-                    <div className="bf" style={{ width: `${rel}%`, background: drv.color }} />
+                    <div 
+                      className="bf" 
+                      style={{ 
+                        "--target-width": `${rel}%`, 
+                        "--row-index": i,
+                        background: drv.color 
+                      }} 
+                    />
                   </div>
                 </td>
                 <td className={`td-pct ${cls}`}>{pct.toFixed(1)}%</td>
