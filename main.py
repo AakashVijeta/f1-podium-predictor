@@ -1,12 +1,18 @@
 import os
 import asyncio
+import pandas as pd
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 import joblib
 from fastapi.middleware.cors import CORSMiddleware
 from routers import results
-from db import init_db, get_prediction, save_prediction, get_all_predictions_by_year, get_race_result, save_race_result
-
+from db import (
+    init_db,
+    get_prediction, save_prediction,
+    get_all_predictions_by_year,
+    get_race_result, save_race_result,
+    get_quali_data, save_quali_data,        # ← new
+)
 from predict import fetch_qualifying_data, predict_podium, fetch_race_results, get_session_status
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -17,7 +23,7 @@ model = None
 async def lifespan(app: FastAPI):
     global model
     model = joblib.load(os.path.join(BASE_DIR, 'models', 'model_v5.pkl'))
-    init_db()  # ensure tables exist
+    init_db()
     yield
 
 
@@ -36,6 +42,41 @@ async def root():
     return {"status": "ok", "message": "F1 Podium Predictor API"}
 
 
+# ---------------------------------------------------------------------------
+# Helper: resolve qualifying data — DB first, FastF1 only as fallback
+# ---------------------------------------------------------------------------
+async def get_quali(year: int, round: int):
+    """
+    Returns (quali_df, circuit_name) or None.
+    Checks DB first. Only calls FastF1 if data isn't cached yet.
+    After a FastF1 fetch, saves raw data to DB so it's never fetched again.
+    """
+    raw = await asyncio.to_thread(get_quali_data, year, round)
+
+    if raw is not None:
+        # DB hit — reconstruct DataFrame, no FastF1 call
+        return pd.DataFrame(raw["laps"]), raw["circuit"]
+
+    # DB miss — fetch from FastF1
+    result = await asyncio.to_thread(fetch_qualifying_data, year, round)
+    if result is None:
+        return None
+
+    quali_df, circuit_name = result
+
+    # Persist raw data so future calls never touch FastF1 for this round
+    asyncio.create_task(
+        asyncio.to_thread(
+            save_quali_data, year, round,
+            {"laps": quali_df.to_dict(orient="records"), "circuit": circuit_name}
+        )
+    )
+    return quali_df, circuit_name
+
+
+# ---------------------------------------------------------------------------
+# /predict/{year}/{round}
+# ---------------------------------------------------------------------------
 @app.get("/predict/{year}/{round}")
 async def predict(year: int, round: int):
     status = await asyncio.to_thread(get_session_status, year, round)
@@ -43,75 +84,97 @@ async def predict(year: int, round: int):
     if status == "pre_quali":
         return {"status": "pre_quali", "message": "Qualifying hasn't happened yet"}
 
-    # Check DB for stored predictions first
-    stored = await asyncio.to_thread(get_prediction, year, round)
-
+    # ── pre_race ────────────────────────────────────────────────────────────
     if status == "pre_race":
+        stored = await asyncio.to_thread(get_prediction, year, round)
         if stored:
             return {"status": "pre_race", "predictions": stored}
 
-        result = await asyncio.to_thread(fetch_qualifying_data, year, round)
-        if result is None:
+        quali_result = await get_quali(year, round)
+        if quali_result is None:
             return {"status": "error", "message": "Failed to fetch qualifying data"}
-        quali_data, circuit_name = result
+
+        quali_data, circuit_name = quali_result
         predictions = await asyncio.to_thread(predict_podium, quali_data, circuit_name, model)
         predictions_list = predictions.to_dict(orient="records")
 
-        await asyncio.to_thread(save_prediction, year, round, predictions_list)
+        # Fire-and-forget DB write — don't block the response
+        asyncio.create_task(
+            asyncio.to_thread(save_prediction, year, round, predictions_list)
+        )
         return {"status": "pre_race", "predictions": predictions_list}
 
+    # ── post_race ────────────────────────────────────────────────────────────
     elif status == "post_race":
-        # --- Predictions ---
-        if stored:
-            predictions_list = stored
-        else:
-            quali_result = await asyncio.to_thread(fetch_qualifying_data, year, round)
-            if quali_result is not None:
-                quali_data, circuit_name = quali_result
-                predictions_df = await asyncio.to_thread(predict_podium, quali_data, circuit_name, model)
-                predictions_list = predictions_df.to_dict(orient="records")
-                await asyncio.to_thread(save_prediction, year, round, predictions_list)
-            else:
-                predictions_list = None
-
-        # --- Race results: DB first, FastF1 only as fallback ---
+        stored = await asyncio.to_thread(get_prediction, year, round)
         race_results_list = await asyncio.to_thread(get_race_result, year, round)
 
+        needs_quali = not stored
+        needs_race = race_results_list is None
+
+        if needs_quali or needs_race:
+            # Build only the tasks that are actually missing
+            task_keys = []
+            tasks = []
+
+            if needs_quali:
+                task_keys.append("quali")
+                tasks.append(get_quali(year, round))
+
+            if needs_race:
+                task_keys.append("race")
+                tasks.append(asyncio.to_thread(fetch_race_results, year, round))
+
+            # Fetch both simultaneously instead of sequentially
+            fetched_results = await asyncio.gather(*tasks, return_exceptions=True)
+            fetched = dict(zip(task_keys, fetched_results))
+
+            if needs_quali:
+                quali_result = fetched.get("quali")
+                if quali_result and not isinstance(quali_result, Exception):
+                    quali_data, circuit_name = quali_result
+                    predictions_df = await asyncio.to_thread(
+                        predict_podium, quali_data, circuit_name, model
+                    )
+                    stored = predictions_df.to_dict(orient="records")
+                    asyncio.create_task(
+                        asyncio.to_thread(save_prediction, year, round, stored)
+                    )
+
+            if needs_race:
+                race_df = fetched.get("race")
+                if race_df is not None and not isinstance(race_df, Exception):
+                    race_results_list = race_df.to_dict(orient="records")
+                    asyncio.create_task(
+                        asyncio.to_thread(save_race_result, year, round, race_results_list)
+                    )
+
         if race_results_list is None:
-            race_results = await asyncio.to_thread(fetch_race_results, year, round)
-            if race_results is None:
-                return {"status": "error", "message": "Failed to fetch race results"}
-            race_results_list = race_results.to_dict(orient="records")
-            await asyncio.to_thread(save_race_result, year, round, race_results_list)
+            return {"status": "error", "message": "Failed to fetch race results"}
 
-        response = {
-            "status": "post_race",
-            "results": race_results_list,
-        }
-        if predictions_list:
-            response["predictions"] = predictions_list
-
+        response = {"status": "post_race", "results": race_results_list}
+        if stored:
+            response["predictions"] = stored
         return response
 
 
+# ---------------------------------------------------------------------------
+# /accuracy/{year}
+# ---------------------------------------------------------------------------
 @app.get("/accuracy/{year}")
 async def fetch_accuracy(year: int):
     predictions = await asyncio.to_thread(get_all_predictions_by_year, year)
     if not predictions:
         return {
-            "status": "ok", 
-            "year": year, 
-            "rounds_analyzed": 0, 
-            "podium_correct": 0, 
-            "winner_correct": 0, 
+            "status": "ok",
+            "year": year,
+            "rounds_analyzed": 0,
+            "podium_correct": 0,
+            "winner_correct": 0,
             "history": []
         }
-    
-    # 1. Prepare all the concurrent tasks
+
     tasks = [results.get_race_results(year, r["round"]) for r in predictions]
-    
-    # 2. Run all requests in parallel
-    # return_exceptions=True prevents one failed race from breaking the whole year
     all_actual_results = await asyncio.gather(*tasks, return_exceptions=True)
 
     rounds_analyzed = 0
@@ -120,9 +183,7 @@ async def fetch_accuracy(year: int):
     total_podium_slots = 0
     history = []
 
-    # 3. Zip the predictions and the fetched results together for processing
     for round_data, actual in zip(predictions, all_actual_results):
-        # Error handling for the parallel results
         if isinstance(actual, Exception) or not actual.get("available") or not actual.get("results"):
             continue
 
@@ -130,7 +191,6 @@ async def fetch_accuracy(year: int):
         preds = round_data["predictions"]
         actual_results = actual["results"]
 
-        # Sort and slice top 3
         preds_sorted = sorted(preds, key=lambda x: x["PodiumProbability"], reverse=True)
         top3_preds = preds_sorted[:3]
         top3_actual = actual_results[:3]
@@ -138,7 +198,6 @@ async def fetch_accuracy(year: int):
         if not top3_preds or not top3_actual:
             continue
 
-        # Clean name matching logic
         pred_last_names = [p["FullName"].split()[-1].upper() for p in top3_preds]
         actual_last_names = [a["driver_name"].split()[-1].upper() for a in top3_actual]
 
@@ -146,12 +205,12 @@ async def fetch_accuracy(year: int):
         for p_name in pred_last_names:
             if any(p_name in a_name or a_name in p_name for a_name in actual_last_names):
                 hits += 1
-                
+
         is_winner_correct = (
-            pred_last_names[0] in actual_last_names[0] or 
+            pred_last_names[0] in actual_last_names[0] or
             actual_last_names[0] in pred_last_names[0]
         )
-            
+
         rounds_analyzed += 1
         podium_correct += hits
         total_podium_slots += min(3, len(top3_actual))

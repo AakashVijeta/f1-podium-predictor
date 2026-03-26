@@ -33,6 +33,14 @@ if DATABASE_URL:
                         UNIQUE(year, round)
                     );
                 """)
+                cur.execute("""
+                    CREATE TABLE IF NOT EXISTS qualifying_data (
+                        year INTEGER,
+                        round INTEGER,
+                        data TEXT,
+                        PRIMARY KEY (year, round)
+                    )
+                """)
             conn.commit()
 
     def get_prediction(year: int, round: int):
@@ -44,6 +52,27 @@ if DATABASE_URL:
                 )
                 row = cur.fetchone()
                 return row["predictions"] if row else None
+
+    def save_quali_data(year, round, quali_records):
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO qualifying_data (year, round, data)
+                VALUES (%s, %s, %s)
+                ON CONFLICT (year, round) DO UPDATE
+                    SET data = EXCLUDED.data
+            """, (year, round, json.dumps(quali_records)))
+        conn.commit()
+
+    def get_quali_data(year, round):
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT data FROM qualifying_data WHERE year=%s AND round=%s",
+                    (year, round)
+                )
+                row = cur.fetchone()
+                return json.loads(row[0]) if row else None        
 
     def get_all_predictions_by_year(year: int):
         with get_conn() as conn:
@@ -126,6 +155,27 @@ else:
             )
             row = cur.fetchone()
             return json.loads(row["predictions"]) if row else None
+        
+    def save_quali_data(year, round, quali_records):
+    with get_conn() as conn:
+        with conn.cursor() as cur:
+            cur.execute("""
+                INSERT INTO qualifying_data (year, round, data)
+                VALUES (%s, %s, %s)
+                ON CONFLICT (year, round) DO UPDATE
+                    SET data = EXCLUDED.data
+            """, (year, round, json.dumps(quali_records)))
+        conn.commit()
+
+    def get_quali_data(year, round):
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT data FROM qualifying_data WHERE year=%s AND round=%s",
+                    (year, round)
+                )
+                row = cur.fetchone()
+                return json.loads(row[0]) if row else None    
 
     def get_all_predictions_by_year(year: int):
         with get_conn() as conn:
