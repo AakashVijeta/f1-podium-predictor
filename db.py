@@ -23,6 +23,16 @@ if DATABASE_URL:
                         UNIQUE(year, round)
                     );
                 """)
+                cur.execute("""
+                    CREATE TABLE IF NOT EXISTS race_results (
+                        id SERIAL PRIMARY KEY,
+                        year INT NOT NULL,
+                        round INT NOT NULL,
+                        results JSONB,
+                        fetched_at TIMESTAMP DEFAULT NOW(),
+                        UNIQUE(year, round)
+                    );
+                """)
             conn.commit()
 
     def get_prediction(year: int, round: int):
@@ -53,6 +63,27 @@ if DATABASE_URL:
                     ON CONFLICT (year, round) DO NOTHING
                 """, (year, round, json.dumps(predictions)))
             conn.commit()
+
+    def get_race_result(year: int, round: int):
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT results FROM race_results WHERE year = %s AND round = %s",
+                    (year, round)
+                )
+                row = cur.fetchone()
+                return row["results"] if row else None
+
+    def save_race_result(year: int, round: int, results: list):
+        with get_conn() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    INSERT INTO race_results (year, round, results)
+                    VALUES (%s, %s, %s)
+                    ON CONFLICT (year, round) DO NOTHING
+                """, (year, round, json.dumps(results)))
+            conn.commit()
+
 else:
     import sqlite3
     
@@ -71,6 +102,16 @@ else:
                     round INT NOT NULL,
                     predictions TEXT,
                     predicted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                    UNIQUE(year, round)
+                );
+            """)
+            cur.execute("""
+                CREATE TABLE IF NOT EXISTS race_results (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    year INT NOT NULL,
+                    round INT NOT NULL,
+                    results TEXT,
+                    fetched_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     UNIQUE(year, round)
                 );
             """)
@@ -104,4 +145,24 @@ else:
                 VALUES (?, ?, ?)
                 ON CONFLICT (year, round) DO NOTHING
             """, (year, round, json.dumps(predictions)))
+            conn.commit()
+
+    def get_race_result(year: int, round: int):
+        with get_conn() as conn:
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT results FROM race_results WHERE year = ? AND round = ?",
+                (year, round)
+            )
+            row = cur.fetchone()
+            return json.loads(row["results"]) if row else None
+
+    def save_race_result(year: int, round: int, results: list):
+        with get_conn() as conn:
+            cur = conn.cursor()
+            cur.execute("""
+                INSERT INTO race_results (year, round, results)
+                VALUES (?, ?, ?)
+                ON CONFLICT (year, round) DO NOTHING
+            """, (year, round, json.dumps(results)))
             conn.commit()

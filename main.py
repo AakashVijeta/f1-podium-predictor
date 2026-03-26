@@ -5,20 +5,19 @@ from fastapi import FastAPI
 import joblib
 from fastapi.middleware.cors import CORSMiddleware
 from routers import results
-from db import init_db, get_prediction, save_prediction, get_all_predictions_by_year
+from db import init_db, get_prediction, save_prediction, get_all_predictions_by_year, get_race_result, save_race_result
 
 from predict import fetch_qualifying_data, predict_podium, fetch_race_results, get_session_status
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model = None
-_results_cache = {}  # in-memory cache for race results (not predictions)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global model
     model = joblib.load(os.path.join(BASE_DIR, 'models', 'model_v5.pkl'))
-    init_db()  # ensure predictions table exists
+    init_db()  # ensure tables exist
     yield
 
 
@@ -44,7 +43,7 @@ async def predict(year: int, round: int):
     if status == "pre_quali":
         return {"status": "pre_quali", "message": "Qualifying hasn't happened yet"}
 
-    # Check DB for stored predictions first — locks them against future retraining
+    # Check DB for stored predictions first
     stored = get_prediction(year, round)
 
     if status == "pre_race":
@@ -62,16 +61,12 @@ async def predict(year: int, round: int):
         return {"status": "pre_race", "predictions": predictions_list}
 
     elif status == "post_race":
-        # Predictions locked in DB — fetch race results fresh (or from memory cache)
-        cache_key = f"{year}_{round}"
-
+        # --- Predictions ---
         if stored:
             predictions_list = stored
         else:
-            # No stored prediction — generate and save
-            loop = asyncio.get_event_loop()
-            quali_task = loop.run_in_executor(None, fetch_qualifying_data, year, round)
-            quali_result = await quali_task
+            loop = asyncio.get_running_loop()
+            quali_result = await loop.run_in_executor(None, fetch_qualifying_data, year, round)
             if quali_result is not None:
                 quali_data, circuit_name = quali_result
                 predictions_df = predict_podium(quali_data, circuit_name, model)
@@ -80,16 +75,16 @@ async def predict(year: int, round: int):
             else:
                 predictions_list = None
 
-        # Race results: use in-memory cache or fetch fresh
-        if cache_key in _results_cache:
-            race_results_list = _results_cache[cache_key]
-        else:
-            loop = asyncio.get_event_loop()
+        # --- Race results: DB first, FastF1 only as fallback ---
+        race_results_list = get_race_result(year, round)
+
+        if race_results_list is None:
+            loop = asyncio.get_running_loop()
             race_results = await loop.run_in_executor(None, fetch_race_results, year, round)
             if race_results is None:
                 return {"status": "error", "message": "Failed to fetch race results"}
             race_results_list = race_results.to_dict(orient="records")
-            _results_cache[cache_key] = race_results_list
+            save_race_result(year, round, race_results_list)
 
         response = {
             "status": "post_race",
@@ -117,7 +112,6 @@ async def fetch_accuracy(year: int):
         r_num = round_data["round"]
         preds = round_data["predictions"]
         
-        # Get actual results from Jolpica
         try:
             actual = await results.get_race_results(year, r_num)
         except Exception:
@@ -127,7 +121,6 @@ async def fetch_accuracy(year: int):
             continue
 
         actual_results = actual["results"]
-        # Sort predictions by probability descending
         preds_sorted = sorted(preds, key=lambda x: x["PodiumProbability"], reverse=True)
         top3_preds = preds_sorted[:3]
         top3_actual = actual_results[:3]
@@ -135,11 +128,9 @@ async def fetch_accuracy(year: int):
         if len(top3_preds) == 0 or len(top3_actual) == 0:
             continue
 
-        # Extract last names for safe comparison
         pred_last_names = [p["FullName"].split()[-1].upper() for p in top3_preds]
         actual_last_names = [a["driver_name"].split()[-1].upper() for a in top3_actual]
 
-        # Calculate metrics
         hits = 0
         for p_name in pred_last_names:
             if any(p_name in a_name or a_name in p_name for a_name in actual_last_names):
