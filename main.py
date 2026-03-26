@@ -19,10 +19,6 @@ async def lifespan(app: FastAPI):
     model = joblib.load(os.path.join(BASE_DIR, 'models', 'model_v5.pkl'))
     init_db()
     await asyncio.to_thread(get_session_status, 2026, 1)  # pre-warms _schedule_cache
-    # Gracefully close all pool connections on shutdown
-    import db
-    if hasattr(db, '_pool') and db._pool:
-        db._pool.closeall()
     yield
 
 

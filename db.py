@@ -12,7 +12,7 @@ if DATABASE_URL:
 
     def get_pool():
         global _pool
-        if _pool is None:
+        if _pool is None or _pool.closed:  # recreate if closed
             _pool = psycopg2.pool.ThreadedConnectionPool(
                 minconn=1,
                 maxconn=5,
