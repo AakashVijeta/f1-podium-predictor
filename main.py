@@ -38,26 +38,26 @@ async def root():
 
 @app.get("/predict/{year}/{round}")
 async def predict(year: int, round: int):
-    status = get_session_status(year, round)
+    status = await asyncio.to_thread(get_session_status, year, round)
 
     if status == "pre_quali":
         return {"status": "pre_quali", "message": "Qualifying hasn't happened yet"}
 
     # Check DB for stored predictions first
-    stored = get_prediction(year, round)
+    stored = await asyncio.to_thread(get_prediction, year, round)
 
     if status == "pre_race":
         if stored:
             return {"status": "pre_race", "predictions": stored}
 
-        result = fetch_qualifying_data(year, round)
+        result = await asyncio.to_thread(fetch_qualifying_data, year, round)
         if result is None:
             return {"status": "error", "message": "Failed to fetch qualifying data"}
         quali_data, circuit_name = result
-        predictions = predict_podium(quali_data, circuit_name, model)
+        predictions = await asyncio.to_thread(predict_podium, quali_data, circuit_name, model)
         predictions_list = predictions.to_dict(orient="records")
 
-        save_prediction(year, round, predictions_list)
+        await asyncio.to_thread(save_prediction, year, round, predictions_list)
         return {"status": "pre_race", "predictions": predictions_list}
 
     elif status == "post_race":
@@ -65,26 +65,24 @@ async def predict(year: int, round: int):
         if stored:
             predictions_list = stored
         else:
-            loop = asyncio.get_running_loop()
-            quali_result = await loop.run_in_executor(None, fetch_qualifying_data, year, round)
+            quali_result = await asyncio.to_thread(fetch_qualifying_data, year, round)
             if quali_result is not None:
                 quali_data, circuit_name = quali_result
-                predictions_df = predict_podium(quali_data, circuit_name, model)
+                predictions_df = await asyncio.to_thread(predict_podium, quali_data, circuit_name, model)
                 predictions_list = predictions_df.to_dict(orient="records")
-                save_prediction(year, round, predictions_list)
+                await asyncio.to_thread(save_prediction, year, round, predictions_list)
             else:
                 predictions_list = None
 
         # --- Race results: DB first, FastF1 only as fallback ---
-        race_results_list = get_race_result(year, round)
+        race_results_list = await asyncio.to_thread(get_race_result, year, round)
 
         if race_results_list is None:
-            loop = asyncio.get_running_loop()
-            race_results = await loop.run_in_executor(None, fetch_race_results, year, round)
+            race_results = await asyncio.to_thread(fetch_race_results, year, round)
             if race_results is None:
                 return {"status": "error", "message": "Failed to fetch race results"}
             race_results_list = race_results.to_dict(orient="records")
-            save_race_result(year, round, race_results_list)
+            await asyncio.to_thread(save_race_result, year, round, race_results_list)
 
         response = {
             "status": "post_race",
@@ -98,7 +96,7 @@ async def predict(year: int, round: int):
 
 @app.get("/accuracy/{year}")
 async def fetch_accuracy(year: int):
-    predictions = get_all_predictions_by_year(year)
+    predictions = await asyncio.to_thread(get_all_predictions_by_year, year)
     if not predictions:
         return {
             "status": "ok", 
