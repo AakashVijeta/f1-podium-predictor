@@ -43,8 +43,12 @@ track_type = {
     'Imola': 'permanent',
 }
 
+_schedule_cache = {}
+
 def get_session_status(year, round):
-    schedule = fastf1.get_event_schedule(year)
+    if year not in _schedule_cache:
+        _schedule_cache[year] = fastf1.get_event_schedule(year)
+    schedule = _schedule_cache[year]
     event = schedule[schedule['RoundNumber'] == round].iloc[0]
     quali_time = event['Session4DateUtc'].to_pydatetime().replace(tzinfo=timezone.utc)
     race_time  = event['Session5DateUtc'].to_pydatetime().replace(tzinfo=timezone.utc)

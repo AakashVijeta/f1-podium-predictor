@@ -5,9 +5,14 @@ router = APIRouter()
 
 JOLPICA_BASE = "https://api.jolpi.ca/ergast/f1"
 
+race_results_cache = {}
 
 @router.get("/results/{year}/{round}")
 async def get_race_results(year: int, round: int):
+    cache_key = f"{year}-{round}"
+    if cache_key in race_results_cache:
+        return race_results_cache[cache_key]
+
     url = f"{JOLPICA_BASE}/{year}/{round}/results.json?limit=20"
 
     async with httpx.AsyncClient(timeout=10) as client:
@@ -39,4 +44,7 @@ async def get_race_results(year: int, round: int):
         for r in results
     ]
 
-    return {"available": True, "results": formatted}
+    ret = {"available": True, "results": formatted}
+    if formatted:
+        race_results_cache[cache_key] = ret
+    return ret
