@@ -6,13 +6,7 @@ from fastapi import FastAPI
 import joblib
 from fastapi.middleware.cors import CORSMiddleware
 from routers import results
-from db import (
-    init_db,
-    get_prediction, save_prediction,
-    get_all_predictions_by_year,
-    get_race_result, save_race_result,
-    get_quali_data, save_quali_data,        # ← new
-)
+from db import init_db, get_prediction, save_prediction, get_all_predictions_by_year, get_race_result, save_race_result, get_quali_data, save_quali_data
 from predict import fetch_qualifying_data, predict_podium, fetch_race_results, get_session_status
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -24,6 +18,11 @@ async def lifespan(app: FastAPI):
     global model
     model = joblib.load(os.path.join(BASE_DIR, 'models', 'model_v5.pkl'))
     init_db()
+    await asyncio.to_thread(get_session_status, 2026, 1)  # pre-warms _schedule_cache
+    # Gracefully close all pool connections on shutdown
+    import db
+    if hasattr(db, '_pool') and db._pool:
+        db._pool.closeall()
     yield
 
 
@@ -79,35 +78,36 @@ async def get_quali(year: int, round: int):
 # ---------------------------------------------------------------------------
 @app.get("/predict/{year}/{round}")
 async def predict(year: int, round: int):
+    import time
+
+    t0 = time.time()
     status = await asyncio.to_thread(get_session_status, year, round)
+    print(f"[TIMING] get_session_status: {time.time()-t0:.2f}s")
 
     if status == "pre_quali":
         return {"status": "pre_quali", "message": "Qualifying hasn't happened yet"}
 
-    # ── pre_race ────────────────────────────────────────────────────────────
     if status == "pre_race":
+        t1 = time.time()
         stored = await asyncio.to_thread(get_prediction, year, round)
+        print(f"[TIMING] get_prediction: {time.time()-t1:.2f}s")
+
         if stored:
             return {"status": "pre_race", "predictions": stored}
 
+        t2 = time.time()
         quali_result = await get_quali(year, round)
-        if quali_result is None:
-            return {"status": "error", "message": "Failed to fetch qualifying data"}
+        print(f"[TIMING] get_quali: {time.time()-t2:.2f}s")
 
-        quali_data, circuit_name = quali_result
+        t3 = time.time()
         predictions = await asyncio.to_thread(predict_podium, quali_data, circuit_name, model)
-        predictions_list = predictions.to_dict(orient="records")
+        print(f"[TIMING] predict_podium: {time.time()-t3:.2f}s")
 
-        # Fire-and-forget DB write — don't block the response
-        asyncio.create_task(
-            asyncio.to_thread(save_prediction, year, round, predictions_list)
-        )
-        return {"status": "pre_race", "predictions": predictions_list}
-
-    # ── post_race ────────────────────────────────────────────────────────────
     elif status == "post_race":
+        t1 = time.time()
         stored = await asyncio.to_thread(get_prediction, year, round)
         race_results_list = await asyncio.to_thread(get_race_result, year, round)
+        print(f"[TIMING] db lookups: {time.time()-t1:.2f}s | stored={stored is not None} | race={race_results_list is not None}")
 
         needs_quali = not stored
         needs_race = race_results_list is None
@@ -145,9 +145,7 @@ async def predict(year: int, round: int):
                 race_df = fetched.get("race")
                 if race_df is not None and not isinstance(race_df, Exception):
                     race_results_list = race_df.to_dict(orient="records")
-                    asyncio.create_task(
-                        asyncio.to_thread(save_race_result, year, round, race_results_list)
-                    )
+                    await asyncio.to_thread(save_race_result, year, round, race_results_list)
 
         if race_results_list is None:
             return {"status": "error", "message": "Failed to fetch race results"}

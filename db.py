@@ -5,13 +5,31 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 
 if DATABASE_URL:
     import psycopg2
+    import psycopg2.pool
     from psycopg2.extras import RealDictCursor
 
+    _pool = None
+
+    def get_pool():
+        global _pool
+        if _pool is None:
+            _pool = psycopg2.pool.ThreadedConnectionPool(
+                minconn=1,
+                maxconn=5,
+                dsn=DATABASE_URL,
+                cursor_factory=RealDictCursor
+            )
+        return _pool
+
     def get_conn():
-        return psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+        return get_pool().getconn()
+
+    def release_conn(conn):
+        get_pool().putconn(conn)
 
     def init_db():
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             with conn.cursor() as cur:
                 cur.execute("""
                     CREATE TABLE IF NOT EXISTS predictions (
@@ -42,9 +60,12 @@ if DATABASE_URL:
                     );
                 """)
             conn.commit()
+        finally:
+            release_conn(conn)
 
     def get_prediction(year: int, round: int):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             with conn.cursor() as cur:
                 cur.execute(
                     "SELECT predictions FROM predictions WHERE year = %s AND round = %s",
@@ -52,9 +73,12 @@ if DATABASE_URL:
                 )
                 row = cur.fetchone()
                 return row["predictions"] if row else None
+        finally:
+            release_conn(conn)
 
     def save_prediction(year: int, round: int, predictions: list):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             with conn.cursor() as cur:
                 cur.execute("""
                     INSERT INTO predictions (year, round, predictions)
@@ -62,18 +86,24 @@ if DATABASE_URL:
                     ON CONFLICT (year, round) DO NOTHING
                 """, (year, round, json.dumps(predictions)))
             conn.commit()
+        finally:
+            release_conn(conn)
 
     def get_all_predictions_by_year(year: int):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             with conn.cursor() as cur:
                 cur.execute(
                     "SELECT round, predictions FROM predictions WHERE year = %s ORDER BY round ASC",
                     (year,)
                 )
                 return cur.fetchall()
+        finally:
+            release_conn(conn)
 
     def get_race_result(year: int, round: int):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             with conn.cursor() as cur:
                 cur.execute(
                     "SELECT results FROM race_results WHERE year = %s AND round = %s",
@@ -81,9 +111,12 @@ if DATABASE_URL:
                 )
                 row = cur.fetchone()
                 return row["results"] if row else None
+        finally:
+            release_conn(conn)
 
     def save_race_result(year: int, round: int, results: list):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             with conn.cursor() as cur:
                 cur.execute("""
                     INSERT INTO race_results (year, round, results)
@@ -91,9 +124,12 @@ if DATABASE_URL:
                     ON CONFLICT (year, round) DO NOTHING
                 """, (year, round, json.dumps(results)))
             conn.commit()
+        finally:
+            release_conn(conn)
 
     def get_quali_data(year: int, round: int):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             with conn.cursor() as cur:
                 cur.execute(
                     "SELECT data FROM qualifying_data WHERE year = %s AND round = %s",
@@ -101,9 +137,12 @@ if DATABASE_URL:
                 )
                 row = cur.fetchone()
                 return json.loads(row["data"]) if row else None
+        finally:
+            release_conn(conn)
 
     def save_quali_data(year: int, round: int, data: dict):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             with conn.cursor() as cur:
                 cur.execute("""
                     INSERT INTO qualifying_data (year, round, data)
@@ -112,6 +151,8 @@ if DATABASE_URL:
                         SET data = EXCLUDED.data
                 """, (year, round, json.dumps(data)))
             conn.commit()
+        finally:
+            release_conn(conn)
 
 else:
     import sqlite3
@@ -121,8 +162,12 @@ else:
         conn.row_factory = sqlite3.Row
         return conn
 
+    def release_conn(conn):
+        conn.close()
+
     def init_db():
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             cur = conn.cursor()
             cur.execute("""
                 CREATE TABLE IF NOT EXISTS predictions (
@@ -153,9 +198,12 @@ else:
                 );
             """)
             conn.commit()
+        finally:
+            release_conn(conn)
 
     def get_prediction(year: int, round: int):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             cur = conn.cursor()
             cur.execute(
                 "SELECT predictions FROM predictions WHERE year = ? AND round = ?",
@@ -163,9 +211,12 @@ else:
             )
             row = cur.fetchone()
             return json.loads(row["predictions"]) if row else None
+        finally:
+            release_conn(conn)
 
     def save_prediction(year: int, round: int, predictions: list):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             cur = conn.cursor()
             cur.execute("""
                 INSERT INTO predictions (year, round, predictions)
@@ -173,9 +224,12 @@ else:
                 ON CONFLICT (year, round) DO NOTHING
             """, (year, round, json.dumps(predictions)))
             conn.commit()
+        finally:
+            release_conn(conn)
 
     def get_all_predictions_by_year(year: int):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             cur = conn.cursor()
             cur.execute(
                 "SELECT round, predictions FROM predictions WHERE year = ? ORDER BY round ASC",
@@ -183,9 +237,12 @@ else:
             )
             rows = cur.fetchall()
             return [{"round": r["round"], "predictions": json.loads(r["predictions"])} for r in rows]
+        finally:
+            release_conn(conn)
 
     def get_race_result(year: int, round: int):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             cur = conn.cursor()
             cur.execute(
                 "SELECT results FROM race_results WHERE year = ? AND round = ?",
@@ -193,9 +250,12 @@ else:
             )
             row = cur.fetchone()
             return json.loads(row["results"]) if row else None
+        finally:
+            release_conn(conn)
 
     def save_race_result(year: int, round: int, results: list):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             cur = conn.cursor()
             cur.execute("""
                 INSERT INTO race_results (year, round, results)
@@ -203,9 +263,12 @@ else:
                 ON CONFLICT (year, round) DO NOTHING
             """, (year, round, json.dumps(results)))
             conn.commit()
+        finally:
+            release_conn(conn)
 
     def get_quali_data(year: int, round: int):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             cur = conn.cursor()
             cur.execute(
                 "SELECT data FROM qualifying_data WHERE year = ? AND round = ?",
@@ -213,12 +276,17 @@ else:
             )
             row = cur.fetchone()
             return json.loads(row["data"]) if row else None
+        finally:
+            release_conn(conn)
 
     def save_quali_data(year: int, round: int, data: dict):
-        with get_conn() as conn:
+        conn = get_conn()
+        try:
             cur = conn.cursor()
             cur.execute("""
                 INSERT OR REPLACE INTO qualifying_data (year, round, data)
                 VALUES (?, ?, ?)
             """, (year, round, json.dumps(data)))
             conn.commit()
+        finally:
+            release_conn(conn)
