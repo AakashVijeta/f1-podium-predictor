@@ -1,5 +1,5 @@
 import "./Header.css";
-import FlagImg from "../FlagImg/FlagImg";
+import FlagImg from "../FlagImg/Flagimg";
 import f1Logo from "../../../public/logo.png";
 
 export default function Header({ race, data }) {

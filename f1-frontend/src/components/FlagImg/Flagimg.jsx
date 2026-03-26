@@ -1,4 +1,4 @@
-import "./FlagImg.css";
+import "./Flagimg.css";
 
 export default function FlagImg({ code, size = "m", className = "" }) {
   if (!code) return null;

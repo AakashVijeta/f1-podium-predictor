@@ -1,5 +1,5 @@
 import { ROUNDS_2026 } from "../../constants/rounds";
-import FlagImg from "../FlagImg/FlagImg";
+import FlagImg from "../FlagImg/Flagimg";
 import "./RaceHero.css";
 
 export default function RaceHero({ race, round, onRoundChange }) {
