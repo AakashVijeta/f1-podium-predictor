@@ -151,6 +151,8 @@ def predict_podium(df, circuit_name, model):
 
     proba = model.predict_proba(df_model[feature_cols])
     df['PodiumProbability'] = proba[:, 1]
+    print(f"[DEBUG] proba sample: {proba[:3]}")
+    print(f"[DEBUG] df sample:\n{df[['FullName', 'GridPosition', 'PodiumProbability']].head(3)}")
     return df[['FullName', 'PodiumProbability']].sort_values(
         by='PodiumProbability', ascending=False
     )
