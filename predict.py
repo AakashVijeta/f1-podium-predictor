@@ -45,6 +45,7 @@ track_type = {
 
 _schedule_cache = {}
 
+
 def get_session_status(year, round):
     if year not in _schedule_cache:
         _schedule_cache[year] = fastf1.get_event_schedule(year)
@@ -61,20 +62,30 @@ def get_session_status(year, round):
     else:
         return "post_race"
 
+
 def fetch_qualifying_data(year, round):
     try:
         session = fastf1.get_session(year, round, 'Q')
         session.load(laps=True, telemetry=False, weather=False, messages=False)
         circuit_name = session.event['Location']
 
-        best_laps = session.laps[session.laps['IsPersonalBest'] == True].copy()
+        laps = session.laps
+        if laps is None or laps.empty:
+            print(f"[QUALI] No laps data available for {year} R{round}")
+            return None
+
+        best_laps = laps[laps['IsPersonalBest'] == True].copy()
         best_laps = best_laps.groupby('Driver')['LapTime'].min().reset_index()
         best_laps.columns = ['Driver', 'BestQualiTime']
         best_laps['BestQualiTime'] = best_laps['BestQualiTime'].dt.total_seconds()
         best_laps['Year']  = year
         best_laps['Round'] = round
 
-        driver_map = session.results[['Abbreviation', 'FullName']].set_index('Abbreviation')['FullName'].to_dict()
+        driver_map = (
+            session.results[['Abbreviation', 'FullName']]
+            .set_index('Abbreviation')['FullName']
+            .to_dict()
+        )
         best_laps['FullName'] = best_laps['Driver'].map(driver_map)
         best_laps = best_laps.drop(columns=['Driver'])
 
@@ -82,21 +93,47 @@ def fetch_qualifying_data(year, round):
         grid = grid.rename(columns={'Position': 'GridPosition'})
         best_laps = best_laps.merge(grid, on='FullName', how='left')
 
+        # Completeness guard — both lap times AND grid positions must be present
+        # Missing GridPosition means FastF1 couldn't compute quali results yet
+        # (usually because race control messages haven't been processed yet)
+        valid_drivers   = best_laps['BestQualiTime'].notna().sum()
+        valid_positions = best_laps['GridPosition'].notna().sum()
+
+        if valid_drivers < 18 or valid_positions < 18:
+            print(
+                f"[QUALI] Incomplete data — "
+                f"{valid_drivers} drivers with lap times, "
+                f"{valid_positions} with grid positions — returning None to retry"
+            )
+            return None
+
         return best_laps, circuit_name
+
     except Exception as e:
-        print(f"Auto Fetch Failed: {e}")
+        print(f"[QUALI] fetch_qualifying_data failed: {e}")
         return None
 
+
 def predict_podium(df, circuit_name, model):
+    df = df.copy()
+
+    # Impute any remaining NaN GridPositions with a midfield default (worst case)
+    if df['GridPosition'].isna().any():
+        missing = df['GridPosition'].isna().sum()
+        print(f"[PREDICT] Imputing {missing} missing GridPosition(s) with fallback value 15")
+        df['GridPosition'] = df['GridPosition'].fillna(15)
+
+    # Impute any remaining NaN BestQualiTimes with worst lap + small penalty
+    if df['BestQualiTime'].isna().any():
+        worst = df['BestQualiTime'].max()
+        df['BestQualiTime'] = df['BestQualiTime'].fillna(worst + 5.0)
+
     df['TrackType'] = track_type[circuit_name]
-
-    # ── Regulation-aware relative features ────────────────────────────────────
-    df['QualiGapToPole'] = df['BestQualiTime'] - df['BestQualiTime'].min()
-    df['QualiGapNormalized'] = (df['BestQualiTime'] - df['BestQualiTime'].min()) / df['BestQualiTime'].min() * 100
+    df['QualiGapToPole']      = df['BestQualiTime'] - df['BestQualiTime'].min()
+    df['QualiGapNormalized']  = (df['BestQualiTime'] - df['BestQualiTime'].min()) / df['BestQualiTime'].min() * 100
     df['GridPositionSquared'] = df['GridPosition'] ** 2
-    df['MidfieldFlag'] = ((df['GridPosition'] >= 8) & (df['GridPosition'] <= 15)).astype(int)
+    df['MidfieldFlag']        = ((df['GridPosition'] >= 8) & (df['GridPosition'] <= 15)).astype(int)
 
-    # Rolling form — neutral defaults at prediction time (no historical context)
     df['AvgFinishLast3']  = 10.0
     df['PodiumRateLast5'] = 0.15
 
@@ -114,7 +151,10 @@ def predict_podium(df, circuit_name, model):
 
     proba = model.predict_proba(df_model[feature_cols])
     df['PodiumProbability'] = proba[:, 1]
-    return df[['FullName', 'PodiumProbability']].sort_values(by='PodiumProbability', ascending=False)
+    return df[['FullName', 'PodiumProbability']].sort_values(
+        by='PodiumProbability', ascending=False
+    )
+
 
 def fetch_race_results(year, round):
     try:
@@ -126,5 +166,5 @@ def fetch_race_results(year, round):
         results = results[results['RacePosition'] <= 3].sort_values('RacePosition')
         return results
     except Exception as e:
-        print(f"Auto Fetch Failed: {e}")
+        print(f"[RACE] fetch_race_results failed: {e}")
         return None
