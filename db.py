@@ -121,7 +121,9 @@ if DATABASE_URL:
                 cur.execute("""
                     INSERT INTO race_results (year, round, results)
                     VALUES (%s, %s, %s)
-                    ON CONFLICT (year, round) DO NOTHING
+                    ON CONFLICT (year, round) DO UPDATE 
+                        SET results = EXCLUDED.results, 
+                            fetched_at = NOW()
                 """, (year, round, json.dumps(results)))
             conn.commit()
         finally:
@@ -258,9 +260,8 @@ else:
         try:
             cur = conn.cursor()
             cur.execute("""
-                INSERT INTO race_results (year, round, results)
+                INSERT OR REPLACE INTO race_results (year, round, results)
                 VALUES (?, ?, ?)
-                ON CONFLICT (year, round) DO NOTHING
             """, (year, round, json.dumps(results)))
             conn.commit()
         finally:

@@ -13,7 +13,7 @@ async def get_race_results(year: int, round: int):
     if cache_key in race_results_cache:
         return race_results_cache[cache_key]
 
-    url = f"{JOLPICA_BASE}/{year}/{round}/results.json?limit=20"
+    url = f"{JOLPICA_BASE}/{year}/{round}/results.json?limit=22"
 
     async with httpx.AsyncClient(timeout=10) as client:
         resp = await client.get(url)

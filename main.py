@@ -142,7 +142,7 @@ async def predict(year: int, round: int):
         )
 
         needs_quali = not stored
-        needs_race  = race_results_list is None
+        needs_race  = not race_results_list
 
         if needs_quali or needs_race:
             task_keys = []
@@ -178,7 +178,8 @@ async def predict(year: int, round: int):
                 race_df = fetched.get("race")
                 if race_df is not None and not isinstance(race_df, Exception):
                     race_results_list = race_df.to_dict(orient="records")
-                    await asyncio.to_thread(save_race_result, year, round, race_results_list)
+                    if race_results_list:
+                        await asyncio.to_thread(save_race_result, year, round, race_results_list)
 
         if race_results_list is None:
             return {"status": "error", "message": "Failed to fetch race results"}

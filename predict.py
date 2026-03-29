@@ -1,7 +1,7 @@
 import os
 import fastf1
 import pandas as pd
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 cache_path = os.path.join(BASE_DIR, 'cache')
@@ -55,9 +55,11 @@ def get_session_status(year, round):
     race_time  = event['Session5DateUtc'].to_pydatetime().replace(tzinfo=timezone.utc)
     now = datetime.now(timezone.utc)
 
-    if now < quali_time:
+    # Added 1.5-hour buffer for qualifying completion
+    if now < quali_time + timedelta(hours=1, minutes=30):
         return "pre_quali"
-    elif now < race_time:
+    # Added 3-hour buffer for race completion
+    elif now < race_time + timedelta(hours=3):
         return "pre_race"
     else:
         return "post_race"
@@ -163,10 +165,12 @@ def fetch_race_results(year, round):
         session = fastf1.get_session(year, round, 'R')
         session.load(laps=False, telemetry=False, weather=False, messages=False)
         results = session.results[['FullName', 'Position']].copy()
+        if results.empty:
+            return None
         results = results.rename(columns={'Position': 'RacePosition'})
         results['RacePosition'] = results['RacePosition'].astype(int)
         results = results[results['RacePosition'] <= 3].sort_values('RacePosition')
-        return results
+        return results if not results.empty else None
     except Exception as e:
         print(f"[RACE] fetch_race_results failed: {e}")
         return None
