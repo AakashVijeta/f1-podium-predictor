@@ -15,36 +15,44 @@ async def get_race_results(year: int, round: int):
 
     url = f"{JOLPICA_BASE}/{year}/{round}/results.json?limit=22"
 
-    async with httpx.AsyncClient(timeout=10) as client:
-        resp = await client.get(url)
+    try:
+        async with httpx.AsyncClient(timeout=10) as client:
+            resp = await client.get(url)
+        
+        if resp.status_code != 200:
+            return {"available": False, "results": [], "error": f"External API returned status {resp.status_code}"}
+            
+        data = resp.json()
+        races = data["MRData"]["RaceTable"]["Races"]
 
-    if resp.status_code != 200:
-        raise HTTPException(status_code=502, detail="Failed to fetch results from Jolpica")
+        if not races:
+            # Race hasn't happened yet — not an error, just not available
+            return {"available": False, "results": []}
 
-    data = resp.json()
-    races = data["MRData"]["RaceTable"]["Races"]
+        results = races[0]["Results"]
 
-    if not races:
-        # Race hasn't happened yet — not an error, just not available
-        return {"available": False, "results": []}
+        formatted = [
+            {
+                "position": int(r["position"]),
+                "driver_code": r.get("Driver", {}).get("code", "N/A"),          # Code is sometimes missing in Ergast
+                "driver_name": (
+                    r["Driver"]["givenName"] + " " + r["Driver"]["familyName"]
+                ),
+                "constructor": r["Constructor"]["name"],
+                "status": r["status"],                       # "Finished", "+1 Lap", "DNF" etc.
+                "points": float(r["points"]),
+            }
+            for r in results
+        ]
 
-    results = races[0]["Results"]
+        ret = {"available": True, "results": formatted}
+        if formatted:
+            race_results_cache[cache_key] = ret
+        return ret
 
-    formatted = [
-        {
-            "position": int(r["position"]),
-            "driver_code": r["Driver"]["code"],          # e.g. "VER"
-            "driver_name": (
-                r["Driver"]["givenName"] + " " + r["Driver"]["familyName"]
-            ),
-            "constructor": r["Constructor"]["name"],
-            "status": r["status"],                       # "Finished", "+1 Lap", "DNF" etc.
-            "points": float(r["points"]),
-        }
-        for r in results
-    ]
-
-    ret = {"available": True, "results": formatted}
-    if formatted:
-        race_results_cache[cache_key] = ret
-    return ret
+    except (httpx.ConnectError, httpx.ConnectTimeout, httpx.TimeoutException, httpx.ReadTimeout) as e:
+        print(f"[RESULTS] External API connection error: {e}")
+        return {"available": False, "results": [], "error": "External API is currently down or unreachable"}
+    except Exception as e:
+        print(f"[RESULTS] Unexpected error fetching results: {e}")
+        return {"available": False, "results": [], "error": f"An unexpected error occurred: {str(e)}"}
