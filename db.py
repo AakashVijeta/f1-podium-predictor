@@ -17,15 +17,37 @@ if DATABASE_URL:
                 minconn=1,
                 maxconn=5,
                 dsn=DATABASE_URL,
-                cursor_factory=RealDictCursor
+                cursor_factory=RealDictCursor,
+                keepalives=1,
+                keepalives_idle=30,
+                keepalives_interval=10,
+                keepalives_count=5,
             )
         return _pool
 
     def get_conn():
-        return get_pool().getconn()
+        conn = get_pool().getconn()
+        try:
+            conn.isolation_level  # test if connection is alive
+            cur = conn.cursor()
+            cur.execute("SELECT 1")
+            cur.close()
+        except Exception:
+            # Connection is stale — discard it and get a fresh one
+            try:
+                get_pool().putconn(conn, close=True)
+            except Exception:
+                pass
+            conn = get_pool().getconn()
+        return conn
 
     def release_conn(conn):
-        get_pool().putconn(conn)
+        try:
+            if conn.closed:
+                return
+            get_pool().putconn(conn)
+        except Exception:
+            pass
 
     def init_db():
         conn = get_conn()

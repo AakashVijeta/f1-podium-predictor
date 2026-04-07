@@ -1,8 +1,10 @@
 import os
 import asyncio
+import traceback
 import pandas as pd
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
 import joblib
 from fastapi.middleware.cors import CORSMiddleware
 from routers import results
@@ -34,6 +36,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 app.include_router(results.router)
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    traceback.print_exc()
+    return JSONResponse(
+        status_code=500,
+        content={"status": "error", "message": "Internal server error"},
+    )
 
 
 @app.get("/")
