@@ -37,25 +37,36 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
 
       {/* Accuracy cards — only when actual results are available */}
       {showActual && (
-        <div className="acc-bar">
-          <div className={`acc-card ${winnerClass}`}>
-            <div className="acc-left">
-              <span className="acc-type">Winner</span>
-              <span className={`acc-value ${winnerClass}`}>{winnerName}</span>
+        <>
+          <div className="acc-bar">
+            <div className={`acc-card ${winnerClass}`}>
+              <div className="acc-left">
+                <span className="acc-type">Winner</span>
+                <span className={`acc-value ${winnerClass}`}>{winnerName}</span>
+              </div>
+              <span className={`acc-badge ${winnerClass}`}>{winnerBadge}</span>
             </div>
-            <span className={`acc-badge ${winnerClass}`}>{winnerBadge}</span>
-          </div>
-          <div className={`acc-card ${podiumClass}`}>
-            <div className="acc-left">
-              <span className="acc-type">Podium</span>
-              <span className={`acc-value ${podiumClass}`}>{podiumCorrect} / 3</span>
+            <div className={`acc-card ${podiumClass}`}>
+              <div className="acc-left">
+                <span className="acc-type">Podium</span>
+                <span className={`acc-value ${podiumClass}`}>{podiumCorrect} / 3</span>
+              </div>
+              <span className={`acc-badge ${podiumClass}`}>{podiumBadge}</span>
             </div>
-            <span className={`acc-badge ${podiumClass}`}>{podiumBadge}</span>
           </div>
-        </div>
+        </>
       )}
 
       <table className="gtbl">
+        <thead>
+          <tr className="gh-row">
+            <th className="th-actual">{showActual ? "Finished" : ""}</th>
+            <th className="th-rank">Predicted</th>
+            <th colSpan={3} className="th-driver">Driver</th>
+            <th className="th-bar">Podium Probability</th>
+            <th className="th-pct"></th>
+          </tr>
+        </thead>
         <tbody>
           {sorted.map((d, i) => {
             const drv = gd(d.FullName);
@@ -66,10 +77,11 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
             const actual = getActual(d.FullName);
             const actualPos = actual ? actual.position : null;
             const isDNF = actual && actual.status !== "Finished" && !actual.status.startsWith("Lap");
-            // Highlight match quality: predicted rank vs actual position
             const predRank = i + 1;
             const isCorrectPodium = actualPos !== null && predRank <= 3 && actualPos <= 3;
             const isWrongPodium = actualPos !== null && predRank <= 3 && actualPos > 3;
+            // Position delta: positive = over-performed vs prediction, negative = under
+            const delta = actualPos !== null && !isDNF ? predRank - actualPos : null;
 
             return (
               <tr
@@ -80,20 +92,23 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
               >
                 {/* Actual result column — leftmost */}
                 <td className="td-actual">
-                  {!showActual ? (
-                    <span className="actual-pending">—</span>
-                  ) : isDNF ? (
-                    <span className="actual-dnf">DNF</span>
+                  {!showActual ? null : isDNF ? (
+                    <span className="actual-chip actual-dnf">DNF</span>
                   ) : actualPos !== null ? (
-                    <span className={`actual-pos ${isCorrectPodium ? "actual-hit" : isWrongPodium ? "actual-miss" : ""}`}>
+                    <span className={`actual-chip ${isCorrectPodium ? "actual-hit" : isWrongPodium ? "actual-miss" : ""}`}>
                       P{actualPos}
+                      {delta !== null && delta !== 0 && (
+                        <span className={`actual-delta ${delta > 0 ? "up" : "down"}`}>
+                          {delta > 0 ? `▲${delta}` : `▼${Math.abs(delta)}`}
+                        </span>
+                      )}
                     </span>
                   ) : (
-                    <span className="actual-pending">—</span>
+                    <span className="actual-chip actual-pending">—</span>
                   )}
                 </td>
 
-                <td className="td-i">{i + 1}</td>
+                <td className="td-i">#{i + 1}</td>
                 <td className="td-stripe">
                   <div className="td-stripe-bar" style={{ background: drv.color }} />
                 </td>

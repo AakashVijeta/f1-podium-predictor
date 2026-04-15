@@ -105,20 +105,6 @@ async def root():
 # Helper: resolve qualifying data — DB first, FastF1 only as fallback.
 # Polls until complete data is available (up to max_wait_minutes).
 # ---------------------------------------------------------------------------
-async def _enrich_grid_positions(year: int, round: int, stored: list) -> list:
-    """Old predictions lack GridPosition. Merge from qualifying_data table if so."""
-    if not stored or all("GridPosition" in p and p["GridPosition"] is not None for p in stored):
-        return stored
-    raw = await asyncio.to_thread(get_quali_data, year, round)
-    if raw is None:
-        return stored
-    grid_by_name = {lap["FullName"]: lap.get("GridPosition") for lap in raw.get("laps", [])}
-    for p in stored:
-        if p.get("GridPosition") is None:
-            p["GridPosition"] = grid_by_name.get(p["FullName"])
-    return stored
-
-
 async def get_quali(year: int, round: int, max_wait_minutes: int = 60, poll_interval_seconds: int = 30):
     """
     Returns (quali_df, circuit_name) or None.
@@ -203,7 +189,6 @@ async def predict(year: int, round: int, response: Response):
         stored = await asyncio.to_thread(get_prediction, year, round)
 
         if stored:
-            stored = await _enrich_grid_positions(year, round, stored)
             payload = {"status": "pre_race", "predictions": stored}
             _cache_put(key, payload, 300)
             _set_cache_headers(response, 300)
@@ -266,9 +251,6 @@ async def predict(year: int, round: int, response: Response):
 
     if race_results_list is None:
         return {"status": "error", "message": "Failed to fetch race results"}
-
-    if stored:
-        stored = await _enrich_grid_positions(year, round, stored)
 
     payload = {"status": "post_race", "results": race_results_list}
     if stored:

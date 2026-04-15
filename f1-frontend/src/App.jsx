@@ -4,7 +4,6 @@ import { API_BASE } from "./constants/drivers";
 import Header from "./components/Header/Header";
 import RaceHero from "./components/RaceHero/RaceHero";
 import PodiumCards from "./components/PodiumCards/PodiumCards";
-import StartingGrid from "./components/StartingGrid/StartingGrid";
 import CircuitMap from "./components/CircuitMap/CircuitMap";
 import GridTable from "./components/GridTable/GridTable";
 import PostRacePodium from "./components/PostRacePodium/PostRacePodium";
@@ -135,7 +134,6 @@ export default function App() {
       ) : data?.status === "pre_race" && sorted.length > 0 ? (
         <div className="fade">
           <PodiumCards top3={top3} maxProb={maxProb} hovered={hovered} onHover={setHovered} />
-          <StartingGrid drivers={sorted} hovered={hovered} onHover={setHovered} />
           <GridTable
             sorted={sorted}
             maxProb={maxProb}
@@ -157,14 +155,6 @@ export default function App() {
           />
           <InfoStrip race={race} round={round} />
           <WinnerStrip winner={raceResults[0]} />
-          {sorted.length > 0 && (
-            <StartingGrid
-              drivers={sorted}
-              hovered={hovered}
-              onHover={setHovered}
-              actualResults={actualResults}
-            />
-          )}
           {/* Prediction vs Actual grid */}
           {sorted.length > 0 && (
             <GridTable
