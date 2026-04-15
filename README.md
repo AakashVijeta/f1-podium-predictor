@@ -55,8 +55,8 @@ For each driver, the trained classifier outputs a **PodiumProbability** (0–1).
  └────────────────────┘
 ```
 
-- **Frontend** calls `/predict/{year}/{round}` and `/results/{year}/{round}`.
-- **Backend** resolves the race’s state (`pre_quali`, `pre_race`, `post_race`), loads the trained model, fetches qualifying/race data, runs inference, and persists to the database.
+- **Frontend** calls `/predict/{year}/{round}` and `/results/{year}/{round}` **in parallel**, with per-round client-side caching and `AbortController` to cancel stale fetches when the user switches rounds mid-load.
+- **Backend** resolves the race's state (`pre_quali`, `pre_race`, `post_race`), loads the trained model, fetches qualifying/race data, runs inference, and persists to the database. An in-process LRU TTL cache short-circuits repeat requests (30s / 300s / 3600s by state), and FastF1 calls are wrapped in `asyncio.wait_for` so a hung upstream can't tie up the event loop.
 - **Database** is used as an idempotent cache so external APIs (FastF1, Jolpica) are only hit once per race.
 
 ---
@@ -107,7 +107,7 @@ CORS is restricted to the production domain and `localhost:5173` (Vite dev serve
 | --- | --- | --- |
 | `GET`  | `/` | Health banner. |
 | `GET`  | `/predict/{year}/{round}` | Core endpoint — returns predictions and/or race results depending on race state. |
-| `GET`  | `/results/{year}/{round}` | Fetches the official result from Jolpica (Ergast-compatible). Cached in-process. |
+| `GET`  | `/results/{year}/{round}` | Fetches the official result from Jolpica (Ergast-compatible). Cached in-process with TTLs (3600s success / 30s empty / 15s error) and a single retry on transient failures — hardens the live-race path when Jolpica is flaky. |
 | `GET`  | `/accuracy/{year}` | Aggregates all stored predictions for a season against actual results: winner hit-rate, podium hit-rate, per-round history. |
 | `GET`  | `/health` | Lightweight healthcheck (also supports `HEAD`). |
 
@@ -129,7 +129,7 @@ The `get_quali()` helper in `main.py` is the most important piece of orchestrati
 
 [`db.py`](db.py) exposes a uniform API across two backends, selected at import time by the presence of `DATABASE_URL`:
 
-- **Postgres** (production) — `psycopg2.pool.ThreadedConnectionPool` with TCP keepalives and a stale-connection probe on every checkout. JSON columns use `JSONB`.
+- **Postgres** (production) — `psycopg2.pool.ThreadedConnectionPool` with TCP keepalives for dead-connection detection (no per-checkout probe round-trip). JSON columns use `JSONB`.
 - **SQLite** (local) — `local_predictions.db` file, `TEXT` columns storing JSON.
 
 Three tables:
@@ -144,6 +144,15 @@ Three tables:
 
 - **[FastF1](https://docs.fastf1.dev/)** — official F1 timing data. Used for qualifying laps, grid positions, and full-results ingestion. Cached to `cache/`.
 - **[Jolpica F1 API](https://github.com/jolpica/jolpica-f1)** — community-maintained drop-in replacement for the deprecated Ergast API. Used by `routers/results.py` for canonical race classification (positions, points, status).
+
+### Performance & Resilience
+
+The hot path is designed so a live-race spike — or a flaky upstream during that spike — degrades gracefully:
+
+- **Layered caching.** `/predict` has an in-process LRU TTL cache (30s pre-quali, 300s pre-race, 3600s post-race) plus a 60s session-status cache, and emits `Cache-Control: public, max-age=<ttl>` headers for CDN/browser reuse. `/results` caches success for 1h and negatively caches empty/error responses briefly (30s / 15s) to prevent stampedes.
+- **Parallel DB reads.** Post-race paths issue the `predictions` and `race_results` lookups concurrently via `asyncio.gather`.
+- **Bounded upstream waits.** FastF1 calls are wrapped in `asyncio.wait_for` (45s quali, 30s race) so a hung session fetch never ties up a worker. Jolpica calls retry once on connect/read timeout.
+- **Pool prewarm.** Startup opens a Postgres connection and warms the FastF1 schedule cache so the first real request doesn't pay cold-start cost.
 
 ---
 
@@ -206,7 +215,7 @@ Key components:
 - **`SeasonDashboard`** — Calls `/accuracy/{year}` and plots winner-correct rate, podium hit-rate, per-round breakdown.
 - **`SkeletonLoader`** — Loading placeholders while the backend polls FastF1.
 
-The selected round drives a single `useEffect` which issues the `/predict` and `/results` calls in sequence.
+The selected round drives a single `useEffect` that issues `/predict` and `/results` in parallel via `Promise.all`, caches completed `post_race` rounds in a `useRef` `Map` (instant revisits), and aborts the in-flight fetch via `AbortController` when the user switches rounds mid-load.
 
 ---
 
