@@ -26,9 +26,21 @@ if DATABASE_URL:
         return _pool
 
     def get_conn():
-        # No probe query — TCP keepalives (configured on the pool) detect
-        # dead connections. Saves one round-trip per DB call.
-        return get_pool().getconn()
+        # Probe on checkout — Render closes idle connections, and TCP
+        # keepalives don't always fire before the first request after idle.
+        # A bare SELECT 1 catches the dead conn and forces a fresh one,
+        # preventing intermittent 502s.
+        pool = get_pool()
+        for _ in range(2):
+            conn = pool.getconn()
+            try:
+                with conn.cursor() as cur:
+                    cur.execute("SELECT 1")
+                return conn
+            except Exception:
+                try: pool.putconn(conn, close=True)
+                except Exception: pass
+        return pool.getconn()
 
     def release_conn(conn):
         try:
