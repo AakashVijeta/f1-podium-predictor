@@ -1,0 +1,1464 @@
+FullName,TeamName,GridPosition,Position,Round,Year,SessionType,Location,BestQualiTime,Podium,TrackType
+Max Verstappen,Red Bull Racing,1.0,1.0,1,2023,R,Sakhir,89.708,1,permanent
+Sergio Perez,Red Bull Racing,2.0,2.0,1,2023,R,Sakhir,89.846,1,permanent
+Fernando Alonso,Aston Martin,5.0,3.0,1,2023,R,Sakhir,90.336,1,permanent
+Carlos Sainz,Ferrari,4.0,4.0,1,2023,R,Sakhir,90.154,0,permanent
+Lewis Hamilton,Mercedes,7.0,5.0,1,2023,R,Sakhir,90.384,0,permanent
+Lance Stroll,Aston Martin,8.0,6.0,1,2023,R,Sakhir,90.836,0,permanent
+George Russell,Mercedes,6.0,7.0,1,2023,R,Sakhir,90.34,0,permanent
+Valtteri Bottas,Alfa Romeo,12.0,8.0,1,2023,R,Sakhir,91.443,0,permanent
+Pierre Gasly,Alpine,20.0,9.0,1,2023,R,Sakhir,92.181,0,permanent
+Alexander Albon,Williams,15.0,10.0,1,2023,R,Sakhir,91.461,0,permanent
+Yuki Tsunoda,AlphaTauri,14.0,11.0,1,2023,R,Sakhir,91.4,0,permanent
+Logan Sargeant,Williams,16.0,12.0,1,2023,R,Sakhir,91.652,0,permanent
+Kevin Magnussen,Haas F1 Team,17.0,13.0,1,2023,R,Sakhir,91.892,0,permanent
+Nyck De Vries,AlphaTauri,19.0,14.0,1,2023,R,Sakhir,92.121,0,permanent
+Nico Hulkenberg,Haas F1 Team,10.0,15.0,1,2023,R,Sakhir,90.809,0,permanent
+Guanyu Zhou,Alfa Romeo,13.0,16.0,1,2023,R,Sakhir,91.473,0,permanent
+Lando Norris,McLaren,11.0,17.0,1,2023,R,Sakhir,91.381,0,permanent
+Esteban Ocon,Alpine,9.0,18.0,1,2023,R,Sakhir,90.914,0,permanent
+Charles Leclerc,Ferrari,3.0,19.0,1,2023,R,Sakhir,90.0,0,permanent
+Oscar Piastri,McLaren,18.0,20.0,1,2023,R,Sakhir,92.101,0,permanent
+Sergio Perez,Red Bull Racing,1.0,1.0,2,2023,R,Jeddah,88.265,1,street
+Max Verstappen,Red Bull Racing,15.0,2.0,2,2023,R,Jeddah,88.761,1,street
+Fernando Alonso,Aston Martin,2.0,3.0,2,2023,R,Jeddah,88.73,1,street
+George Russell,Mercedes,3.0,4.0,2,2023,R,Jeddah,88.857,0,street
+Lewis Hamilton,Mercedes,7.0,5.0,2,2023,R,Jeddah,89.223,0,street
+Carlos Sainz,Ferrari,4.0,6.0,2,2023,R,Jeddah,88.931,0,street
+Charles Leclerc,Ferrari,12.0,7.0,2,2023,R,Jeddah,88.42,0,street
+Esteban Ocon,Alpine,6.0,8.0,2,2023,R,Jeddah,89.078,0,street
+Pierre Gasly,Alpine,9.0,9.0,2,2023,R,Jeddah,89.357,0,street
+Kevin Magnussen,Haas F1 Team,13.0,10.0,2,2023,R,Jeddah,89.634,0,street
+Yuki Tsunoda,AlphaTauri,16.0,11.0,2,2023,R,Jeddah,89.939,0,street
+Nico Hulkenberg,Haas F1 Team,10.0,12.0,2,2023,R,Jeddah,89.451,0,street
+Guanyu Zhou,Alfa Romeo,11.0,13.0,2,2023,R,Jeddah,89.461,0,street
+Nyck De Vries,AlphaTauri,18.0,14.0,2,2023,R,Jeddah,90.244,0,street
+Oscar Piastri,McLaren,8.0,15.0,2,2023,R,Jeddah,89.243,0,street
+Logan Sargeant,Williams,20.0,16.0,2,2023,R,Jeddah,128.51,0,street
+Lando Norris,McLaren,19.0,17.0,2,2023,R,Jeddah,90.447,0,street
+Valtteri Bottas,Alfa Romeo,14.0,18.0,2,2023,R,Jeddah,89.668,0,street
+Alexander Albon,Williams,17.0,19.0,2,2023,R,Jeddah,89.994,0,street
+Lance Stroll,Aston Martin,5.0,20.0,2,2023,R,Jeddah,88.945,0,street
+Max Verstappen,Red Bull Racing,1.0,1.0,3,2023,R,Melbourne,76.732,1,street
+Lewis Hamilton,Mercedes,3.0,2.0,3,2023,R,Melbourne,77.104,1,street
+Fernando Alonso,Aston Martin,4.0,3.0,3,2023,R,Melbourne,77.139,1,street
+Lance Stroll,Aston Martin,6.0,4.0,3,2023,R,Melbourne,77.308,0,street
+Sergio Perez,Red Bull Racing,20.0,5.0,3,2023,R,Melbourne,77.609,0,street
+Lando Norris,McLaren,13.0,6.0,3,2023,R,Melbourne,78.119,0,street
+Nico Hulkenberg,Haas F1 Team,10.0,7.0,3,2023,R,Melbourne,77.412,0,street
+Oscar Piastri,McLaren,16.0,8.0,3,2023,R,Melbourne,78.517,0,street
+Guanyu Zhou,Alfa Romeo,17.0,9.0,3,2023,R,Melbourne,78.54,0,street
+Yuki Tsunoda,AlphaTauri,12.0,10.0,3,2023,R,Melbourne,78.099,0,street
+Valtteri Bottas,Alfa Romeo,19.0,11.0,3,2023,R,Melbourne,78.714,0,street
+Carlos Sainz,Ferrari,5.0,12.0,3,2023,R,Melbourne,77.27,0,street
+Pierre Gasly,Alpine,9.0,13.0,3,2023,R,Melbourne,77.574,0,street
+Esteban Ocon,Alpine,11.0,14.0,3,2023,R,Melbourne,77.768,0,street
+Nyck De Vries,AlphaTauri,15.0,15.0,3,2023,R,Melbourne,78.335,0,street
+Logan Sargeant,Williams,18.0,16.0,3,2023,R,Melbourne,78.557,0,street
+Kevin Magnussen,Haas F1 Team,14.0,17.0,3,2023,R,Melbourne,78.129,0,street
+George Russell,Mercedes,2.0,18.0,3,2023,R,Melbourne,76.968,0,street
+Alexander Albon,Williams,8.0,19.0,3,2023,R,Melbourne,77.609,0,street
+Charles Leclerc,Ferrari,7.0,20.0,3,2023,R,Melbourne,77.369,0,street
+Sergio Perez,Red Bull Racing,3.0,1.0,4,2023,R,Baku,100.495,1,street
+Max Verstappen,Red Bull Racing,2.0,2.0,4,2023,R,Baku,100.391,1,street
+Charles Leclerc,Ferrari,1.0,3.0,4,2023,R,Baku,100.203,1,street
+Fernando Alonso,Aston Martin,6.0,4.0,4,2023,R,Baku,101.253,0,street
+Carlos Sainz,Ferrari,4.0,5.0,4,2023,R,Baku,101.016,0,street
+Lewis Hamilton,Mercedes,5.0,6.0,4,2023,R,Baku,101.177,0,street
+Lance Stroll,Aston Martin,9.0,7.0,4,2023,R,Baku,101.576,0,street
+George Russell,Mercedes,11.0,8.0,4,2023,R,Baku,101.654,0,street
+Lando Norris,McLaren,7.0,9.0,4,2023,R,Baku,101.281,0,street
+Yuki Tsunoda,AlphaTauri,8.0,10.0,4,2023,R,Baku,101.569,0,street
+Oscar Piastri,McLaren,10.0,11.0,4,2023,R,Baku,101.611,0,street
+Alexander Albon,Williams,12.0,12.0,4,2023,R,Baku,101.818,0,street
+Kevin Magnussen,Haas F1 Team,16.0,13.0,4,2023,R,Baku,103.417,0,street
+Pierre Gasly,Alpine,17.0,14.0,4,2023,R,Baku,104.853,0,street
+Esteban Ocon,Alpine,19.0,15.0,4,2023,R,Baku,101.798,0,street
+Logan Sargeant,Williams,14.0,16.0,4,2023,R,Baku,102.242,0,street
+Nico Hulkenberg,Haas F1 Team,20.0,17.0,4,2023,R,Baku,102.755,0,street
+Valtteri Bottas,Alfa Romeo,13.0,18.0,4,2023,R,Baku,102.259,0,street
+Guanyu Zhou,Alfa Romeo,15.0,19.0,4,2023,R,Baku,102.642,0,street
+Nyck De Vries,AlphaTauri,18.0,20.0,4,2023,R,Baku,115.282,0,street
+Max Verstappen,Red Bull Racing,9.0,1.0,5,2023,R,Miami,86.814,1,street
+Sergio Perez,Red Bull Racing,1.0,2.0,5,2023,R,Miami,86.841,1,street
+Fernando Alonso,Aston Martin,2.0,3.0,5,2023,R,Miami,87.097,1,street
+George Russell,Mercedes,6.0,4.0,5,2023,R,Miami,87.743,0,street
+Carlos Sainz,Ferrari,3.0,5.0,5,2023,R,Miami,87.148,0,street
+Lewis Hamilton,Mercedes,13.0,6.0,5,2023,R,Miami,87.846,0,street
+Charles Leclerc,Ferrari,7.0,7.0,5,2023,R,Miami,86.964,0,street
+Pierre Gasly,Alpine,5.0,8.0,5,2023,R,Miami,87.612,0,street
+Esteban Ocon,Alpine,8.0,9.0,5,2023,R,Miami,87.444,0,street
+Kevin Magnussen,Haas F1 Team,4.0,10.0,5,2023,R,Miami,87.673,0,street
+Yuki Tsunoda,AlphaTauri,17.0,11.0,5,2023,R,Miami,88.429,0,street
+Lance Stroll,Aston Martin,18.0,12.0,5,2023,R,Miami,88.476,0,street
+Valtteri Bottas,Alfa Romeo,10.0,13.0,5,2023,R,Miami,87.564,0,street
+Alexander Albon,Williams,11.0,14.0,5,2023,R,Miami,87.795,0,street
+Nico Hulkenberg,Haas F1 Team,12.0,15.0,5,2023,R,Miami,87.903,0,street
+Guanyu Zhou,Alfa Romeo,14.0,16.0,5,2023,R,Miami,88.091,0,street
+Lando Norris,McLaren,16.0,17.0,5,2023,R,Miami,88.394,0,street
+Nyck De Vries,AlphaTauri,15.0,18.0,5,2023,R,Miami,88.325,0,street
+Oscar Piastri,McLaren,19.0,19.0,5,2023,R,Miami,88.484,0,street
+Logan Sargeant,Williams,20.0,20.0,5,2023,R,Miami,88.577,0,street
+Max Verstappen,Red Bull Racing,1.0,1.0,6,2023,R,Monaco,71.365,1,street
+Fernando Alonso,Aston Martin,2.0,2.0,6,2023,R,Monaco,71.449,1,street
+Esteban Ocon,Alpine,3.0,3.0,6,2023,R,Monaco,71.553,1,street
+Lewis Hamilton,Mercedes,5.0,4.0,6,2023,R,Monaco,71.725,0,street
+George Russell,Mercedes,8.0,5.0,6,2023,R,Monaco,71.964,0,street
+Charles Leclerc,Ferrari,6.0,6.0,6,2023,R,Monaco,71.471,0,street
+Pierre Gasly,Alpine,7.0,7.0,6,2023,R,Monaco,71.933,0,street
+Carlos Sainz,Ferrari,4.0,8.0,6,2023,R,Monaco,71.63,0,street
+Lando Norris,McLaren,10.0,9.0,6,2023,R,Monaco,72.254,0,street
+Oscar Piastri,McLaren,11.0,10.0,6,2023,R,Monaco,72.395,0,street
+Valtteri Bottas,Alfa Romeo,15.0,11.0,6,2023,R,Monaco,72.625,0,street
+Nyck De Vries,AlphaTauri,12.0,12.0,6,2023,R,Monaco,72.428,0,street
+Guanyu Zhou,Alfa Romeo,19.0,13.0,6,2023,R,Monaco,73.523,0,street
+Alexander Albon,Williams,13.0,14.0,6,2023,R,Monaco,72.527,0,street
+Yuki Tsunoda,AlphaTauri,9.0,15.0,6,2023,R,Monaco,72.082,0,street
+Sergio Perez,Red Bull Racing,20.0,16.0,6,2023,R,Monaco,73.85,0,street
+Nico Hulkenberg,Haas F1 Team,18.0,17.0,6,2023,R,Monaco,73.279,0,street
+Logan Sargeant,Williams,16.0,18.0,6,2023,R,Monaco,73.113,0,street
+Kevin Magnussen,Haas F1 Team,17.0,19.0,6,2023,R,Monaco,73.27,0,street
+Lance Stroll,Aston Martin,14.0,20.0,6,2023,R,Monaco,72.623,0,street
+Max Verstappen,Red Bull Racing,1.0,1.0,7,2023,R,Barcelona,72.272,1,permanent
+Lewis Hamilton,Mercedes,4.0,2.0,7,2023,R,Barcelona,72.818,1,permanent
+George Russell,Mercedes,12.0,3.0,7,2023,R,Barcelona,73.326,1,permanent
+Sergio Perez,Red Bull Racing,11.0,4.0,7,2023,R,Barcelona,73.334,0,permanent
+Carlos Sainz,Ferrari,2.0,5.0,7,2023,R,Barcelona,72.734,0,permanent
+Lance Stroll,Aston Martin,5.0,6.0,7,2023,R,Barcelona,72.994,0,permanent
+Fernando Alonso,Aston Martin,8.0,7.0,7,2023,R,Barcelona,73.098,0,permanent
+Esteban Ocon,Alpine,6.0,8.0,7,2023,R,Barcelona,73.001,0,permanent
+Guanyu Zhou,Alfa Romeo,13.0,9.0,7,2023,R,Barcelona,73.521,0,permanent
+Pierre Gasly,Alpine,10.0,10.0,7,2023,R,Barcelona,72.816,0,permanent
+Charles Leclerc,Ferrari,19.0,11.0,7,2023,R,Barcelona,74.079,0,permanent
+Yuki Tsunoda,AlphaTauri,15.0,12.0,7,2023,R,Barcelona,73.862,0,permanent
+Oscar Piastri,McLaren,9.0,13.0,7,2023,R,Barcelona,73.059,0,permanent
+Nyck De Vries,AlphaTauri,14.0,14.0,7,2023,R,Barcelona,73.581,0,permanent
+Nico Hulkenberg,Haas F1 Team,7.0,15.0,7,2023,R,Barcelona,73.229,0,permanent
+Alexander Albon,Williams,18.0,16.0,7,2023,R,Barcelona,74.063,0,permanent
+Lando Norris,McLaren,3.0,17.0,7,2023,R,Barcelona,72.776,0,permanent
+Kevin Magnussen,Haas F1 Team,17.0,18.0,7,2023,R,Barcelona,74.042,0,permanent
+Valtteri Bottas,Alfa Romeo,16.0,19.0,7,2023,R,Barcelona,73.977,0,permanent
+Logan Sargeant,Williams,20.0,20.0,7,2023,R,Barcelona,74.699,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,8,2023,R,Montréal,79.092,1,permanent
+Fernando Alonso,Aston Martin,2.0,2.0,8,2023,R,Montréal,79.776,1,permanent
+Lewis Hamilton,Mercedes,3.0,3.0,8,2023,R,Montréal,80.426,1,permanent
+Charles Leclerc,Ferrari,10.0,4.0,8,2023,R,Montréal,80.615,0,permanent
+Carlos Sainz,Ferrari,11.0,5.0,8,2023,R,Montréal,79.856,0,permanent
+Sergio Perez,Red Bull Racing,12.0,6.0,8,2023,R,Montréal,80.959,0,permanent
+Alexander Albon,Williams,9.0,7.0,8,2023,R,Montréal,78.725,0,permanent
+Esteban Ocon,Alpine,6.0,8.0,8,2023,R,Montréal,80.406,0,permanent
+Lance Stroll,Aston Martin,16.0,9.0,8,2023,R,Montréal,81.484,0,permanent
+Valtteri Bottas,Alfa Romeo,14.0,10.0,8,2023,R,Montréal,81.821,0,permanent
+Oscar Piastri,McLaren,8.0,11.0,8,2023,R,Montréal,79.659,0,permanent
+Pierre Gasly,Alpine,15.0,12.0,8,2023,R,Montréal,82.886,0,permanent
+Lando Norris,McLaren,7.0,13.0,8,2023,R,Montréal,79.347,0,permanent
+Yuki Tsunoda,AlphaTauri,19.0,14.0,8,2023,R,Montréal,82.746,0,permanent
+Nico Hulkenberg,Haas F1 Team,5.0,15.0,8,2023,R,Montréal,80.305,0,permanent
+Guanyu Zhou,Alfa Romeo,20.0,16.0,8,2023,R,Montréal,83.342,0,permanent
+Kevin Magnussen,Haas F1 Team,13.0,17.0,8,2023,R,Montréal,81.678,0,permanent
+Nyck De Vries,AlphaTauri,17.0,18.0,8,2023,R,Montréal,83.137,0,permanent
+George Russell,Mercedes,4.0,19.0,8,2023,R,Montréal,80.098,0,permanent
+Logan Sargeant,Williams,18.0,20.0,8,2023,R,Montréal,83.337,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,9,2023,R,Spielberg,64.391,1,permanent
+Charles Leclerc,Ferrari,2.0,2.0,9,2023,R,Spielberg,64.439,1,permanent
+Sergio Perez,Red Bull Racing,15.0,3.0,9,2023,R,Spielberg,65.177,1,permanent
+Lando Norris,McLaren,4.0,4.0,9,2023,R,Spielberg,64.658,0,permanent
+Fernando Alonso,Aston Martin,7.0,5.0,9,2023,R,Spielberg,64.911,0,permanent
+Carlos Sainz,Ferrari,3.0,6.0,9,2023,R,Spielberg,64.581,0,permanent
+George Russell,Mercedes,11.0,7.0,9,2023,R,Spielberg,65.428,0,permanent
+Lewis Hamilton,Mercedes,5.0,8.0,9,2023,R,Spielberg,64.819,0,permanent
+Lance Stroll,Aston Martin,6.0,9.0,9,2023,R,Spielberg,64.893,0,permanent
+Pierre Gasly,Alpine,9.0,10.0,9,2023,R,Spielberg,65.17,0,permanent
+Alexander Albon,Williams,10.0,11.0,9,2023,R,Spielberg,65.387,0,permanent
+Guanyu Zhou,Alfa Romeo,17.0,12.0,9,2023,R,Spielberg,65.818,0,permanent
+Logan Sargeant,Williams,18.0,13.0,9,2023,R,Spielberg,65.948,0,permanent
+Esteban Ocon,Alpine,12.0,14.0,9,2023,R,Spielberg,65.453,0,permanent
+Valtteri Bottas,Alfa Romeo,14.0,15.0,9,2023,R,Spielberg,65.68,0,permanent
+Oscar Piastri,McLaren,13.0,16.0,9,2023,R,Spielberg,65.605,0,permanent
+Nyck De Vries,AlphaTauri,20.0,17.0,9,2023,R,Spielberg,65.974,0,permanent
+Kevin Magnussen,Haas F1 Team,19.0,18.0,9,2023,R,Spielberg,65.971,0,permanent
+Yuki Tsunoda,AlphaTauri,16.0,19.0,9,2023,R,Spielberg,65.784,0,permanent
+Nico Hulkenberg,Haas F1 Team,8.0,20.0,9,2023,R,Spielberg,65.09,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,10,2023,R,Silverstone,86.72,1,permanent
+Lando Norris,McLaren,2.0,2.0,10,2023,R,Silverstone,86.961,1,permanent
+Lewis Hamilton,Mercedes,7.0,3.0,10,2023,R,Silverstone,87.211,1,permanent
+Oscar Piastri,McLaren,3.0,4.0,10,2023,R,Silverstone,87.092,0,permanent
+George Russell,Mercedes,6.0,5.0,10,2023,R,Silverstone,87.155,0,permanent
+Sergio Perez,Red Bull Racing,15.0,6.0,10,2023,R,Silverstone,89.968,0,permanent
+Fernando Alonso,Aston Martin,9.0,7.0,10,2023,R,Silverstone,87.659,0,permanent
+Alexander Albon,Williams,8.0,8.0,10,2023,R,Silverstone,87.53,0,permanent
+Charles Leclerc,Ferrari,4.0,9.0,10,2023,R,Silverstone,87.136,0,permanent
+Carlos Sainz,Ferrari,5.0,10.0,10,2023,R,Silverstone,87.148,0,permanent
+Logan Sargeant,Williams,14.0,11.0,10,2023,R,Silverstone,89.031,0,permanent
+Valtteri Bottas,Alfa Romeo,20.0,12.0,10,2023,R,Silverstone,89.798,0,permanent
+Nico Hulkenberg,Haas F1 Team,11.0,13.0,10,2023,R,Silverstone,88.896,0,permanent
+Lance Stroll,Aston Martin,12.0,14.0,10,2023,R,Silverstone,88.935,0,permanent
+Guanyu Zhou,Alfa Romeo,17.0,15.0,10,2023,R,Silverstone,90.123,0,permanent
+Yuki Tsunoda,AlphaTauri,16.0,16.0,10,2023,R,Silverstone,90.025,0,permanent
+Nyck De Vries,AlphaTauri,18.0,17.0,10,2023,R,Silverstone,90.513,0,permanent
+Pierre Gasly,Alpine,10.0,18.0,10,2023,R,Silverstone,87.689,0,permanent
+Kevin Magnussen,Haas F1 Team,19.0,19.0,10,2023,R,Silverstone,92.378,0,permanent
+Esteban Ocon,Alpine,13.0,20.0,10,2023,R,Silverstone,88.956,0,permanent
+Max Verstappen,Red Bull Racing,2.0,1.0,11,2023,R,Budapest,76.612,1,permanent
+Lando Norris,McLaren,3.0,2.0,11,2023,R,Budapest,76.694,1,permanent
+Sergio Perez,Red Bull Racing,9.0,3.0,11,2023,R,Budapest,77.045,1,permanent
+Lewis Hamilton,Mercedes,1.0,4.0,11,2023,R,Budapest,76.609,0,permanent
+Oscar Piastri,McLaren,4.0,5.0,11,2023,R,Budapest,76.905,0,permanent
+George Russell,Mercedes,18.0,6.0,11,2023,R,Budapest,79.027,0,permanent
+Charles Leclerc,Ferrari,6.0,7.0,11,2023,R,Budapest,76.992,0,permanent
+Carlos Sainz,Ferrari,11.0,8.0,11,2023,R,Budapest,77.703,0,permanent
+Fernando Alonso,Aston Martin,8.0,9.0,11,2023,R,Budapest,77.035,0,permanent
+Lance Stroll,Aston Martin,14.0,10.0,11,2023,R,Budapest,78.144,0,permanent
+Alexander Albon,Williams,16.0,11.0,11,2023,R,Budapest,78.917,0,permanent
+Valtteri Bottas,Alfa Romeo,7.0,12.0,11,2023,R,Budapest,77.034,0,permanent
+Daniel Ricciardo,AlphaTauri,13.0,13.0,11,2023,R,Budapest,78.002,0,permanent
+Nico Hulkenberg,Haas F1 Team,10.0,14.0,11,2023,R,Budapest,77.186,0,permanent
+Yuki Tsunoda,AlphaTauri,17.0,15.0,11,2023,R,Budapest,78.919,0,permanent
+Guanyu Zhou,Alfa Romeo,5.0,16.0,11,2023,R,Budapest,76.971,0,permanent
+Kevin Magnussen,Haas F1 Team,19.0,17.0,11,2023,R,Budapest,79.206,0,permanent
+Logan Sargeant,Williams,20.0,18.0,11,2023,R,Budapest,79.248,0,permanent
+Esteban Ocon,Alpine,12.0,19.0,11,2023,R,Budapest,77.841,0,permanent
+Pierre Gasly,Alpine,15.0,20.0,11,2023,R,Budapest,78.217,0,permanent
+Max Verstappen,Red Bull Racing,6.0,1.0,12,2023,R,Spa-Francorchamps,106.168,1,permanent
+Sergio Perez,Red Bull Racing,2.0,2.0,12,2023,R,Spa-Francorchamps,107.045,1,permanent
+Charles Leclerc,Ferrari,1.0,3.0,12,2023,R,Spa-Francorchamps,106.988,1,permanent
+Lewis Hamilton,Mercedes,3.0,4.0,12,2023,R,Spa-Francorchamps,107.087,0,permanent
+Fernando Alonso,Aston Martin,9.0,5.0,12,2023,R,Spa-Francorchamps,107.843,0,permanent
+George Russell,Mercedes,8.0,6.0,12,2023,R,Spa-Francorchamps,107.805,0,permanent
+Lando Norris,McLaren,7.0,7.0,12,2023,R,Spa-Francorchamps,107.669,0,permanent
+Esteban Ocon,Alpine,14.0,8.0,12,2023,R,Spa-Francorchamps,116.372,0,permanent
+Lance Stroll,Aston Martin,10.0,9.0,12,2023,R,Spa-Francorchamps,108.841,0,permanent
+Yuki Tsunoda,AlphaTauri,11.0,10.0,12,2023,R,Spa-Francorchamps,113.148,0,permanent
+Pierre Gasly,Alpine,12.0,11.0,12,2023,R,Spa-Francorchamps,113.671,0,permanent
+Valtteri Bottas,Alfa Romeo,13.0,12.0,12,2023,R,Spa-Francorchamps,114.694,0,permanent
+Guanyu Zhou,Alfa Romeo,17.0,13.0,12,2023,R,Spa-Francorchamps,120.832,0,permanent
+Alexander Albon,Williams,15.0,14.0,12,2023,R,Spa-Francorchamps,120.314,0,permanent
+Kevin Magnussen,Haas F1 Team,16.0,15.0,12,2023,R,Spa-Francorchamps,114.16,0,permanent
+Daniel Ricciardo,AlphaTauri,19.0,16.0,12,2023,R,Spa-Francorchamps,122.159,0,permanent
+Logan Sargeant,Williams,18.0,17.0,12,2023,R,Spa-Francorchamps,121.535,0,permanent
+Nico Hulkenberg,Haas F1 Team,20.0,18.0,12,2023,R,Spa-Francorchamps,123.166,0,permanent
+Carlos Sainz,Ferrari,4.0,19.0,12,2023,R,Spa-Francorchamps,107.152,0,permanent
+Oscar Piastri,McLaren,5.0,20.0,12,2023,R,Spa-Francorchamps,107.365,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,13,2023,R,Zandvoort,70.567,1,permanent
+Fernando Alonso,Aston Martin,5.0,2.0,13,2023,R,Zandvoort,71.506,1,permanent
+Pierre Gasly,Alpine,12.0,3.0,13,2023,R,Zandvoort,80.128,1,permanent
+Sergio Perez,Red Bull Racing,7.0,4.0,13,2023,R,Zandvoort,71.88,0,permanent
+Carlos Sainz,Ferrari,6.0,5.0,13,2023,R,Zandvoort,71.754,0,permanent
+Lewis Hamilton,Mercedes,13.0,6.0,13,2023,R,Zandvoort,80.151,0,permanent
+Lando Norris,McLaren,2.0,7.0,13,2023,R,Zandvoort,71.104,0,permanent
+Alexander Albon,Williams,4.0,8.0,13,2023,R,Zandvoort,71.419,0,permanent
+Oscar Piastri,McLaren,8.0,9.0,13,2023,R,Zandvoort,71.938,0,permanent
+Esteban Ocon,Alpine,16.0,10.0,13,2023,R,Zandvoort,82.11,0,permanent
+Lance Stroll,Aston Martin,11.0,11.0,13,2023,R,Zandvoort,80.121,0,permanent
+Nico Hulkenberg,Haas F1 Team,14.0,12.0,13,2023,R,Zandvoort,80.25,0,permanent
+Liam Lawson,AlphaTauri,19.0,13.0,13,2023,R,Zandvoort,83.42,0,permanent
+Valtteri Bottas,Alfa Romeo,18.0,14.0,13,2023,R,Zandvoort,82.26,0,permanent
+Yuki Tsunoda,AlphaTauri,17.0,15.0,13,2023,R,Zandvoort,80.23,0,permanent
+Kevin Magnussen,Haas F1 Team,0.0,16.0,13,2023,R,Zandvoort,82.192,0,permanent
+George Russell,Mercedes,3.0,17.0,13,2023,R,Zandvoort,71.294,0,permanent
+Guanyu Zhou,Alfa Romeo,15.0,18.0,13,2023,R,Zandvoort,82.067,0,permanent
+Charles Leclerc,Ferrari,9.0,19.0,13,2023,R,Zandvoort,72.665,0,permanent
+Logan Sargeant,Williams,10.0,20.0,13,2023,R,Zandvoort,76.748,0,permanent
+Max Verstappen,Red Bull Racing,2.0,1.0,14,2023,R,Monza,80.307,1,permanent
+Sergio Perez,Red Bull Racing,5.0,2.0,14,2023,R,Monza,80.688,1,permanent
+Carlos Sainz,Ferrari,1.0,3.0,14,2023,R,Monza,80.294,1,permanent
+Charles Leclerc,Ferrari,3.0,4.0,14,2023,R,Monza,80.361,0,permanent
+George Russell,Mercedes,4.0,5.0,14,2023,R,Monza,80.671,0,permanent
+Lewis Hamilton,Mercedes,8.0,6.0,14,2023,R,Monza,80.82,0,permanent
+Alexander Albon,Williams,6.0,7.0,14,2023,R,Monza,80.76,0,permanent
+Lando Norris,McLaren,9.0,8.0,14,2023,R,Monza,80.979,0,permanent
+Fernando Alonso,Aston Martin,10.0,9.0,14,2023,R,Monza,81.417,0,permanent
+Valtteri Bottas,Alfa Romeo,14.0,10.0,14,2023,R,Monza,81.94,0,permanent
+Liam Lawson,AlphaTauri,12.0,11.0,14,2023,R,Monza,81.758,0,permanent
+Oscar Piastri,McLaren,7.0,12.0,14,2023,R,Monza,80.785,0,permanent
+Logan Sargeant,Williams,15.0,13.0,14,2023,R,Monza,81.93,0,permanent
+Guanyu Zhou,Alfa Romeo,16.0,14.0,14,2023,R,Monza,82.39,0,permanent
+Pierre Gasly,Alpine,17.0,15.0,14,2023,R,Monza,82.545,0,permanent
+Lance Stroll,Aston Martin,20.0,16.0,14,2023,R,Monza,82.86,0,permanent
+Nico Hulkenberg,Haas F1 Team,13.0,17.0,14,2023,R,Monza,81.776,0,permanent
+Kevin Magnussen,Haas F1 Team,19.0,18.0,14,2023,R,Monza,82.592,0,permanent
+Esteban Ocon,Alpine,18.0,19.0,14,2023,R,Monza,82.548,0,permanent
+Yuki Tsunoda,AlphaTauri,11.0,20.0,14,2023,R,Monza,81.594,0,permanent
+Carlos Sainz,Ferrari,1.0,1.0,15,2023,R,Marina Bay,90.984,1,street
+Lando Norris,McLaren,4.0,2.0,15,2023,R,Marina Bay,91.27,1,street
+Lewis Hamilton,Mercedes,5.0,3.0,15,2023,R,Marina Bay,91.485,1,street
+Charles Leclerc,Ferrari,3.0,4.0,15,2023,R,Marina Bay,91.063,0,street
+Max Verstappen,Red Bull Racing,11.0,5.0,15,2023,R,Marina Bay,92.173,0,street
+Pierre Gasly,Alpine,12.0,6.0,15,2023,R,Marina Bay,92.274,0,street
+Oscar Piastri,McLaren,17.0,7.0,15,2023,R,Marina Bay,92.902,0,street
+Sergio Perez,Red Bull Racing,13.0,8.0,15,2023,R,Marina Bay,92.099,0,street
+Liam Lawson,AlphaTauri,10.0,9.0,15,2023,R,Marina Bay,92.166,0,street
+Kevin Magnussen,Haas F1 Team,6.0,10.0,15,2023,R,Marina Bay,91.575,0,street
+Alexander Albon,Williams,14.0,11.0,15,2023,R,Marina Bay,92.668,0,street
+Guanyu Zhou,Alfa Romeo,19.0,12.0,15,2023,R,Marina Bay,93.258,0,street
+Nico Hulkenberg,Haas F1 Team,9.0,13.0,15,2023,R,Marina Bay,91.808,0,street
+Logan Sargeant,Williams,18.0,14.0,15,2023,R,Marina Bay,93.252,0,street
+Fernando Alonso,Aston Martin,7.0,15.0,15,2023,R,Marina Bay,91.615,0,street
+George Russell,Mercedes,2.0,16.0,15,2023,R,Marina Bay,91.056,0,street
+Valtteri Bottas,Alfa Romeo,16.0,17.0,15,2023,R,Marina Bay,92.809,0,street
+Esteban Ocon,Alpine,8.0,18.0,15,2023,R,Marina Bay,91.673,0,street
+Yuki Tsunoda,AlphaTauri,15.0,19.0,15,2023,R,Marina Bay,91.991,0,street
+Max Verstappen,Red Bull Racing,1.0,1.0,16,2023,R,Suzuka,88.877,1,permanent
+Lando Norris,McLaren,3.0,2.0,16,2023,R,Suzuka,89.493,1,permanent
+Oscar Piastri,McLaren,2.0,3.0,16,2023,R,Suzuka,89.458,1,permanent
+Charles Leclerc,Ferrari,4.0,4.0,16,2023,R,Suzuka,89.542,0,permanent
+Lewis Hamilton,Mercedes,7.0,5.0,16,2023,R,Suzuka,89.908,0,permanent
+Carlos Sainz,Ferrari,6.0,6.0,16,2023,R,Suzuka,89.85,0,permanent
+George Russell,Mercedes,8.0,7.0,16,2023,R,Suzuka,90.219,0,permanent
+Fernando Alonso,Aston Martin,10.0,8.0,16,2023,R,Suzuka,90.465,0,permanent
+Esteban Ocon,Alpine,14.0,9.0,16,2023,R,Suzuka,90.586,0,permanent
+Pierre Gasly,Alpine,12.0,10.0,16,2023,R,Suzuka,90.509,0,permanent
+Liam Lawson,AlphaTauri,11.0,11.0,16,2023,R,Suzuka,90.425,0,permanent
+Yuki Tsunoda,AlphaTauri,9.0,12.0,16,2023,R,Suzuka,90.204,0,permanent
+Guanyu Zhou,Alfa Romeo,19.0,13.0,16,2023,R,Suzuka,91.398,0,permanent
+Nico Hulkenberg,Haas F1 Team,18.0,14.0,16,2023,R,Suzuka,91.299,0,permanent
+Kevin Magnussen,Haas F1 Team,15.0,15.0,16,2023,R,Suzuka,90.665,0,permanent
+Alexander Albon,Williams,13.0,16.0,16,2023,R,Suzuka,90.537,0,permanent
+Logan Sargeant,Williams,20.0,17.0,16,2023,R,Suzuka,90.425,0,permanent
+Lance Stroll,Aston Martin,17.0,18.0,16,2023,R,Suzuka,91.181,0,permanent
+Sergio Perez,Red Bull Racing,5.0,19.0,16,2023,R,Suzuka,89.65,0,permanent
+Valtteri Bottas,Alfa Romeo,16.0,20.0,16,2023,R,Suzuka,91.049,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,17,2023,R,Lusail,83.778,1,permanent
+Oscar Piastri,McLaren,6.0,2.0,17,2023,R,Lusail,84.228,1,permanent
+Lando Norris,McLaren,10.0,3.0,17,2023,R,Lusail,84.074,1,permanent
+George Russell,Mercedes,2.0,4.0,17,2023,R,Lusail,84.219,0,permanent
+Charles Leclerc,Ferrari,5.0,5.0,17,2023,R,Lusail,84.424,0,permanent
+Fernando Alonso,Aston Martin,4.0,6.0,17,2023,R,Lusail,84.369,0,permanent
+Esteban Ocon,Alpine,8.0,7.0,17,2023,R,Lusail,84.763,0,permanent
+Valtteri Bottas,Alfa Romeo,9.0,8.0,17,2023,R,Lusail,85.058,0,permanent
+Guanyu Zhou,Alfa Romeo,19.0,9.0,17,2023,R,Lusail,87.432,0,permanent
+Sergio Perez,Red Bull Racing,20.0,10.0,17,2023,R,Lusail,85.462,0,permanent
+Lance Stroll,Aston Martin,16.0,11.0,17,2023,R,Lusail,86.345,0,permanent
+Pierre Gasly,Alpine,7.0,12.0,17,2023,R,Lusail,84.553,0,permanent
+Alexander Albon,Williams,13.0,13.0,17,2023,R,Lusail,85.707,0,permanent
+Kevin Magnussen,Haas F1 Team,18.0,14.0,17,2023,R,Lusail,87.046,0,permanent
+Yuki Tsunoda,AlphaTauri,11.0,15.0,17,2023,R,Lusail,85.301,0,permanent
+Nico Hulkenberg,Haas F1 Team,14.0,16.0,17,2023,R,Lusail,85.783,0,permanent
+Liam Lawson,AlphaTauri,17.0,17.0,17,2023,R,Lusail,86.635,0,permanent
+Logan Sargeant,Williams,15.0,18.0,17,2023,R,Lusail,86.21,0,permanent
+Lewis Hamilton,Mercedes,3.0,19.0,17,2023,R,Lusail,84.305,0,permanent
+Carlos Sainz,Ferrari,12.0,20.0,17,2023,R,Lusail,85.328,0,permanent
+Max Verstappen,Red Bull Racing,6.0,1.0,18,2023,R,Austin,95.008,1,permanent
+Lando Norris,McLaren,2.0,2.0,18,2023,R,Austin,94.853,1,permanent
+Carlos Sainz,Ferrari,4.0,3.0,18,2023,R,Austin,94.945,1,permanent
+Sergio Perez,Red Bull Racing,9.0,4.0,18,2023,R,Austin,95.173,0,permanent
+George Russell,Mercedes,5.0,5.0,18,2023,R,Austin,95.079,0,permanent
+Pierre Gasly,Alpine,7.0,6.0,18,2023,R,Austin,95.089,0,permanent
+Lance Stroll,Aston Martin,20.0,7.0,18,2023,R,Austin,96.589,0,permanent
+Yuki Tsunoda,AlphaTauri,11.0,8.0,18,2023,R,Austin,95.697,0,permanent
+Alexander Albon,Williams,15.0,9.0,18,2023,R,Austin,96.315,0,permanent
+Logan Sargeant,Williams,16.0,10.0,18,2023,R,Austin,96.827,0,permanent
+Nico Hulkenberg,Haas F1 Team,18.0,11.0,18,2023,R,Austin,96.235,0,permanent
+Valtteri Bottas,Alfa Romeo,13.0,12.0,18,2023,R,Austin,95.858,0,permanent
+Guanyu Zhou,Alfa Romeo,12.0,13.0,18,2023,R,Austin,95.698,0,permanent
+Kevin Magnussen,Haas F1 Team,17.0,14.0,18,2023,R,Austin,95.88,0,permanent
+Daniel Ricciardo,AlphaTauri,14.0,15.0,18,2023,R,Austin,95.974,0,permanent
+Fernando Alonso,Aston Martin,19.0,16.0,18,2023,R,Austin,96.268,0,permanent
+Oscar Piastri,McLaren,10.0,17.0,18,2023,R,Austin,95.467,0,permanent
+Esteban Ocon,Alpine,8.0,18.0,18,2023,R,Austin,95.154,0,permanent
+Lewis Hamilton,Mercedes,3.0,19.0,18,2023,R,Austin,94.862,0,permanent
+Charles Leclerc,Ferrari,1.0,20.0,18,2023,R,Austin,94.723,0,permanent
+Max Verstappen,Red Bull Racing,3.0,1.0,19,2023,R,Mexico City,77.263,1,permanent
+Lewis Hamilton,Mercedes,6.0,2.0,19,2023,R,Mexico City,77.454,1,permanent
+Charles Leclerc,Ferrari,1.0,3.0,19,2023,R,Mexico City,77.166,1,permanent
+Carlos Sainz,Ferrari,2.0,4.0,19,2023,R,Mexico City,77.233,0,permanent
+Lando Norris,McLaren,17.0,5.0,19,2023,R,Mexico City,81.554,0,permanent
+George Russell,Mercedes,8.0,6.0,19,2023,R,Mexico City,77.673,0,permanent
+Daniel Ricciardo,AlphaTauri,4.0,7.0,19,2023,R,Mexico City,77.382,0,permanent
+Oscar Piastri,McLaren,7.0,8.0,19,2023,R,Mexico City,77.623,0,permanent
+Alexander Albon,Williams,14.0,9.0,19,2023,R,Mexico City,78.828,0,permanent
+Esteban Ocon,Alpine,15.0,10.0,19,2023,R,Mexico City,79.08,0,permanent
+Pierre Gasly,Alpine,11.0,11.0,19,2023,R,Mexico City,78.521,0,permanent
+Yuki Tsunoda,AlphaTauri,18.0,12.0,19,2023,R,Mexico City,78.89,0,permanent
+Nico Hulkenberg,Haas F1 Team,12.0,13.0,19,2023,R,Mexico City,78.524,0,permanent
+Guanyu Zhou,Alfa Romeo,10.0,14.0,19,2023,R,Mexico City,78.05,0,permanent
+Valtteri Bottas,Alfa Romeo,9.0,15.0,19,2023,R,Mexico City,78.016,0,permanent
+Logan Sargeant,Williams,19.0,16.0,19,2023,R,Mexico City,79.965,0,permanent
+Lance Stroll,Aston Martin,0.0,17.0,19,2023,R,Mexico City,79.227,0,permanent
+Fernando Alonso,Aston Martin,13.0,18.0,19,2023,R,Mexico City,78.738,0,permanent
+Kevin Magnussen,Haas F1 Team,16.0,19.0,19,2023,R,Mexico City,79.163,0,permanent
+Sergio Perez,Red Bull Racing,5.0,20.0,19,2023,R,Mexico City,77.423,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,20,2023,R,São Paulo,70.162,1,permanent
+Lando Norris,McLaren,6.0,2.0,20,2023,R,São Paulo,70.021,1,permanent
+Fernando Alonso,Aston Martin,4.0,3.0,20,2023,R,São Paulo,70.237,1,permanent
+Sergio Perez,Red Bull Racing,9.0,4.0,20,2023,R,São Paulo,70.219,0,permanent
+Lance Stroll,Aston Martin,3.0,5.0,20,2023,R,São Paulo,70.375,0,permanent
+Carlos Sainz,Ferrari,7.0,6.0,20,2023,R,São Paulo,70.254,0,permanent
+Pierre Gasly,Alpine,15.0,7.0,20,2023,R,São Paulo,70.567,0,permanent
+Lewis Hamilton,Mercedes,5.0,8.0,20,2023,R,São Paulo,70.266,0,permanent
+Yuki Tsunoda,AlphaTauri,16.0,9.0,20,2023,R,São Paulo,70.837,0,permanent
+Esteban Ocon,Alpine,14.0,10.0,20,2023,R,São Paulo,70.562,0,permanent
+Logan Sargeant,Williams,19.0,11.0,20,2023,R,São Paulo,71.035,0,permanent
+Nico Hulkenberg,Haas F1 Team,11.0,12.0,20,2023,R,São Paulo,70.475,0,permanent
+Daniel Ricciardo,AlphaTauri,17.0,13.0,20,2023,R,São Paulo,70.843,0,permanent
+Oscar Piastri,McLaren,10.0,14.0,20,2023,R,São Paulo,70.33,0,permanent
+George Russell,Mercedes,8.0,15.0,20,2023,R,São Paulo,70.316,0,permanent
+Valtteri Bottas,Alfa Romeo,18.0,16.0,20,2023,R,São Paulo,70.955,0,permanent
+Guanyu Zhou,Alfa Romeo,20.0,17.0,20,2023,R,São Paulo,71.275,0,permanent
+Kevin Magnussen,Haas F1 Team,12.0,18.0,20,2023,R,São Paulo,70.602,0,permanent
+Alexander Albon,Williams,13.0,19.0,20,2023,R,São Paulo,70.621,0,permanent
+Charles Leclerc,Ferrari,2.0,20.0,20,2023,R,São Paulo,70.303,0,permanent
+Max Verstappen,Red Bull Racing,2.0,1.0,21,2023,R,Las Vegas,93.104,1,street
+Charles Leclerc,Ferrari,1.0,2.0,21,2023,R,Las Vegas,92.726,1,street
+Sergio Perez,Red Bull Racing,11.0,3.0,21,2023,R,Las Vegas,93.855,1,street
+Esteban Ocon,Alpine,16.0,4.0,21,2023,R,Las Vegas,94.834,0,street
+Lance Stroll,Aston Martin,19.0,5.0,21,2023,R,Las Vegas,94.199,0,street
+Carlos Sainz,Ferrari,12.0,6.0,21,2023,R,Las Vegas,92.77,0,street
+Lewis Hamilton,Mercedes,10.0,7.0,21,2023,R,Las Vegas,93.837,0,street
+George Russell,Mercedes,3.0,8.0,21,2023,R,Las Vegas,93.112,0,street
+Fernando Alonso,Aston Martin,9.0,9.0,21,2023,R,Las Vegas,93.555,0,street
+Oscar Piastri,McLaren,18.0,10.0,21,2023,R,Las Vegas,94.85,0,street
+Pierre Gasly,Alpine,4.0,11.0,21,2023,R,Las Vegas,93.239,0,street
+Alexander Albon,Williams,5.0,12.0,21,2023,R,Las Vegas,93.323,0,street
+Kevin Magnussen,Haas F1 Team,8.0,13.0,21,2023,R,Las Vegas,93.537,0,street
+Daniel Ricciardo,AlphaTauri,14.0,14.0,21,2023,R,Las Vegas,94.308,0,street
+Guanyu Zhou,Alfa Romeo,17.0,15.0,21,2023,R,Las Vegas,94.849,0,street
+Logan Sargeant,Williams,6.0,16.0,21,2023,R,Las Vegas,93.513,0,street
+Valtteri Bottas,Alfa Romeo,7.0,17.0,21,2023,R,Las Vegas,93.525,0,street
+Yuki Tsunoda,AlphaTauri,20.0,18.0,21,2023,R,Las Vegas,96.447,0,street
+Nico Hulkenberg,Haas F1 Team,13.0,19.0,21,2023,R,Las Vegas,93.979,0,street
+Lando Norris,McLaren,15.0,20.0,21,2023,R,Las Vegas,94.703,0,street
+Max Verstappen,Red Bull Racing,1.0,1.0,22,2023,R,Yas Island,83.445,1,permanent
+Charles Leclerc,Ferrari,2.0,2.0,22,2023,R,Yas Island,83.584,1,permanent
+George Russell,Mercedes,4.0,3.0,22,2023,R,Yas Island,83.788,1,permanent
+Sergio Perez,Red Bull Racing,9.0,4.0,22,2023,R,Yas Island,84.116,0,permanent
+Lando Norris,McLaren,5.0,5.0,22,2023,R,Yas Island,83.816,0,permanent
+Oscar Piastri,McLaren,3.0,6.0,22,2023,R,Yas Island,83.782,0,permanent
+Fernando Alonso,Aston Martin,7.0,7.0,22,2023,R,Yas Island,84.084,0,permanent
+Yuki Tsunoda,AlphaTauri,6.0,8.0,22,2023,R,Yas Island,83.968,0,permanent
+Lewis Hamilton,Mercedes,11.0,9.0,22,2023,R,Yas Island,84.359,0,permanent
+Lance Stroll,Aston Martin,13.0,10.0,22,2023,R,Yas Island,84.405,0,permanent
+Daniel Ricciardo,AlphaTauri,15.0,11.0,22,2023,R,Yas Island,84.442,0,permanent
+Esteban Ocon,Alpine,12.0,12.0,22,2023,R,Yas Island,84.391,0,permanent
+Pierre Gasly,Alpine,10.0,13.0,22,2023,R,Yas Island,84.078,0,permanent
+Alexander Albon,Williams,14.0,14.0,22,2023,R,Yas Island,84.298,0,permanent
+Nico Hulkenberg,Haas F1 Team,8.0,15.0,22,2023,R,Yas Island,84.108,0,permanent
+Logan Sargeant,Williams,20.0,16.0,22,2023,R,Yas Island,84.532,0,permanent
+Guanyu Zhou,Alfa Romeo,19.0,17.0,22,2023,R,Yas Island,85.159,0,permanent
+Carlos Sainz,Ferrari,16.0,18.0,22,2023,R,Yas Island,84.738,0,permanent
+Valtteri Bottas,Alfa Romeo,18.0,19.0,22,2023,R,Yas Island,84.788,0,permanent
+Kevin Magnussen,Haas F1 Team,17.0,20.0,22,2023,R,Yas Island,84.764,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,1,2024,R,Sakhir,89.179,1,permanent
+Sergio Perez,Red Bull Racing,5.0,2.0,1,2024,R,Sakhir,89.537,1,permanent
+Carlos Sainz,Ferrari,4.0,3.0,1,2024,R,Sakhir,89.507,1,permanent
+Charles Leclerc,Ferrari,2.0,4.0,1,2024,R,Sakhir,89.165,0,permanent
+George Russell,Mercedes,3.0,5.0,1,2024,R,Sakhir,89.485,0,permanent
+Lando Norris,McLaren,7.0,6.0,1,2024,R,Sakhir,89.614,0,permanent
+Lewis Hamilton,Mercedes,9.0,7.0,1,2024,R,Sakhir,89.71,0,permanent
+Oscar Piastri,McLaren,8.0,8.0,1,2024,R,Sakhir,89.683,0,permanent
+Fernando Alonso,Aston Martin,6.0,9.0,1,2024,R,Sakhir,89.542,0,permanent
+Lance Stroll,Aston Martin,12.0,10.0,1,2024,R,Sakhir,89.965,0,permanent
+Guanyu Zhou,Kick Sauber,17.0,11.0,1,2024,R,Sakhir,90.757,0,permanent
+Kevin Magnussen,Haas F1 Team,15.0,12.0,1,2024,R,Sakhir,90.529,0,permanent
+Daniel Ricciardo,RB,14.0,13.0,1,2024,R,Sakhir,90.278,0,permanent
+Yuki Tsunoda,RB,11.0,14.0,1,2024,R,Sakhir,90.129,0,permanent
+Alexander Albon,Williams,13.0,15.0,1,2024,R,Sakhir,90.221,0,permanent
+Nico Hulkenberg,Haas F1 Team,10.0,16.0,1,2024,R,Sakhir,89.851,0,permanent
+Esteban Ocon,Alpine,19.0,17.0,1,2024,R,Sakhir,90.793,0,permanent
+Pierre Gasly,Alpine,20.0,18.0,1,2024,R,Sakhir,90.948,0,permanent
+Valtteri Bottas,Kick Sauber,16.0,19.0,1,2024,R,Sakhir,90.756,0,permanent
+Logan Sargeant,Williams,18.0,20.0,1,2024,R,Sakhir,90.77,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,2,2024,R,Jeddah,87.472,1,street
+Sergio Perez,Red Bull Racing,3.0,2.0,2,2024,R,Jeddah,87.807,1,street
+Charles Leclerc,Ferrari,2.0,3.0,2,2024,R,Jeddah,87.791,1,street
+Oscar Piastri,McLaren,5.0,4.0,2,2024,R,Jeddah,88.089,0,street
+Fernando Alonso,Aston Martin,4.0,5.0,2,2024,R,Jeddah,87.846,0,street
+George Russell,Mercedes,7.0,6.0,2,2024,R,Jeddah,88.316,0,street
+Oliver Bearman,Ferrari,11.0,7.0,2,2024,R,Jeddah,88.642,0,street
+Lando Norris,McLaren,6.0,8.0,2,2024,R,Jeddah,88.132,0,street
+Lewis Hamilton,Mercedes,8.0,9.0,2,2024,R,Jeddah,88.46,0,street
+Nico Hulkenberg,Haas F1 Team,15.0,10.0,2,2024,R,Jeddah,89.055,0,street
+Alexander Albon,Williams,12.0,11.0,2,2024,R,Jeddah,88.98,0,street
+Kevin Magnussen,Haas F1 Team,13.0,12.0,2,2024,R,Jeddah,89.02,0,street
+Esteban Ocon,Alpine,17.0,13.0,2,2024,R,Jeddah,89.475,0,street
+Logan Sargeant,Williams,19.0,14.0,2,2024,R,Jeddah,89.526,0,street
+Yuki Tsunoda,RB,9.0,15.0,2,2024,R,Jeddah,88.547,0,street
+Daniel Ricciardo,RB,14.0,16.0,2,2024,R,Jeddah,89.025,0,street
+Valtteri Bottas,Kick Sauber,16.0,17.0,2,2024,R,Jeddah,89.179,0,street
+Guanyu Zhou,Kick Sauber,20.0,18.0,2,2024,R,Jeddah,88.547,0,street
+Lance Stroll,Aston Martin,10.0,19.0,2,2024,R,Jeddah,88.25,0,street
+Pierre Gasly,Alpine,18.0,20.0,2,2024,R,Jeddah,89.479,0,street
+Carlos Sainz,Ferrari,2.0,1.0,3,2024,R,Melbourne,76.185,1,street
+Charles Leclerc,Ferrari,4.0,2.0,3,2024,R,Melbourne,76.304,1,street
+Lando Norris,McLaren,3.0,3.0,3,2024,R,Melbourne,76.315,1,street
+Oscar Piastri,McLaren,5.0,4.0,3,2024,R,Melbourne,76.572,0,street
+Sergio Perez,Red Bull Racing,6.0,5.0,3,2024,R,Melbourne,76.274,0,street
+Lance Stroll,Aston Martin,9.0,6.0,3,2024,R,Melbourne,76.78,0,street
+Yuki Tsunoda,RB,8.0,7.0,3,2024,R,Melbourne,76.788,0,street
+Fernando Alonso,Aston Martin,10.0,8.0,3,2024,R,Melbourne,76.71,0,street
+Nico Hulkenberg,Haas F1 Team,16.0,9.0,3,2024,R,Melbourne,77.976,0,street
+Kevin Magnussen,Haas F1 Team,14.0,10.0,3,2024,R,Melbourne,77.427,0,street
+Alexander Albon,Williams,12.0,11.0,3,2024,R,Melbourne,77.13,0,street
+Daniel Ricciardo,RB,18.0,12.0,3,2024,R,Melbourne,78.085,0,street
+Pierre Gasly,Alpine,17.0,13.0,3,2024,R,Melbourne,77.982,0,street
+Valtteri Bottas,Kick Sauber,13.0,14.0,3,2024,R,Melbourne,77.34,0,street
+Guanyu Zhou,Kick Sauber,19.0,15.0,3,2024,R,Melbourne,78.188,0,street
+Esteban Ocon,Alpine,15.0,16.0,3,2024,R,Melbourne,77.617,0,street
+George Russell,Mercedes,7.0,17.0,3,2024,R,Melbourne,76.724,0,street
+Lewis Hamilton,Mercedes,11.0,18.0,3,2024,R,Melbourne,76.96,0,street
+Max Verstappen,Red Bull Racing,1.0,19.0,3,2024,R,Melbourne,75.915,0,street
+Max Verstappen,Red Bull Racing,1.0,1.0,4,2024,R,Suzuka,88.197,1,permanent
+Sergio Perez,Red Bull Racing,2.0,2.0,4,2024,R,Suzuka,88.263,1,permanent
+Carlos Sainz,Ferrari,4.0,3.0,4,2024,R,Suzuka,88.682,1,permanent
+Charles Leclerc,Ferrari,8.0,4.0,4,2024,R,Suzuka,88.786,0,permanent
+Lando Norris,McLaren,3.0,5.0,4,2024,R,Suzuka,88.489,0,permanent
+Fernando Alonso,Aston Martin,5.0,6.0,4,2024,R,Suzuka,88.686,0,permanent
+George Russell,Mercedes,9.0,7.0,4,2024,R,Suzuka,89.008,0,permanent
+Oscar Piastri,McLaren,6.0,8.0,4,2024,R,Suzuka,88.76,0,permanent
+Lewis Hamilton,Mercedes,7.0,9.0,4,2024,R,Suzuka,88.766,0,permanent
+Yuki Tsunoda,RB,10.0,10.0,4,2024,R,Suzuka,89.413,0,permanent
+Nico Hulkenberg,Haas F1 Team,12.0,11.0,4,2024,R,Suzuka,89.494,0,permanent
+Lance Stroll,Aston Martin,16.0,12.0,4,2024,R,Suzuka,90.024,0,permanent
+Kevin Magnussen,Haas F1 Team,18.0,13.0,4,2024,R,Suzuka,90.131,0,permanent
+Valtteri Bottas,Kick Sauber,13.0,14.0,4,2024,R,Suzuka,89.593,0,permanent
+Esteban Ocon,Alpine,15.0,15.0,4,2024,R,Suzuka,89.811,0,permanent
+Pierre Gasly,Alpine,17.0,16.0,4,2024,R,Suzuka,90.119,0,permanent
+Logan Sargeant,Williams,19.0,17.0,4,2024,R,Suzuka,90.139,0,permanent
+Guanyu Zhou,Kick Sauber,20.0,18.0,4,2024,R,Suzuka,90.143,0,permanent
+Daniel Ricciardo,RB,11.0,19.0,4,2024,R,Suzuka,89.472,0,permanent
+Alexander Albon,Williams,14.0,20.0,4,2024,R,Suzuka,89.714,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,5,2024,R,Shanghai,93.66,1,permanent
+Lando Norris,McLaren,4.0,2.0,5,2024,R,Shanghai,94.165,1,permanent
+Sergio Perez,Red Bull Racing,2.0,3.0,5,2024,R,Shanghai,93.982,1,permanent
+Charles Leclerc,Ferrari,6.0,4.0,5,2024,R,Shanghai,94.289,0,permanent
+Carlos Sainz,Ferrari,7.0,5.0,5,2024,R,Shanghai,94.297,0,permanent
+George Russell,Mercedes,8.0,6.0,5,2024,R,Shanghai,94.433,0,permanent
+Fernando Alonso,Aston Martin,3.0,7.0,5,2024,R,Shanghai,94.148,0,permanent
+Oscar Piastri,McLaren,5.0,8.0,5,2024,R,Shanghai,94.273,0,permanent
+Lewis Hamilton,Mercedes,18.0,9.0,5,2024,R,Shanghai,95.573,0,permanent
+Nico Hulkenberg,Haas F1 Team,9.0,10.0,5,2024,R,Shanghai,94.604,0,permanent
+Esteban Ocon,Alpine,13.0,11.0,5,2024,R,Shanghai,95.223,0,permanent
+Alexander Albon,Williams,14.0,12.0,5,2024,R,Shanghai,95.241,0,permanent
+Pierre Gasly,Alpine,15.0,13.0,5,2024,R,Shanghai,95.287,0,permanent
+Guanyu Zhou,Kick Sauber,16.0,14.0,5,2024,R,Shanghai,95.505,0,permanent
+Lance Stroll,Aston Martin,11.0,15.0,5,2024,R,Shanghai,94.838,0,permanent
+Kevin Magnussen,Haas F1 Team,17.0,16.0,5,2024,R,Shanghai,95.516,0,permanent
+Logan Sargeant,Williams,20.0,17.0,5,2024,R,Shanghai,96.358,0,permanent
+Daniel Ricciardo,RB,12.0,18.0,5,2024,R,Shanghai,94.934,0,permanent
+Yuki Tsunoda,RB,19.0,19.0,5,2024,R,Shanghai,95.746,0,permanent
+Valtteri Bottas,Kick Sauber,10.0,20.0,5,2024,R,Shanghai,94.665,0,permanent
+Lando Norris,McLaren,5.0,1.0,6,2024,R,Miami,87.594,1,street
+Max Verstappen,Red Bull Racing,1.0,2.0,6,2024,R,Miami,87.241,1,street
+Charles Leclerc,Ferrari,2.0,3.0,6,2024,R,Miami,87.382,1,street
+Sergio Perez,Red Bull Racing,4.0,4.0,6,2024,R,Miami,87.46,0,street
+Carlos Sainz,Ferrari,3.0,5.0,6,2024,R,Miami,87.455,0,street
+Lewis Hamilton,Mercedes,8.0,6.0,6,2024,R,Miami,87.697,0,street
+Yuki Tsunoda,RB,10.0,7.0,6,2024,R,Miami,88.167,0,street
+George Russell,Mercedes,7.0,8.0,6,2024,R,Miami,88.067,0,street
+Fernando Alonso,Aston Martin,15.0,9.0,6,2024,R,Miami,88.427,0,street
+Esteban Ocon,Alpine,13.0,10.0,6,2024,R,Miami,88.209,0,street
+Nico Hulkenberg,Haas F1 Team,9.0,11.0,6,2024,R,Miami,88.146,0,street
+Pierre Gasly,Alpine,12.0,12.0,6,2024,R,Miami,87.976,0,street
+Oscar Piastri,McLaren,6.0,13.0,6,2024,R,Miami,87.675,0,street
+Guanyu Zhou,Kick Sauber,19.0,14.0,6,2024,R,Miami,88.824,0,street
+Daniel Ricciardo,RB,20.0,15.0,6,2024,R,Miami,88.617,0,street
+Valtteri Bottas,Kick Sauber,16.0,16.0,6,2024,R,Miami,88.463,0,street
+Lance Stroll,Aston Martin,11.0,17.0,6,2024,R,Miami,88.177,0,street
+Alexander Albon,Williams,14.0,18.0,6,2024,R,Miami,88.343,0,street
+Kevin Magnussen,Haas F1 Team,18.0,19.0,6,2024,R,Miami,88.619,0,street
+Logan Sargeant,Williams,17.0,20.0,6,2024,R,Miami,88.487,0,street
+Max Verstappen,Red Bull Racing,1.0,1.0,7,2024,R,Imola,74.746,1,permanent
+Lando Norris,McLaren,2.0,2.0,7,2024,R,Imola,74.837,1,permanent
+Charles Leclerc,Ferrari,3.0,3.0,7,2024,R,Imola,74.97,1,permanent
+Oscar Piastri,McLaren,5.0,4.0,7,2024,R,Imola,74.82,0,permanent
+Carlos Sainz,Ferrari,4.0,5.0,7,2024,R,Imola,75.233,0,permanent
+Lewis Hamilton,Mercedes,8.0,6.0,7,2024,R,Imola,75.504,0,permanent
+George Russell,Mercedes,6.0,7.0,7,2024,R,Imola,75.234,0,permanent
+Sergio Perez,Red Bull Racing,11.0,8.0,7,2024,R,Imola,75.706,0,permanent
+Lance Stroll,Aston Martin,13.0,9.0,7,2024,R,Imola,75.992,0,permanent
+Yuki Tsunoda,RB,7.0,10.0,7,2024,R,Imola,75.358,0,permanent
+Nico Hulkenberg,Haas F1 Team,10.0,11.0,7,2024,R,Imola,75.569,0,permanent
+Kevin Magnussen,Haas F1 Team,18.0,12.0,7,2024,R,Imola,76.854,0,permanent
+Daniel Ricciardo,RB,9.0,13.0,7,2024,R,Imola,75.674,0,permanent
+Esteban Ocon,Alpine,12.0,14.0,7,2024,R,Imola,75.906,0,permanent
+Guanyu Zhou,Kick Sauber,17.0,15.0,7,2024,R,Imola,76.834,0,permanent
+Pierre Gasly,Alpine,15.0,16.0,7,2024,R,Imola,76.015,0,permanent
+Logan Sargeant,Williams,19.0,17.0,7,2024,R,Imola,76.731,0,permanent
+Valtteri Bottas,Kick Sauber,16.0,18.0,7,2024,R,Imola,76.626,0,permanent
+Fernando Alonso,Aston Martin,20.0,19.0,7,2024,R,Imola,76.917,0,permanent
+Alexander Albon,Williams,14.0,20.0,7,2024,R,Imola,76.2,0,permanent
+Charles Leclerc,Ferrari,1.0,1.0,8,2024,R,Monaco,70.27,1,street
+Oscar Piastri,McLaren,2.0,2.0,8,2024,R,Monaco,70.424,1,street
+Carlos Sainz,Ferrari,3.0,3.0,8,2024,R,Monaco,70.518,1,street
+Lando Norris,McLaren,4.0,4.0,8,2024,R,Monaco,70.542,0,street
+George Russell,Mercedes,5.0,5.0,8,2024,R,Monaco,70.543,0,street
+Max Verstappen,Red Bull Racing,6.0,6.0,8,2024,R,Monaco,70.567,0,street
+Lewis Hamilton,Mercedes,7.0,7.0,8,2024,R,Monaco,70.621,0,street
+Yuki Tsunoda,RB,8.0,8.0,8,2024,R,Monaco,70.858,0,street
+Alexander Albon,Williams,9.0,9.0,8,2024,R,Monaco,70.948,0,street
+Pierre Gasly,Alpine,10.0,10.0,8,2024,R,Monaco,70.896,0,street
+Fernando Alonso,Aston Martin,14.0,11.0,8,2024,R,Monaco,72.019,0,street
+Daniel Ricciardo,RB,12.0,12.0,8,2024,R,Monaco,71.482,0,street
+Valtteri Bottas,Kick Sauber,17.0,13.0,8,2024,R,Monaco,72.512,0,street
+Lance Stroll,Aston Martin,13.0,14.0,8,2024,R,Monaco,71.563,0,street
+Logan Sargeant,Williams,15.0,15.0,8,2024,R,Monaco,72.02,0,street
+Guanyu Zhou,Kick Sauber,18.0,16.0,8,2024,R,Monaco,73.028,0,street
+Esteban Ocon,Alpine,11.0,17.0,8,2024,R,Monaco,71.285,0,street
+Sergio Perez,Red Bull Racing,16.0,18.0,8,2024,R,Monaco,72.06,0,street
+Nico Hulkenberg,Haas F1 Team,19.0,19.0,8,2024,R,Monaco,71.44,0,street
+Kevin Magnussen,Haas F1 Team,20.0,20.0,8,2024,R,Monaco,71.725,0,street
+Max Verstappen,Red Bull Racing,2.0,1.0,9,2024,R,Montréal,72.0,1,permanent
+Lando Norris,McLaren,3.0,2.0,9,2024,R,Montréal,72.021,1,permanent
+George Russell,Mercedes,1.0,3.0,9,2024,R,Montréal,71.742,1,permanent
+Lewis Hamilton,Mercedes,7.0,4.0,9,2024,R,Montréal,71.979,0,permanent
+Oscar Piastri,McLaren,4.0,5.0,9,2024,R,Montréal,72.103,0,permanent
+Fernando Alonso,Aston Martin,6.0,6.0,9,2024,R,Montréal,72.228,0,permanent
+Lance Stroll,Aston Martin,9.0,7.0,9,2024,R,Montréal,72.659,0,permanent
+Daniel Ricciardo,RB,5.0,8.0,9,2024,R,Montréal,72.178,0,permanent
+Pierre Gasly,Alpine,15.0,9.0,9,2024,R,Montréal,72.94,0,permanent
+Esteban Ocon,Alpine,18.0,10.0,9,2024,R,Montréal,73.435,0,permanent
+Nico Hulkenberg,Haas F1 Team,17.0,11.0,9,2024,R,Montréal,73.978,0,permanent
+Kevin Magnussen,Haas F1 Team,14.0,12.0,9,2024,R,Montréal,72.916,0,permanent
+Valtteri Bottas,Kick Sauber,19.0,13.0,9,2024,R,Montréal,73.366,0,permanent
+Yuki Tsunoda,RB,8.0,14.0,9,2024,R,Montréal,72.303,0,permanent
+Guanyu Zhou,Kick Sauber,20.0,15.0,9,2024,R,Montréal,74.292,0,permanent
+Carlos Sainz,Ferrari,12.0,16.0,9,2024,R,Montréal,72.728,0,permanent
+Alexander Albon,Williams,10.0,17.0,9,2024,R,Montréal,72.485,0,permanent
+Sergio Perez,Red Bull Racing,16.0,18.0,9,2024,R,Montréal,73.326,0,permanent
+Charles Leclerc,Ferrari,11.0,19.0,9,2024,R,Montréal,72.691,0,permanent
+Logan Sargeant,Williams,13.0,20.0,9,2024,R,Montréal,72.736,0,permanent
+Max Verstappen,Red Bull Racing,2.0,1.0,10,2024,R,Barcelona,71.403,1,permanent
+Lando Norris,McLaren,1.0,2.0,10,2024,R,Barcelona,71.383,1,permanent
+Lewis Hamilton,Mercedes,3.0,3.0,10,2024,R,Barcelona,71.701,1,permanent
+George Russell,Mercedes,4.0,4.0,10,2024,R,Barcelona,71.703,0,permanent
+Charles Leclerc,Ferrari,5.0,5.0,10,2024,R,Barcelona,71.731,0,permanent
+Carlos Sainz,Ferrari,6.0,6.0,10,2024,R,Barcelona,71.736,0,permanent
+Oscar Piastri,McLaren,9.0,7.0,10,2024,R,Barcelona,72.011,0,permanent
+Sergio Perez,Red Bull Racing,11.0,8.0,10,2024,R,Barcelona,72.054,0,permanent
+Pierre Gasly,Alpine,7.0,9.0,10,2024,R,Barcelona,71.857,0,permanent
+Esteban Ocon,Alpine,8.0,10.0,10,2024,R,Barcelona,72.109,0,permanent
+Nico Hulkenberg,Haas F1 Team,13.0,11.0,10,2024,R,Barcelona,72.31,0,permanent
+Fernando Alonso,Aston Martin,10.0,12.0,10,2024,R,Barcelona,72.128,0,permanent
+Guanyu Zhou,Kick Sauber,15.0,13.0,10,2024,R,Barcelona,72.738,0,permanent
+Lance Stroll,Aston Martin,14.0,14.0,10,2024,R,Barcelona,72.372,0,permanent
+Daniel Ricciardo,RB,18.0,15.0,10,2024,R,Barcelona,73.075,0,permanent
+Valtteri Bottas,Kick Sauber,12.0,16.0,10,2024,R,Barcelona,72.227,0,permanent
+Kevin Magnussen,Haas F1 Team,16.0,17.0,10,2024,R,Barcelona,72.937,0,permanent
+Alexander Albon,Williams,20.0,18.0,10,2024,R,Barcelona,73.153,0,permanent
+Yuki Tsunoda,RB,17.0,19.0,10,2024,R,Barcelona,72.985,0,permanent
+Logan Sargeant,Williams,19.0,20.0,10,2024,R,Barcelona,73.509,0,permanent
+George Russell,Mercedes,3.0,1.0,11,2024,R,Spielberg,64.84,1,permanent
+Oscar Piastri,McLaren,7.0,2.0,11,2024,R,Spielberg,65.048,1,permanent
+Carlos Sainz,Ferrari,4.0,3.0,11,2024,R,Spielberg,64.851,1,permanent
+Lewis Hamilton,Mercedes,5.0,4.0,11,2024,R,Spielberg,64.903,0,permanent
+Max Verstappen,Red Bull Racing,1.0,5.0,11,2024,R,Spielberg,64.314,0,permanent
+Nico Hulkenberg,Haas F1 Team,9.0,6.0,11,2024,R,Spielberg,65.262,0,permanent
+Sergio Perez,Red Bull Racing,8.0,7.0,11,2024,R,Spielberg,65.144,0,permanent
+Kevin Magnussen,Haas F1 Team,12.0,8.0,11,2024,R,Spielberg,65.347,0,permanent
+Daniel Ricciardo,RB,11.0,9.0,11,2024,R,Spielberg,65.289,0,permanent
+Pierre Gasly,Alpine,13.0,10.0,11,2024,R,Spielberg,65.359,0,permanent
+Charles Leclerc,Ferrari,6.0,11.0,11,2024,R,Spielberg,65.044,0,permanent
+Esteban Ocon,Alpine,10.0,12.0,11,2024,R,Spielberg,65.274,0,permanent
+Lance Stroll,Aston Martin,17.0,13.0,11,2024,R,Spielberg,65.819,0,permanent
+Yuki Tsunoda,RB,14.0,14.0,11,2024,R,Spielberg,65.412,0,permanent
+Alexander Albon,Williams,16.0,15.0,11,2024,R,Spielberg,65.736,0,permanent
+Valtteri Bottas,Kick Sauber,18.0,16.0,11,2024,R,Spielberg,65.847,0,permanent
+Guanyu Zhou,Kick Sauber,20.0,17.0,11,2024,R,Spielberg,66.061,0,permanent
+Fernando Alonso,Aston Martin,15.0,18.0,11,2024,R,Spielberg,65.639,0,permanent
+Logan Sargeant,Williams,19.0,19.0,11,2024,R,Spielberg,65.856,0,permanent
+Lando Norris,McLaren,2.0,20.0,11,2024,R,Spielberg,64.718,0,permanent
+Lewis Hamilton,Mercedes,2.0,1.0,12,2024,R,Silverstone,85.99,1,permanent
+Max Verstappen,Red Bull Racing,4.0,2.0,12,2024,R,Silverstone,86.203,1,permanent
+Lando Norris,McLaren,3.0,3.0,12,2024,R,Silverstone,86.03,1,permanent
+Oscar Piastri,McLaren,5.0,4.0,12,2024,R,Silverstone,86.237,0,permanent
+Carlos Sainz,Ferrari,7.0,5.0,12,2024,R,Silverstone,86.509,0,permanent
+Nico Hulkenberg,Haas F1 Team,6.0,6.0,12,2024,R,Silverstone,86.338,0,permanent
+Lance Stroll,Aston Martin,8.0,7.0,12,2024,R,Silverstone,86.585,0,permanent
+Fernando Alonso,Aston Martin,10.0,8.0,12,2024,R,Silverstone,86.73,0,permanent
+Alexander Albon,Williams,9.0,9.0,12,2024,R,Silverstone,86.64,0,permanent
+Yuki Tsunoda,RB,13.0,10.0,12,2024,R,Silverstone,87.269,0,permanent
+Logan Sargeant,Williams,12.0,11.0,12,2024,R,Silverstone,87.175,0,permanent
+Kevin Magnussen,Haas F1 Team,17.0,12.0,12,2024,R,Silverstone,92.905,0,permanent
+Daniel Ricciardo,RB,15.0,13.0,12,2024,R,Silverstone,87.949,0,permanent
+Charles Leclerc,Ferrari,11.0,14.0,12,2024,R,Silverstone,87.097,0,permanent
+Valtteri Bottas,Kick Sauber,16.0,15.0,12,2024,R,Silverstone,92.431,0,permanent
+Esteban Ocon,Alpine,18.0,16.0,12,2024,R,Silverstone,94.557,0,permanent
+Sergio Perez,Red Bull Racing,20.0,17.0,12,2024,R,Silverstone,98.348,0,permanent
+Guanyu Zhou,Kick Sauber,14.0,18.0,12,2024,R,Silverstone,87.867,0,permanent
+George Russell,Mercedes,1.0,19.0,12,2024,R,Silverstone,85.819,0,permanent
+Pierre Gasly,Alpine,19.0,20.0,12,2024,R,Silverstone,99.804,0,permanent
+Oscar Piastri,McLaren,2.0,1.0,13,2024,R,Budapest,75.249,1,permanent
+Lando Norris,McLaren,1.0,2.0,13,2024,R,Budapest,75.227,1,permanent
+Lewis Hamilton,Mercedes,5.0,3.0,13,2024,R,Budapest,75.854,1,permanent
+Charles Leclerc,Ferrari,6.0,4.0,13,2024,R,Budapest,75.891,0,permanent
+Max Verstappen,Red Bull Racing,3.0,5.0,13,2024,R,Budapest,75.273,0,permanent
+Carlos Sainz,Ferrari,4.0,6.0,13,2024,R,Budapest,75.696,0,permanent
+Sergio Perez,Red Bull Racing,16.0,7.0,13,2024,R,Budapest,77.886,0,permanent
+George Russell,Mercedes,17.0,8.0,13,2024,R,Budapest,77.968,0,permanent
+Yuki Tsunoda,RB,10.0,9.0,13,2024,R,Budapest,76.121,0,permanent
+Lance Stroll,Aston Martin,8.0,10.0,13,2024,R,Budapest,76.075,0,permanent
+Fernando Alonso,Aston Martin,7.0,11.0,13,2024,R,Budapest,76.043,0,permanent
+Daniel Ricciardo,RB,9.0,12.0,13,2024,R,Budapest,76.202,0,permanent
+Nico Hulkenberg,Haas F1 Team,11.0,13.0,13,2024,R,Budapest,76.317,0,permanent
+Alexander Albon,Williams,13.0,14.0,13,2024,R,Budapest,76.429,0,permanent
+Kevin Magnussen,Haas F1 Team,15.0,15.0,13,2024,R,Budapest,76.548,0,permanent
+Valtteri Bottas,Kick Sauber,12.0,16.0,13,2024,R,Budapest,76.384,0,permanent
+Logan Sargeant,Williams,14.0,17.0,13,2024,R,Budapest,76.543,0,permanent
+Esteban Ocon,Alpine,19.0,18.0,13,2024,R,Budapest,78.049,0,permanent
+Guanyu Zhou,Kick Sauber,18.0,19.0,13,2024,R,Budapest,78.037,0,permanent
+Pierre Gasly,Alpine,20.0,20.0,13,2024,R,Budapest,78.166,0,permanent
+Lewis Hamilton,Mercedes,3.0,1.0,14,2024,R,Spa-Francorchamps,113.835,1,permanent
+Oscar Piastri,McLaren,5.0,2.0,14,2024,R,Spa-Francorchamps,114.027,1,permanent
+Charles Leclerc,Ferrari,1.0,3.0,14,2024,R,Spa-Francorchamps,113.754,1,permanent
+Max Verstappen,Red Bull Racing,11.0,4.0,14,2024,R,Spa-Francorchamps,113.159,0,permanent
+Lando Norris,McLaren,4.0,5.0,14,2024,R,Spa-Francorchamps,113.981,0,permanent
+Carlos Sainz,Ferrari,7.0,6.0,14,2024,R,Spa-Francorchamps,114.112,0,permanent
+Sergio Perez,Red Bull Racing,2.0,7.0,14,2024,R,Spa-Francorchamps,113.765,0,permanent
+Fernando Alonso,Aston Martin,8.0,8.0,14,2024,R,Spa-Francorchamps,114.258,0,permanent
+Esteban Ocon,Alpine,9.0,9.0,14,2024,R,Spa-Francorchamps,114.46,0,permanent
+Daniel Ricciardo,RB,13.0,10.0,14,2024,R,Spa-Francorchamps,114.682,0,permanent
+Lance Stroll,Aston Martin,15.0,11.0,14,2024,R,Spa-Francorchamps,115.716,0,permanent
+Alexander Albon,Williams,10.0,12.0,14,2024,R,Spa-Francorchamps,114.473,0,permanent
+Pierre Gasly,Alpine,12.0,13.0,14,2024,R,Spa-Francorchamps,114.635,0,permanent
+Kevin Magnussen,Haas F1 Team,17.0,14.0,14,2024,R,Spa-Francorchamps,116.5,0,permanent
+Valtteri Bottas,Kick Sauber,14.0,15.0,14,2024,R,Spa-Francorchamps,114.764,0,permanent
+Yuki Tsunoda,RB,20.0,16.0,14,2024,R,Spa-Francorchamps,116.593,0,permanent
+Logan Sargeant,Williams,18.0,17.0,14,2024,R,Spa-Francorchamps,117.23,0,permanent
+Nico Hulkenberg,Haas F1 Team,16.0,18.0,14,2024,R,Spa-Francorchamps,116.308,0,permanent
+Guanyu Zhou,Kick Sauber,19.0,19.0,14,2024,R,Spa-Francorchamps,117.775,0,permanent
+George Russell,Mercedes,6.0,20.0,14,2024,R,Spa-Francorchamps,114.095,0,permanent
+Lando Norris,McLaren,1.0,1.0,15,2024,R,Zandvoort,69.673,1,permanent
+Max Verstappen,Red Bull Racing,2.0,2.0,15,2024,R,Zandvoort,70.029,1,permanent
+Charles Leclerc,Ferrari,6.0,3.0,15,2024,R,Zandvoort,70.582,1,permanent
+Oscar Piastri,McLaren,3.0,4.0,15,2024,R,Zandvoort,70.172,0,permanent
+Carlos Sainz,Ferrari,10.0,5.0,15,2024,R,Zandvoort,70.914,0,permanent
+Sergio Perez,Red Bull Racing,5.0,6.0,15,2024,R,Zandvoort,70.416,0,permanent
+George Russell,Mercedes,4.0,7.0,15,2024,R,Zandvoort,70.244,0,permanent
+Lewis Hamilton,Mercedes,14.0,8.0,15,2024,R,Zandvoort,70.948,0,permanent
+Pierre Gasly,Alpine,9.0,9.0,15,2024,R,Zandvoort,70.815,0,permanent
+Fernando Alonso,Aston Martin,7.0,10.0,15,2024,R,Zandvoort,70.633,0,permanent
+Nico Hulkenberg,Haas F1 Team,12.0,11.0,15,2024,R,Zandvoort,71.215,0,permanent
+Daniel Ricciardo,RB,13.0,12.0,15,2024,R,Zandvoort,71.943,0,permanent
+Lance Stroll,Aston Martin,8.0,13.0,15,2024,R,Zandvoort,70.661,0,permanent
+Alexander Albon,Williams,19.0,14.0,15,2024,R,Zandvoort,70.653,0,permanent
+Esteban Ocon,Alpine,15.0,15.0,15,2024,R,Zandvoort,71.995,0,permanent
+Logan Sargeant,Williams,18.0,16.0,15,2024,R,Zandvoort,70.815,0,permanent
+Yuki Tsunoda,RB,11.0,17.0,15,2024,R,Zandvoort,70.955,0,permanent
+Kevin Magnussen,Haas F1 Team,20.0,18.0,15,2024,R,Zandvoort,71.295,0,permanent
+Valtteri Bottas,Kick Sauber,16.0,19.0,15,2024,R,Zandvoort,72.168,0,permanent
+Guanyu Zhou,Kick Sauber,17.0,20.0,15,2024,R,Zandvoort,73.261,0,permanent
+Charles Leclerc,Ferrari,4.0,1.0,16,2024,R,Monza,79.461,1,permanent
+Oscar Piastri,McLaren,2.0,2.0,16,2024,R,Monza,79.436,1,permanent
+Lando Norris,McLaren,1.0,3.0,16,2024,R,Monza,79.327,1,permanent
+Carlos Sainz,Ferrari,5.0,4.0,16,2024,R,Monza,79.467,0,permanent
+Lewis Hamilton,Mercedes,6.0,5.0,16,2024,R,Monza,79.513,0,permanent
+Max Verstappen,Red Bull Racing,7.0,6.0,16,2024,R,Monza,79.662,0,permanent
+George Russell,Mercedes,3.0,7.0,16,2024,R,Monza,79.44,0,permanent
+Sergio Perez,Red Bull Racing,8.0,8.0,16,2024,R,Monza,80.062,0,permanent
+Alexander Albon,Williams,9.0,9.0,16,2024,R,Monza,80.299,0,permanent
+Kevin Magnussen,Haas F1 Team,13.0,10.0,16,2024,R,Monza,80.698,0,permanent
+Fernando Alonso,Aston Martin,11.0,11.0,16,2024,R,Monza,80.421,0,permanent
+Franco Colapinto,Williams,18.0,12.0,16,2024,R,Monza,81.061,0,permanent
+Daniel Ricciardo,RB,12.0,13.0,16,2024,R,Monza,80.479,0,permanent
+Esteban Ocon,Alpine,15.0,14.0,16,2024,R,Monza,80.764,0,permanent
+Pierre Gasly,Alpine,14.0,15.0,16,2024,R,Monza,80.738,0,permanent
+Valtteri Bottas,Kick Sauber,19.0,16.0,16,2024,R,Monza,81.101,0,permanent
+Nico Hulkenberg,Haas F1 Team,10.0,17.0,16,2024,R,Monza,80.339,0,permanent
+Guanyu Zhou,Kick Sauber,20.0,18.0,16,2024,R,Monza,81.445,0,permanent
+Lance Stroll,Aston Martin,17.0,19.0,16,2024,R,Monza,81.013,0,permanent
+Yuki Tsunoda,RB,16.0,20.0,16,2024,R,Monza,80.945,0,permanent
+Oscar Piastri,McLaren,2.0,1.0,17,2024,R,Baku,101.686,1,street
+Charles Leclerc,Ferrari,1.0,2.0,17,2024,R,Baku,101.365,1,street
+George Russell,Mercedes,5.0,3.0,17,2024,R,Baku,101.874,1,street
+Lando Norris,McLaren,15.0,4.0,17,2024,R,Baku,103.609,0,street
+Max Verstappen,Red Bull Racing,6.0,5.0,17,2024,R,Baku,102.023,0,street
+Fernando Alonso,Aston Martin,7.0,6.0,17,2024,R,Baku,102.369,0,street
+Alexander Albon,Williams,9.0,7.0,17,2024,R,Baku,102.84,0,street
+Franco Colapinto,Williams,8.0,8.0,17,2024,R,Baku,102.473,0,street
+Lewis Hamilton,Mercedes,19.0,9.0,17,2024,R,Baku,102.289,0,street
+Oliver Bearman,Haas F1 Team,10.0,10.0,17,2024,R,Baku,102.968,0,street
+Nico Hulkenberg,Haas F1 Team,12.0,11.0,17,2024,R,Baku,103.101,0,street
+Pierre Gasly,Alpine,18.0,12.0,17,2024,R,Baku,103.088,0,street
+Daniel Ricciardo,RB,14.0,13.0,17,2024,R,Baku,103.547,0,street
+Guanyu Zhou,Kick Sauber,17.0,14.0,17,2024,R,Baku,104.246,0,street
+Esteban Ocon,Alpine,20.0,15.0,17,2024,R,Baku,104.504,0,street
+Valtteri Bottas,Kick Sauber,16.0,16.0,17,2024,R,Baku,103.618,0,street
+Sergio Perez,Red Bull Racing,4.0,17.0,17,2024,R,Baku,101.813,0,street
+Carlos Sainz,Ferrari,3.0,18.0,17,2024,R,Baku,101.805,0,street
+Lance Stroll,Aston Martin,13.0,19.0,17,2024,R,Baku,103.37,0,street
+Yuki Tsunoda,RB,11.0,20.0,17,2024,R,Baku,103.035,0,street
+Lando Norris,McLaren,1.0,1.0,18,2024,R,Marina Bay,89.525,1,street
+Max Verstappen,Red Bull Racing,2.0,2.0,18,2024,R,Marina Bay,89.68,1,street
+Oscar Piastri,McLaren,5.0,3.0,18,2024,R,Marina Bay,89.64,1,street
+George Russell,Mercedes,4.0,4.0,18,2024,R,Marina Bay,89.867,0,street
+Charles Leclerc,Ferrari,9.0,5.0,18,2024,R,Marina Bay,89.747,0,street
+Lewis Hamilton,Mercedes,3.0,6.0,18,2024,R,Marina Bay,89.841,0,street
+Carlos Sainz,Ferrari,10.0,7.0,18,2024,R,Marina Bay,90.108,0,street
+Fernando Alonso,Aston Martin,7.0,8.0,18,2024,R,Marina Bay,90.214,0,street
+Nico Hulkenberg,Haas F1 Team,6.0,9.0,18,2024,R,Marina Bay,90.115,0,street
+Sergio Perez,Red Bull Racing,13.0,10.0,18,2024,R,Marina Bay,90.579,0,street
+Franco Colapinto,Williams,12.0,11.0,18,2024,R,Marina Bay,90.481,0,street
+Yuki Tsunoda,RB,8.0,12.0,18,2024,R,Marina Bay,90.289,0,street
+Esteban Ocon,Alpine,15.0,13.0,18,2024,R,Marina Bay,90.769,0,street
+Lance Stroll,Aston Martin,17.0,14.0,18,2024,R,Marina Bay,91.094,0,street
+Guanyu Zhou,Kick Sauber,20.0,15.0,18,2024,R,Marina Bay,92.054,0,street
+Valtteri Bottas,Kick Sauber,19.0,16.0,18,2024,R,Marina Bay,91.572,0,street
+Pierre Gasly,Alpine,18.0,17.0,18,2024,R,Marina Bay,91.312,0,street
+Daniel Ricciardo,RB,16.0,18.0,18,2024,R,Marina Bay,91.085,0,street
+Kevin Magnussen,Haas F1 Team,14.0,19.0,18,2024,R,Marina Bay,90.653,0,street
+Alexander Albon,Williams,11.0,20.0,18,2024,R,Marina Bay,90.474,0,street
+Charles Leclerc,Ferrari,4.0,1.0,19,2024,R,Austin,92.74,1,permanent
+Carlos Sainz,Ferrari,3.0,2.0,19,2024,R,Austin,92.652,1,permanent
+Max Verstappen,Red Bull Racing,2.0,3.0,19,2024,R,Austin,92.361,1,permanent
+Lando Norris,McLaren,1.0,4.0,19,2024,R,Austin,92.33,0,permanent
+Oscar Piastri,McLaren,5.0,5.0,19,2024,R,Austin,92.95,0,permanent
+George Russell,Mercedes,20.0,6.0,19,2024,R,Austin,92.974,0,permanent
+Sergio Perez,Red Bull Racing,9.0,7.0,19,2024,R,Austin,93.02,0,permanent
+Nico Hulkenberg,Haas F1 Team,11.0,8.0,19,2024,R,Austin,93.544,0,permanent
+Liam Lawson,RB,19.0,9.0,19,2024,R,Austin,93.339,0,permanent
+Franco Colapinto,Williams,15.0,10.0,19,2024,R,Austin,94.062,0,permanent
+Kevin Magnussen,Haas F1 Team,8.0,11.0,19,2024,R,Austin,93.474,0,permanent
+Pierre Gasly,Alpine,6.0,12.0,19,2024,R,Austin,93.018,0,permanent
+Fernando Alonso,Aston Martin,7.0,13.0,19,2024,R,Austin,93.309,0,permanent
+Yuki Tsunoda,RB,10.0,14.0,19,2024,R,Austin,93.506,0,permanent
+Lance Stroll,Aston Martin,13.0,15.0,19,2024,R,Austin,93.759,0,permanent
+Alexander Albon,Williams,14.0,16.0,19,2024,R,Austin,94.051,0,permanent
+Valtteri Bottas,Kick Sauber,16.0,17.0,19,2024,R,Austin,94.152,0,permanent
+Esteban Ocon,Alpine,12.0,18.0,19,2024,R,Austin,93.597,0,permanent
+Guanyu Zhou,Kick Sauber,18.0,19.0,19,2024,R,Austin,94.228,0,permanent
+Lewis Hamilton,Mercedes,17.0,20.0,19,2024,R,Austin,94.154,0,permanent
+Carlos Sainz,Ferrari,1.0,1.0,20,2024,R,Mexico City,75.946,1,permanent
+Lando Norris,McLaren,3.0,2.0,20,2024,R,Mexico City,76.26,1,permanent
+Charles Leclerc,Ferrari,4.0,3.0,20,2024,R,Mexico City,76.265,1,permanent
+Lewis Hamilton,Mercedes,6.0,4.0,20,2024,R,Mexico City,76.651,0,permanent
+George Russell,Mercedes,5.0,5.0,20,2024,R,Mexico City,76.356,0,permanent
+Max Verstappen,Red Bull Racing,2.0,6.0,20,2024,R,Mexico City,76.171,0,permanent
+Kevin Magnussen,Haas F1 Team,7.0,7.0,20,2024,R,Mexico City,76.886,0,permanent
+Oscar Piastri,McLaren,17.0,8.0,20,2024,R,Mexico City,77.597,0,permanent
+Nico Hulkenberg,Haas F1 Team,10.0,9.0,20,2024,R,Mexico City,76.995,0,permanent
+Pierre Gasly,Alpine,8.0,10.0,20,2024,R,Mexico City,76.892,0,permanent
+Lance Stroll,Aston Martin,14.0,11.0,20,2024,R,Mexico City,77.294,0,permanent
+Franco Colapinto,Williams,16.0,12.0,20,2024,R,Mexico City,77.558,0,permanent
+Esteban Ocon,Alpine,0.0,13.0,20,2024,R,Mexico City,77.617,0,permanent
+Valtteri Bottas,Kick Sauber,15.0,14.0,20,2024,R,Mexico City,77.393,0,permanent
+Guanyu Zhou,Kick Sauber,19.0,15.0,20,2024,R,Mexico City,78.072,0,permanent
+Liam Lawson,RB,12.0,16.0,20,2024,R,Mexico City,77.162,0,permanent
+Sergio Perez,Red Bull Racing,18.0,17.0,20,2024,R,Mexico City,77.611,0,permanent
+Fernando Alonso,Aston Martin,13.0,18.0,20,2024,R,Mexico City,77.168,0,permanent
+Alexander Albon,Williams,9.0,19.0,20,2024,R,Mexico City,76.988,0,permanent
+Yuki Tsunoda,RB,11.0,20.0,20,2024,R,Mexico City,77.129,0,permanent
+Max Verstappen,Red Bull Racing,17.0,1.0,21,2024,R,São Paulo,87.771,1,permanent
+Esteban Ocon,Alpine,4.0,2.0,21,2024,R,São Paulo,84.475,1,permanent
+Pierre Gasly,Alpine,13.0,3.0,21,2024,R,São Paulo,89.42,1,permanent
+George Russell,Mercedes,2.0,4.0,21,2024,R,São Paulo,83.578,0,permanent
+Charles Leclerc,Ferrari,6.0,5.0,21,2024,R,São Paulo,84.525,0,permanent
+Lando Norris,McLaren,1.0,6.0,21,2024,R,São Paulo,83.405,0,permanent
+Yuki Tsunoda,RB,3.0,7.0,21,2024,R,São Paulo,84.111,0,permanent
+Oscar Piastri,McLaren,8.0,8.0,21,2024,R,São Paulo,84.686,0,permanent
+Liam Lawson,RB,5.0,9.0,21,2024,R,São Paulo,84.484,0,permanent
+Lewis Hamilton,Mercedes,14.0,10.0,21,2024,R,São Paulo,91.15,0,permanent
+Sergio Perez,Red Bull Racing,12.0,11.0,21,2024,R,São Paulo,88.158,0,permanent
+Oliver Bearman,Haas F1 Team,15.0,12.0,21,2024,R,São Paulo,91.229,0,permanent
+Valtteri Bottas,Kick Sauber,11.0,13.0,21,2024,R,São Paulo,86.472,0,permanent
+Fernando Alonso,Aston Martin,9.0,14.0,21,2024,R,São Paulo,85.035,0,permanent
+Guanyu Zhou,Kick Sauber,19.0,15.0,21,2024,R,São Paulo,92.263,0,permanent
+Carlos Sainz,Ferrari,20.0,16.0,21,2024,R,São Paulo,89.406,0,permanent
+Franco Colapinto,Williams,16.0,17.0,21,2024,R,São Paulo,91.27,0,permanent
+Alexander Albon,Williams,7.0,18.0,21,2024,R,São Paulo,84.657,0,permanent
+Lance Stroll,Aston Martin,10.0,19.0,21,2024,R,São Paulo,86.334,0,permanent
+Nico Hulkenberg,Haas F1 Team,18.0,20.0,21,2024,R,São Paulo,91.623,0,permanent
+George Russell,Mercedes,1.0,1.0,22,2024,R,Las Vegas,92.312,1,street
+Lewis Hamilton,Mercedes,10.0,2.0,22,2024,R,Las Vegas,92.567,1,street
+Carlos Sainz,Ferrari,2.0,3.0,22,2024,R,Las Vegas,92.41,1,street
+Charles Leclerc,Ferrari,4.0,4.0,22,2024,R,Las Vegas,92.783,0,street
+Max Verstappen,Red Bull Racing,5.0,5.0,22,2024,R,Las Vegas,92.797,0,street
+Lando Norris,McLaren,6.0,6.0,22,2024,R,Las Vegas,93.008,0,street
+Oscar Piastri,McLaren,8.0,7.0,22,2024,R,Las Vegas,93.024,0,street
+Nico Hulkenberg,Haas F1 Team,9.0,8.0,22,2024,R,Las Vegas,93.062,0,street
+Yuki Tsunoda,RB,7.0,9.0,22,2024,R,Las Vegas,93.029,0,street
+Sergio Perez,Red Bull Racing,15.0,10.0,22,2024,R,Las Vegas,94.155,0,street
+Fernando Alonso,Aston Martin,16.0,11.0,22,2024,R,Las Vegas,94.258,0,street
+Kevin Magnussen,Haas F1 Team,12.0,12.0,22,2024,R,Las Vegas,93.297,0,street
+Guanyu Zhou,Kick Sauber,13.0,13.0,22,2024,R,Las Vegas,93.566,0,street
+Franco Colapinto,Williams,20.0,14.0,22,2024,R,Las Vegas,93.746,0,street
+Lance Stroll,Aston Martin,18.0,15.0,22,2024,R,Las Vegas,94.484,0,street
+Liam Lawson,RB,14.0,16.0,22,2024,R,Las Vegas,94.087,0,street
+Esteban Ocon,Alpine,11.0,17.0,22,2024,R,Las Vegas,93.221,0,street
+Valtteri Bottas,Kick Sauber,19.0,18.0,22,2024,R,Las Vegas,94.43,0,street
+Alexander Albon,Williams,17.0,19.0,22,2024,R,Las Vegas,94.425,0,street
+Pierre Gasly,Alpine,3.0,20.0,22,2024,R,Las Vegas,92.664,0,street
+Max Verstappen,Red Bull Racing,2.0,1.0,23,2024,R,Lusail,80.52,1,permanent
+Charles Leclerc,Ferrari,5.0,2.0,23,2024,R,Lusail,80.852,1,permanent
+Oscar Piastri,McLaren,4.0,3.0,23,2024,R,Lusail,80.829,1,permanent
+George Russell,Mercedes,1.0,4.0,23,2024,R,Lusail,80.575,0,permanent
+Pierre Gasly,Alpine,11.0,5.0,23,2024,R,Lusail,81.437,0,permanent
+Carlos Sainz,Ferrari,7.0,6.0,23,2024,R,Lusail,81.041,0,permanent
+Fernando Alonso,Aston Martin,8.0,7.0,23,2024,R,Lusail,81.208,0,permanent
+Guanyu Zhou,Kick Sauber,12.0,8.0,23,2024,R,Lusail,81.501,0,permanent
+Kevin Magnussen,Haas F1 Team,10.0,9.0,23,2024,R,Lusail,81.387,0,permanent
+Lando Norris,McLaren,3.0,10.0,23,2024,R,Lusail,80.772,0,permanent
+Valtteri Bottas,Kick Sauber,13.0,11.0,23,2024,R,Lusail,81.731,0,permanent
+Lewis Hamilton,Mercedes,6.0,12.0,23,2024,R,Lusail,81.011,0,permanent
+Yuki Tsunoda,RB,14.0,13.0,23,2024,R,Lusail,81.771,0,permanent
+Liam Lawson,RB,17.0,14.0,23,2024,R,Lusail,82.411,0,permanent
+Alexander Albon,Williams,16.0,15.0,23,2024,R,Lusail,82.39,0,permanent
+Nico Hulkenberg,Haas F1 Team,18.0,16.0,23,2024,R,Lusail,82.442,0,permanent
+Sergio Perez,Red Bull Racing,9.0,17.0,23,2024,R,Lusail,81.425,0,permanent
+Lance Stroll,Aston Martin,15.0,18.0,23,2024,R,Lusail,81.911,0,permanent
+Franco Colapinto,Williams,19.0,19.0,23,2024,R,Lusail,82.594,0,permanent
+Esteban Ocon,Alpine,20.0,20.0,23,2024,R,Lusail,82.714,0,permanent
+Lando Norris,McLaren,1.0,1.0,24,2024,R,Yas Island,82.595,1,permanent
+Carlos Sainz,Ferrari,3.0,2.0,24,2024,R,Yas Island,82.824,1,permanent
+Charles Leclerc,Ferrari,19.0,3.0,24,2024,R,Yas Island,83.302,1,permanent
+Lewis Hamilton,Mercedes,16.0,4.0,24,2024,R,Yas Island,83.887,0,permanent
+George Russell,Mercedes,6.0,5.0,24,2024,R,Yas Island,83.132,0,permanent
+Max Verstappen,Red Bull Racing,4.0,6.0,24,2024,R,Yas Island,82.945,0,permanent
+Pierre Gasly,Alpine,5.0,7.0,24,2024,R,Yas Island,82.984,0,permanent
+Nico Hulkenberg,Haas F1 Team,7.0,8.0,24,2024,R,Yas Island,82.886,0,permanent
+Fernando Alonso,Aston Martin,8.0,9.0,24,2024,R,Yas Island,83.196,0,permanent
+Oscar Piastri,McLaren,2.0,10.0,24,2024,R,Yas Island,82.804,0,permanent
+Alexander Albon,Williams,18.0,11.0,24,2024,R,Yas Island,83.821,0,permanent
+Yuki Tsunoda,RB,11.0,12.0,24,2024,R,Yas Island,83.419,0,permanent
+Guanyu Zhou,Kick Sauber,15.0,13.0,24,2024,R,Yas Island,83.88,0,permanent
+Lance Stroll,Aston Martin,13.0,14.0,24,2024,R,Yas Island,83.729,0,permanent
+Jack Doohan,Alpine,17.0,15.0,24,2024,R,Yas Island,84.105,0,permanent
+Kevin Magnussen,Haas F1 Team,14.0,16.0,24,2024,R,Yas Island,83.632,0,permanent
+Liam Lawson,RB,12.0,17.0,24,2024,R,Yas Island,83.472,0,permanent
+Valtteri Bottas,Kick Sauber,9.0,18.0,24,2024,R,Yas Island,83.204,0,permanent
+Franco Colapinto,Williams,20.0,19.0,24,2024,R,Yas Island,83.912,0,permanent
+Sergio Perez,Red Bull Racing,10.0,20.0,24,2024,R,Yas Island,83.264,0,permanent
+Lando Norris,McLaren,1.0,1.0,1,2025,R,Melbourne,75.096,1,street
+Max Verstappen,Red Bull Racing,3.0,2.0,1,2025,R,Melbourne,75.481,1,street
+George Russell,Mercedes,4.0,3.0,1,2025,R,Melbourne,75.546,1,street
+Andrea Kimi Antonelli,Mercedes,16.0,4.0,1,2025,R,Melbourne,76.525,0,street
+Alexander Albon,Williams,6.0,5.0,1,2025,R,Melbourne,75.737,0,street
+Lance Stroll,Aston Martin,13.0,6.0,1,2025,R,Melbourne,76.369,0,street
+Nico Hulkenberg,Kick Sauber,17.0,7.0,1,2025,R,Melbourne,76.579,0,street
+Charles Leclerc,Ferrari,7.0,8.0,1,2025,R,Melbourne,75.755,0,street
+Oscar Piastri,McLaren,2.0,9.0,1,2025,R,Melbourne,75.18,0,street
+Lewis Hamilton,Ferrari,8.0,10.0,1,2025,R,Melbourne,75.919,0,street
+Pierre Gasly,Alpine,9.0,11.0,1,2025,R,Melbourne,75.98,0,street
+Yuki Tsunoda,Racing Bulls,5.0,12.0,1,2025,R,Melbourne,75.67,0,street
+Esteban Ocon,Haas F1 Team,19.0,13.0,1,2025,R,Melbourne,77.147,0,street
+Oliver Bearman,Haas F1 Team,20.0,14.0,1,2025,R,Melbourne,75.98,0,street
+Liam Lawson,Red Bull Racing,18.0,15.0,1,2025,R,Melbourne,77.094,0,street
+Gabriel Bortoleto,Kick Sauber,15.0,16.0,1,2025,R,Melbourne,76.516,0,street
+Fernando Alonso,Aston Martin,12.0,17.0,1,2025,R,Melbourne,76.288,0,street
+Carlos Sainz,Williams,10.0,18.0,1,2025,R,Melbourne,75.931,0,street
+Jack Doohan,Alpine,14.0,19.0,1,2025,R,Melbourne,76.315,0,street
+Isack Hadjar,Racing Bulls,11.0,20.0,1,2025,R,Melbourne,76.175,0,street
+Oscar Piastri,McLaren,1.0,1.0,2,2025,R,Shanghai,90.641,1,permanent
+Lando Norris,McLaren,3.0,2.0,2,2025,R,Shanghai,90.787,1,permanent
+George Russell,Mercedes,2.0,3.0,2,2025,R,Shanghai,90.723,1,permanent
+Max Verstappen,Red Bull Racing,4.0,4.0,2,2025,R,Shanghai,90.817,0,permanent
+Esteban Ocon,Haas F1 Team,11.0,5.0,2,2025,R,Shanghai,91.625,0,permanent
+Kimi Antonelli,Mercedes,8.0,6.0,2,2025,R,Shanghai,91.625,0,permanent
+Alexander Albon,Williams,10.0,7.0,2,2025,R,Shanghai,91.503,0,permanent
+Oliver Bearman,Haas F1 Team,17.0,8.0,2,2025,R,Shanghai,92.018,0,permanent
+Lance Stroll,Aston Martin,14.0,9.0,2,2025,R,Shanghai,91.773,0,permanent
+Carlos Sainz,Williams,15.0,10.0,2,2025,R,Shanghai,91.628,0,permanent
+Isack Hadjar,Racing Bulls,7.0,11.0,2,2025,R,Shanghai,91.079,0,permanent
+Liam Lawson,Red Bull Racing,20.0,12.0,2,2025,R,Shanghai,92.174,0,permanent
+Jack Doohan,Alpine,18.0,13.0,2,2025,R,Shanghai,92.092,0,permanent
+Gabriel Bortoleto,Kick Sauber,19.0,14.0,2,2025,R,Shanghai,92.141,0,permanent
+Nico Hulkenberg,Kick Sauber,12.0,15.0,2,2025,R,Shanghai,91.632,0,permanent
+Yuki Tsunoda,Racing Bulls,9.0,16.0,2,2025,R,Shanghai,91.238,0,permanent
+Fernando Alonso,Aston Martin,13.0,17.0,2,2025,R,Shanghai,91.688,0,permanent
+Charles Leclerc,Ferrari,6.0,18.0,2,2025,R,Shanghai,91.021,0,permanent
+Lewis Hamilton,Ferrari,5.0,19.0,2,2025,R,Shanghai,90.927,0,permanent
+Pierre Gasly,Alpine,16.0,20.0,2,2025,R,Shanghai,91.992,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,3,2025,R,Suzuka,86.983,1,permanent
+Lando Norris,McLaren,2.0,2.0,3,2025,R,Suzuka,86.995,1,permanent
+Oscar Piastri,McLaren,3.0,3.0,3,2025,R,Suzuka,87.027,1,permanent
+Charles Leclerc,Ferrari,4.0,4.0,3,2025,R,Suzuka,87.299,0,permanent
+George Russell,Mercedes,5.0,5.0,3,2025,R,Suzuka,87.318,0,permanent
+Kimi Antonelli,Mercedes,6.0,6.0,3,2025,R,Suzuka,87.555,0,permanent
+Lewis Hamilton,Ferrari,8.0,7.0,3,2025,R,Suzuka,87.61,0,permanent
+Isack Hadjar,Racing Bulls,7.0,8.0,3,2025,R,Suzuka,87.569,0,permanent
+Alexander Albon,Williams,9.0,9.0,3,2025,R,Suzuka,87.615,0,permanent
+Oliver Bearman,Haas F1 Team,10.0,10.0,3,2025,R,Suzuka,87.711,0,permanent
+Fernando Alonso,Aston Martin,12.0,11.0,3,2025,R,Suzuka,87.897,0,permanent
+Yuki Tsunoda,Red Bull Racing,14.0,12.0,3,2025,R,Suzuka,87.967,0,permanent
+Pierre Gasly,Alpine,11.0,13.0,3,2025,R,Suzuka,87.822,0,permanent
+Carlos Sainz,Williams,15.0,14.0,3,2025,R,Suzuka,87.836,0,permanent
+Jack Doohan,Alpine,19.0,15.0,3,2025,R,Suzuka,88.877,0,permanent
+Nico Hulkenberg,Kick Sauber,16.0,16.0,3,2025,R,Suzuka,88.57,0,permanent
+Liam Lawson,Racing Bulls,13.0,17.0,3,2025,R,Suzuka,87.906,0,permanent
+Esteban Ocon,Haas F1 Team,18.0,18.0,3,2025,R,Suzuka,88.696,0,permanent
+Gabriel Bortoleto,Kick Sauber,17.0,19.0,3,2025,R,Suzuka,88.622,0,permanent
+Lance Stroll,Aston Martin,20.0,20.0,3,2025,R,Suzuka,89.271,0,permanent
+Oscar Piastri,McLaren,1.0,1.0,4,2025,R,Sakhir,89.841,1,permanent
+George Russell,Mercedes,3.0,2.0,4,2025,R,Sakhir,90.009,1,permanent
+Lando Norris,McLaren,6.0,3.0,4,2025,R,Sakhir,90.267,1,permanent
+Charles Leclerc,Ferrari,2.0,4.0,4,2025,R,Sakhir,90.175,0,permanent
+Lewis Hamilton,Ferrari,9.0,5.0,4,2025,R,Sakhir,90.772,0,permanent
+Max Verstappen,Red Bull Racing,7.0,6.0,4,2025,R,Sakhir,90.423,0,permanent
+Pierre Gasly,Alpine,4.0,7.0,4,2025,R,Sakhir,90.216,0,permanent
+Esteban Ocon,Haas F1 Team,14.0,8.0,4,2025,R,Sakhir,91.594,0,permanent
+Yuki Tsunoda,Red Bull Racing,10.0,9.0,4,2025,R,Sakhir,91.228,0,permanent
+Oliver Bearman,Haas F1 Team,20.0,10.0,4,2025,R,Sakhir,92.373,0,permanent
+Kimi Antonelli,Mercedes,5.0,11.0,4,2025,R,Sakhir,90.213,0,permanent
+Alexander Albon,Williams,15.0,12.0,4,2025,R,Sakhir,92.04,0,permanent
+Isack Hadjar,Racing Bulls,12.0,13.0,4,2025,R,Sakhir,91.271,0,permanent
+Jack Doohan,Alpine,11.0,14.0,4,2025,R,Sakhir,91.245,0,permanent
+Fernando Alonso,Aston Martin,13.0,15.0,4,2025,R,Sakhir,91.634,0,permanent
+Liam Lawson,Racing Bulls,17.0,16.0,4,2025,R,Sakhir,92.165,0,permanent
+Lance Stroll,Aston Martin,19.0,17.0,4,2025,R,Sakhir,92.283,0,permanent
+Gabriel Bortoleto,Kick Sauber,18.0,18.0,4,2025,R,Sakhir,92.186,0,permanent
+Carlos Sainz,Williams,8.0,19.0,4,2025,R,Sakhir,90.68,0,permanent
+Nico Hulkenberg,Kick Sauber,16.0,20.0,4,2025,R,Sakhir,91.998,0,permanent
+Oscar Piastri,McLaren,2.0,1.0,5,2025,R,Jeddah,87.304,1,street
+Max Verstappen,Red Bull Racing,1.0,2.0,5,2025,R,Jeddah,87.294,1,street
+Charles Leclerc,Ferrari,4.0,3.0,5,2025,R,Jeddah,87.67,1,street
+Lando Norris,McLaren,10.0,4.0,5,2025,R,Jeddah,87.481,0,street
+George Russell,Mercedes,3.0,5.0,5,2025,R,Jeddah,87.407,0,street
+Kimi Antonelli,Mercedes,5.0,6.0,5,2025,R,Jeddah,87.798,0,street
+Lewis Hamilton,Ferrari,7.0,7.0,5,2025,R,Jeddah,88.102,0,street
+Carlos Sainz,Williams,6.0,8.0,5,2025,R,Jeddah,88.024,0,street
+Alexander Albon,Williams,11.0,9.0,5,2025,R,Jeddah,88.109,0,street
+Isack Hadjar,Racing Bulls,14.0,10.0,5,2025,R,Jeddah,88.418,0,street
+Fernando Alonso,Aston Martin,13.0,11.0,5,2025,R,Jeddah,88.303,0,street
+Liam Lawson,Racing Bulls,12.0,12.0,5,2025,R,Jeddah,88.191,0,street
+Oliver Bearman,Haas F1 Team,15.0,13.0,5,2025,R,Jeddah,88.536,0,street
+Esteban Ocon,Haas F1 Team,19.0,14.0,5,2025,R,Jeddah,89.092,0,street
+Nico Hulkenberg,Kick Sauber,18.0,15.0,5,2025,R,Jeddah,88.782,0,street
+Lance Stroll,Aston Martin,16.0,16.0,5,2025,R,Jeddah,88.645,0,street
+Jack Doohan,Alpine,17.0,17.0,5,2025,R,Jeddah,88.739,0,street
+Gabriel Bortoleto,Kick Sauber,20.0,18.0,5,2025,R,Jeddah,89.462,0,street
+Yuki Tsunoda,Red Bull Racing,8.0,19.0,5,2025,R,Jeddah,87.99,0,street
+Pierre Gasly,Alpine,9.0,20.0,5,2025,R,Jeddah,88.025,0,street
+Oscar Piastri,McLaren,4.0,1.0,6,2025,R,Miami Gardens,86.269,1,street
+Lando Norris,McLaren,2.0,2.0,6,2025,R,Miami Gardens,86.269,1,street
+George Russell,Mercedes,5.0,3.0,6,2025,R,Miami Gardens,86.385,1,street
+Max Verstappen,Red Bull Racing,1.0,4.0,6,2025,R,Miami Gardens,86.204,0,street
+Alexander Albon,Williams,7.0,5.0,6,2025,R,Miami Gardens,86.682,0,street
+Kimi Antonelli,Mercedes,3.0,6.0,6,2025,R,Miami Gardens,86.271,0,street
+Charles Leclerc,Ferrari,8.0,7.0,6,2025,R,Miami Gardens,86.754,0,street
+Lewis Hamilton,Ferrari,12.0,8.0,6,2025,R,Miami Gardens,87.006,0,street
+Carlos Sainz,Williams,6.0,9.0,6,2025,R,Miami Gardens,86.569,0,street
+Yuki Tsunoda,Red Bull Racing,10.0,10.0,6,2025,R,Miami Gardens,86.943,0,street
+Isack Hadjar,Racing Bulls,11.0,11.0,6,2025,R,Miami Gardens,86.987,0,street
+Esteban Ocon,Haas F1 Team,9.0,12.0,6,2025,R,Miami Gardens,86.824,0,street
+Pierre Gasly,Alpine,20.0,13.0,6,2025,R,Miami Gardens,87.71,0,street
+Nico Hulkenberg,Kick Sauber,16.0,14.0,6,2025,R,Miami Gardens,87.473,0,street
+Fernando Alonso,Aston Martin,17.0,15.0,6,2025,R,Miami Gardens,87.604,0,street
+Lance Stroll,Aston Martin,18.0,16.0,6,2025,R,Miami Gardens,87.83,0,street
+Liam Lawson,Racing Bulls,15.0,17.0,6,2025,R,Miami Gardens,87.363,0,street
+Gabriel Bortoleto,Kick Sauber,13.0,18.0,6,2025,R,Miami Gardens,87.151,0,street
+Oliver Bearman,Haas F1 Team,19.0,19.0,6,2025,R,Miami Gardens,87.999,0,street
+Jack Doohan,Alpine,14.0,20.0,6,2025,R,Miami Gardens,87.186,0,street
+Max Verstappen,Red Bull Racing,2.0,1.0,7,2025,R,Imola,74.704,1,permanent
+Lando Norris,McLaren,4.0,2.0,7,2025,R,Imola,74.962,1,permanent
+Oscar Piastri,McLaren,1.0,3.0,7,2025,R,Imola,74.67,1,permanent
+Lewis Hamilton,Ferrari,12.0,4.0,7,2025,R,Imola,75.765,0,permanent
+Alexander Albon,Williams,7.0,5.0,7,2025,R,Imola,75.473,0,permanent
+Charles Leclerc,Ferrari,11.0,6.0,7,2025,R,Imola,75.604,0,permanent
+George Russell,Mercedes,3.0,7.0,7,2025,R,Imola,74.807,0,permanent
+Carlos Sainz,Williams,6.0,8.0,7,2025,R,Imola,75.198,0,permanent
+Isack Hadjar,Racing Bulls,9.0,9.0,7,2025,R,Imola,75.51,0,permanent
+Yuki Tsunoda,Red Bull Racing,20.0,10.0,7,2025,R,Imola,75.51,0,permanent
+Fernando Alonso,Aston Martin,5.0,11.0,7,2025,R,Imola,75.431,0,permanent
+Nico Hulkenberg,Kick Sauber,17.0,12.0,7,2025,R,Imola,76.518,0,permanent
+Pierre Gasly,Alpine,10.0,13.0,7,2025,R,Imola,75.505,0,permanent
+Liam Lawson,Racing Bulls,15.0,14.0,7,2025,R,Imola,76.379,0,permanent
+Lance Stroll,Aston Martin,8.0,15.0,7,2025,R,Imola,75.497,0,permanent
+Franco Colapinto,Alpine,16.0,16.0,7,2025,R,Imola,76.256,0,permanent
+Oliver Bearman,Haas F1 Team,19.0,17.0,7,2025,R,Imola,76.077,0,permanent
+Gabriel Bortoleto,Kick Sauber,14.0,18.0,7,2025,R,Imola,76.26,0,permanent
+Kimi Antonelli,Mercedes,13.0,19.0,7,2025,R,Imola,75.772,0,permanent
+Esteban Ocon,Haas F1 Team,18.0,20.0,7,2025,R,Imola,76.613,0,permanent
+Lando Norris,McLaren,1.0,1.0,8,2025,R,Monaco,69.954,1,street
+Charles Leclerc,Ferrari,2.0,2.0,8,2025,R,Monaco,70.063,1,street
+Oscar Piastri,McLaren,3.0,3.0,8,2025,R,Monaco,70.129,1,street
+Max Verstappen,Red Bull Racing,4.0,4.0,8,2025,R,Monaco,70.669,0,street
+Lewis Hamilton,Ferrari,7.0,5.0,8,2025,R,Monaco,70.382,0,street
+Isack Hadjar,Racing Bulls,5.0,6.0,8,2025,R,Monaco,70.923,0,street
+Esteban Ocon,Haas F1 Team,8.0,7.0,8,2025,R,Monaco,70.942,0,street
+Liam Lawson,Racing Bulls,9.0,8.0,8,2025,R,Monaco,71.129,0,street
+Alexander Albon,Williams,10.0,9.0,8,2025,R,Monaco,70.732,0,street
+Carlos Sainz,Williams,11.0,10.0,8,2025,R,Monaco,71.362,0,street
+George Russell,Mercedes,14.0,11.0,8,2025,R,Monaco,71.507,0,street
+Oliver Bearman,Haas F1 Team,20.0,12.0,8,2025,R,Monaco,71.979,0,street
+Franco Colapinto,Alpine,18.0,13.0,8,2025,R,Monaco,72.597,0,street
+Gabriel Bortoleto,Kick Sauber,16.0,14.0,8,2025,R,Monaco,71.902,0,street
+Lance Stroll,Aston Martin,19.0,15.0,8,2025,R,Monaco,72.563,0,street
+Nico Hulkenberg,Kick Sauber,13.0,16.0,8,2025,R,Monaco,71.596,0,street
+Yuki Tsunoda,Red Bull Racing,12.0,17.0,8,2025,R,Monaco,71.415,0,street
+Kimi Antonelli,Mercedes,15.0,18.0,8,2025,R,Monaco,71.88,0,street
+Fernando Alonso,Aston Martin,6.0,19.0,8,2025,R,Monaco,70.924,0,street
+Pierre Gasly,Alpine,17.0,20.0,8,2025,R,Monaco,71.994,0,street
+Oscar Piastri,McLaren,1.0,1.0,9,2025,R,Barcelona,71.546,1,permanent
+Lando Norris,McLaren,2.0,2.0,9,2025,R,Barcelona,71.755,1,permanent
+Charles Leclerc,Ferrari,7.0,3.0,9,2025,R,Barcelona,72.131,1,permanent
+George Russell,Mercedes,4.0,4.0,9,2025,R,Barcelona,71.848,0,permanent
+Nico Hulkenberg,Kick Sauber,15.0,5.0,9,2025,R,Barcelona,73.19,0,permanent
+Lewis Hamilton,Ferrari,5.0,6.0,9,2025,R,Barcelona,72.045,0,permanent
+Isack Hadjar,Racing Bulls,9.0,7.0,9,2025,R,Barcelona,72.252,0,permanent
+Pierre Gasly,Alpine,8.0,8.0,9,2025,R,Barcelona,72.199,0,permanent
+Fernando Alonso,Aston Martin,10.0,9.0,9,2025,R,Barcelona,72.284,0,permanent
+Max Verstappen,Red Bull Racing,3.0,10.0,9,2025,R,Barcelona,71.848,0,permanent
+Liam Lawson,Racing Bulls,13.0,11.0,9,2025,R,Barcelona,72.763,0,permanent
+Gabriel Bortoleto,Kick Sauber,12.0,12.0,9,2025,R,Barcelona,72.756,0,permanent
+Yuki Tsunoda,Red Bull Racing,19.0,13.0,9,2025,R,Barcelona,73.385,0,permanent
+Carlos Sainz,Williams,17.0,14.0,9,2025,R,Barcelona,73.203,0,permanent
+Franco Colapinto,Alpine,18.0,15.0,9,2025,R,Barcelona,73.334,0,permanent
+Esteban Ocon,Haas F1 Team,16.0,16.0,9,2025,R,Barcelona,73.201,0,permanent
+Oliver Bearman,Haas F1 Team,14.0,17.0,9,2025,R,Barcelona,73.074,0,permanent
+Kimi Antonelli,Mercedes,6.0,18.0,9,2025,R,Barcelona,72.111,0,permanent
+Alexander Albon,Williams,11.0,19.0,9,2025,R,Barcelona,72.641,0,permanent
+George Russell,Mercedes,1.0,1.0,10,2025,R,Montréal,70.899,1,permanent
+Max Verstappen,Red Bull Racing,2.0,2.0,10,2025,R,Montréal,71.059,1,permanent
+Kimi Antonelli,Mercedes,4.0,3.0,10,2025,R,Montréal,71.391,1,permanent
+Oscar Piastri,McLaren,3.0,4.0,10,2025,R,Montréal,71.12,0,permanent
+Charles Leclerc,Ferrari,8.0,5.0,10,2025,R,Montréal,71.626,0,permanent
+Lewis Hamilton,Ferrari,5.0,6.0,10,2025,R,Montréal,71.526,0,permanent
+Fernando Alonso,Aston Martin,6.0,7.0,10,2025,R,Montréal,71.586,0,permanent
+Nico Hulkenberg,Kick Sauber,11.0,8.0,10,2025,R,Montréal,72.183,0,permanent
+Esteban Ocon,Haas F1 Team,14.0,9.0,10,2025,R,Montréal,72.378,0,permanent
+Carlos Sainz,Williams,16.0,10.0,10,2025,R,Montréal,72.398,0,permanent
+Oliver Bearman,Haas F1 Team,13.0,11.0,10,2025,R,Montréal,72.306,0,permanent
+Yuki Tsunoda,Red Bull Racing,18.0,12.0,10,2025,R,Montréal,72.102,0,permanent
+Franco Colapinto,Alpine,10.0,13.0,10,2025,R,Montréal,72.142,0,permanent
+Gabriel Bortoleto,Kick Sauber,15.0,14.0,10,2025,R,Montréal,72.385,0,permanent
+Pierre Gasly,Alpine,20.0,15.0,10,2025,R,Montréal,72.667,0,permanent
+Isack Hadjar,Racing Bulls,12.0,16.0,10,2025,R,Montréal,71.867,0,permanent
+Lance Stroll,Aston Martin,17.0,17.0,10,2025,R,Montréal,72.517,0,permanent
+Lando Norris,McLaren,7.0,18.0,10,2025,R,Montréal,71.599,0,permanent
+Liam Lawson,Racing Bulls,19.0,19.0,10,2025,R,Montréal,72.525,0,permanent
+Alexander Albon,Williams,9.0,20.0,10,2025,R,Montréal,71.892,0,permanent
+Lando Norris,McLaren,1.0,1.0,11,2025,R,Spielberg,63.971,1,permanent
+Oscar Piastri,McLaren,3.0,2.0,11,2025,R,Spielberg,64.554,1,permanent
+Charles Leclerc,Ferrari,2.0,3.0,11,2025,R,Spielberg,64.492,1,permanent
+Lewis Hamilton,Ferrari,4.0,4.0,11,2025,R,Spielberg,64.582,0,permanent
+George Russell,Mercedes,5.0,5.0,11,2025,R,Spielberg,64.763,0,permanent
+Liam Lawson,Racing Bulls,6.0,6.0,11,2025,R,Spielberg,64.926,0,permanent
+Fernando Alonso,Aston Martin,11.0,7.0,11,2025,R,Spielberg,65.128,0,permanent
+Gabriel Bortoleto,Kick Sauber,8.0,8.0,11,2025,R,Spielberg,64.846,0,permanent
+Nico Hulkenberg,Kick Sauber,20.0,9.0,11,2025,R,Spielberg,65.606,0,permanent
+Esteban Ocon,Haas F1 Team,17.0,10.0,11,2025,R,Spielberg,65.364,0,permanent
+Oliver Bearman,Haas F1 Team,15.0,11.0,11,2025,R,Spielberg,65.218,0,permanent
+Isack Hadjar,Racing Bulls,13.0,12.0,11,2025,R,Spielberg,65.063,0,permanent
+Pierre Gasly,Alpine,10.0,13.0,11,2025,R,Spielberg,64.846,0,permanent
+Lance Stroll,Aston Martin,16.0,14.0,11,2025,R,Spielberg,65.329,0,permanent
+Franco Colapinto,Alpine,14.0,15.0,11,2025,R,Spielberg,65.278,0,permanent
+Yuki Tsunoda,Red Bull Racing,18.0,16.0,11,2025,R,Spielberg,65.369,0,permanent
+Alexander Albon,Williams,12.0,17.0,11,2025,R,Spielberg,65.143,0,permanent
+Max Verstappen,Red Bull Racing,7.0,18.0,11,2025,R,Spielberg,64.836,0,permanent
+Kimi Antonelli,Mercedes,9.0,19.0,11,2025,R,Spielberg,65.052,0,permanent
+Carlos Sainz,Williams,19.0,20.0,11,2025,R,Spielberg,65.582,0,permanent
+Lando Norris,McLaren,3.0,1.0,12,2025,R,Silverstone,85.01,1,permanent
+Oscar Piastri,McLaren,2.0,2.0,12,2025,R,Silverstone,84.995,1,permanent
+Nico Hulkenberg,Kick Sauber,19.0,3.0,12,2025,R,Silverstone,86.574,1,permanent
+Lewis Hamilton,Ferrari,5.0,4.0,12,2025,R,Silverstone,85.084,0,permanent
+Max Verstappen,Red Bull Racing,1.0,5.0,12,2025,R,Silverstone,84.892,0,permanent
+Pierre Gasly,Alpine,8.0,6.0,12,2025,R,Silverstone,85.711,0,permanent
+Lance Stroll,Aston Martin,17.0,7.0,12,2025,R,Silverstone,86.504,0,permanent
+Alexander Albon,Williams,13.0,8.0,12,2025,R,Silverstone,85.889,0,permanent
+Fernando Alonso,Aston Martin,7.0,9.0,12,2025,R,Silverstone,85.593,0,permanent
+George Russell,Mercedes,4.0,10.0,12,2025,R,Silverstone,85.029,0,permanent
+Oliver Bearman,Haas F1 Team,18.0,11.0,12,2025,R,Silverstone,85.471,0,permanent
+Carlos Sainz,Williams,9.0,12.0,12,2025,R,Silverstone,85.746,0,permanent
+Esteban Ocon,Haas F1 Team,14.0,13.0,12,2025,R,Silverstone,85.95,0,permanent
+Charles Leclerc,Ferrari,6.0,14.0,12,2025,R,Silverstone,85.121,0,permanent
+Yuki Tsunoda,Red Bull Racing,11.0,15.0,12,2025,R,Silverstone,85.826,0,permanent
+Kimi Antonelli,Mercedes,10.0,16.0,12,2025,R,Silverstone,85.374,0,permanent
+Isack Hadjar,Racing Bulls,12.0,17.0,12,2025,R,Silverstone,85.864,0,permanent
+Gabriel Bortoleto,Kick Sauber,16.0,18.0,12,2025,R,Silverstone,86.446,0,permanent
+Liam Lawson,Racing Bulls,15.0,19.0,12,2025,R,Silverstone,86.44,0,permanent
+Franco Colapinto,Alpine,20.0,20.0,12,2025,R,Silverstone,87.06,0,permanent
+Oscar Piastri,McLaren,2.0,1.0,13,2025,R,Spa-Francorchamps,100.626,1,permanent
+Lando Norris,McLaren,1.0,2.0,13,2025,R,Spa-Francorchamps,100.562,1,permanent
+Charles Leclerc,Ferrari,3.0,3.0,13,2025,R,Spa-Francorchamps,100.9,1,permanent
+Max Verstappen,Red Bull Racing,4.0,4.0,13,2025,R,Spa-Francorchamps,100.903,0,permanent
+George Russell,Mercedes,6.0,5.0,13,2025,R,Spa-Francorchamps,101.254,0,permanent
+Alexander Albon,Williams,5.0,6.0,13,2025,R,Spa-Francorchamps,101.201,0,permanent
+Lewis Hamilton,Ferrari,18.0,7.0,13,2025,R,Spa-Francorchamps,101.939,0,permanent
+Liam Lawson,Racing Bulls,9.0,8.0,13,2025,R,Spa-Francorchamps,101.297,0,permanent
+Gabriel Bortoleto,Kick Sauber,10.0,9.0,13,2025,R,Spa-Francorchamps,101.336,0,permanent
+Pierre Gasly,Alpine,13.0,10.0,13,2025,R,Spa-Francorchamps,101.633,0,permanent
+Oliver Bearman,Haas F1 Team,12.0,11.0,13,2025,R,Spa-Francorchamps,101.617,0,permanent
+Nico Hulkenberg,Kick Sauber,14.0,12.0,13,2025,R,Spa-Francorchamps,101.707,0,permanent
+Yuki Tsunoda,Red Bull Racing,7.0,13.0,13,2025,R,Spa-Francorchamps,101.245,0,permanent
+Lance Stroll,Aston Martin,16.0,14.0,13,2025,R,Spa-Francorchamps,102.502,0,permanent
+Esteban Ocon,Haas F1 Team,11.0,15.0,13,2025,R,Spa-Francorchamps,101.525,0,permanent
+Kimi Antonelli,Mercedes,19.0,16.0,13,2025,R,Spa-Francorchamps,102.139,0,permanent
+Fernando Alonso,Aston Martin,20.0,17.0,13,2025,R,Spa-Francorchamps,102.385,0,permanent
+Carlos Sainz,Williams,17.0,18.0,13,2025,R,Spa-Francorchamps,101.691,0,permanent
+Franco Colapinto,Alpine,15.0,19.0,13,2025,R,Spa-Francorchamps,102.022,0,permanent
+Isack Hadjar,Racing Bulls,8.0,20.0,13,2025,R,Spa-Francorchamps,101.281,0,permanent
+Lando Norris,McLaren,3.0,1.0,14,2025,R,Budapest,74.89,1,permanent
+Oscar Piastri,McLaren,2.0,2.0,14,2025,R,Budapest,74.941,1,permanent
+George Russell,Mercedes,4.0,3.0,14,2025,R,Budapest,75.201,1,permanent
+Charles Leclerc,Ferrari,1.0,4.0,14,2025,R,Budapest,75.372,0,permanent
+Fernando Alonso,Aston Martin,5.0,5.0,14,2025,R,Budapest,75.281,0,permanent
+Gabriel Bortoleto,Kick Sauber,7.0,6.0,14,2025,R,Budapest,75.586,0,permanent
+Lance Stroll,Aston Martin,6.0,7.0,14,2025,R,Budapest,75.129,0,permanent
+Liam Lawson,Racing Bulls,9.0,8.0,14,2025,R,Budapest,75.63,0,permanent
+Max Verstappen,Red Bull Racing,8.0,9.0,14,2025,R,Budapest,75.547,0,permanent
+Kimi Antonelli,Mercedes,15.0,10.0,14,2025,R,Budapest,75.782,0,permanent
+Isack Hadjar,Racing Bulls,10.0,11.0,14,2025,R,Budapest,75.469,0,permanent
+Lewis Hamilton,Ferrari,12.0,12.0,14,2025,R,Budapest,75.702,0,permanent
+Nico Hulkenberg,Kick Sauber,18.0,13.0,14,2025,R,Budapest,76.081,0,permanent
+Carlos Sainz,Williams,13.0,14.0,14,2025,R,Budapest,75.652,0,permanent
+Alexander Albon,Williams,19.0,15.0,14,2025,R,Budapest,76.223,0,permanent
+Esteban Ocon,Haas F1 Team,17.0,16.0,14,2025,R,Budapest,76.023,0,permanent
+Yuki Tsunoda,Red Bull Racing,20.0,17.0,14,2025,R,Budapest,75.899,0,permanent
+Franco Colapinto,Alpine,14.0,18.0,14,2025,R,Budapest,75.875,0,permanent
+Pierre Gasly,Alpine,16.0,19.0,14,2025,R,Budapest,75.966,0,permanent
+Oliver Bearman,Haas F1 Team,11.0,20.0,14,2025,R,Budapest,75.694,0,permanent
+Oscar Piastri,McLaren,1.0,1.0,15,2025,R,Zandvoort,68.662,1,permanent
+Max Verstappen,Red Bull Racing,3.0,2.0,15,2025,R,Zandvoort,68.925,1,permanent
+Isack Hadjar,Racing Bulls,4.0,3.0,15,2025,R,Zandvoort,69.208,1,permanent
+George Russell,Mercedes,5.0,4.0,15,2025,R,Zandvoort,69.255,0,permanent
+Alexander Albon,Williams,15.0,5.0,15,2025,R,Zandvoort,69.652,0,permanent
+Oliver Bearman,Haas F1 Team,20.0,6.0,15,2025,R,Zandvoort,70.262,0,permanent
+Lance Stroll,Aston Martin,19.0,7.0,15,2025,R,Zandvoort,69.472,0,permanent
+Fernando Alonso,Aston Martin,10.0,8.0,15,2025,R,Zandvoort,69.366,0,permanent
+Yuki Tsunoda,Red Bull Racing,12.0,9.0,15,2025,R,Zandvoort,69.622,0,permanent
+Esteban Ocon,Haas F1 Team,18.0,10.0,15,2025,R,Zandvoort,70.197,0,permanent
+Franco Colapinto,Alpine,16.0,11.0,15,2025,R,Zandvoort,70.104,0,permanent
+Liam Lawson,Racing Bulls,8.0,12.0,15,2025,R,Zandvoort,69.383,0,permanent
+Carlos Sainz,Williams,9.0,13.0,15,2025,R,Zandvoort,69.472,0,permanent
+Nico Hulkenberg,Kick Sauber,17.0,14.0,15,2025,R,Zandvoort,70.195,0,permanent
+Gabriel Bortoleto,Kick Sauber,13.0,15.0,15,2025,R,Zandvoort,69.622,0,permanent
+Kimi Antonelli,Mercedes,11.0,16.0,15,2025,R,Zandvoort,69.493,0,permanent
+Pierre Gasly,Alpine,14.0,17.0,15,2025,R,Zandvoort,69.637,0,permanent
+Lando Norris,McLaren,2.0,18.0,15,2025,R,Zandvoort,68.674,0,permanent
+Charles Leclerc,Ferrari,6.0,19.0,15,2025,R,Zandvoort,69.304,0,permanent
+Lewis Hamilton,Ferrari,7.0,20.0,15,2025,R,Zandvoort,69.261,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,16,2025,R,Monza,78.792,1,permanent
+Lando Norris,McLaren,2.0,2.0,16,2025,R,Monza,78.869,1,permanent
+Oscar Piastri,McLaren,3.0,3.0,16,2025,R,Monza,78.982,1,permanent
+Charles Leclerc,Ferrari,4.0,4.0,16,2025,R,Monza,79.007,0,permanent
+George Russell,Mercedes,5.0,5.0,16,2025,R,Monza,79.157,0,permanent
+Lewis Hamilton,Ferrari,10.0,6.0,16,2025,R,Monza,79.124,0,permanent
+Alexander Albon,Williams,14.0,7.0,16,2025,R,Monza,79.583,0,permanent
+Gabriel Bortoleto,Kick Sauber,7.0,8.0,16,2025,R,Monza,79.323,0,permanent
+Kimi Antonelli,Mercedes,6.0,9.0,16,2025,R,Monza,79.2,0,permanent
+Isack Hadjar,Racing Bulls,19.0,10.0,16,2025,R,Monza,79.917,0,permanent
+Carlos Sainz,Williams,13.0,11.0,16,2025,R,Monza,79.528,0,permanent
+Oliver Bearman,Haas F1 Team,11.0,12.0,16,2025,R,Monza,79.446,0,permanent
+Yuki Tsunoda,Red Bull Racing,9.0,13.0,16,2025,R,Monza,79.433,0,permanent
+Liam Lawson,Racing Bulls,18.0,14.0,16,2025,R,Monza,80.279,0,permanent
+Esteban Ocon,Haas F1 Team,15.0,15.0,16,2025,R,Monza,79.707,0,permanent
+Pierre Gasly,Alpine,20.0,16.0,16,2025,R,Monza,80.103,0,permanent
+Franco Colapinto,Alpine,17.0,17.0,16,2025,R,Monza,79.992,0,permanent
+Lance Stroll,Aston Martin,16.0,18.0,16,2025,R,Monza,79.948,0,permanent
+Fernando Alonso,Aston Martin,8.0,19.0,16,2025,R,Monza,79.362,0,permanent
+Nico Hulkenberg,Kick Sauber,12.0,20.0,16,2025,R,Monza,79.498,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,17,2025,R,Baku,101.117,1,street
+George Russell,Mercedes,5.0,2.0,17,2025,R,Baku,101.455,1,street
+Carlos Sainz,Williams,2.0,3.0,17,2025,R,Baku,101.595,1,street
+Kimi Antonelli,Mercedes,4.0,4.0,17,2025,R,Baku,101.464,0,street
+Liam Lawson,Racing Bulls,3.0,5.0,17,2025,R,Baku,101.537,0,street
+Yuki Tsunoda,Red Bull Racing,6.0,6.0,17,2025,R,Baku,101.788,0,street
+Lando Norris,McLaren,7.0,7.0,17,2025,R,Baku,101.322,0,street
+Lewis Hamilton,Ferrari,12.0,8.0,17,2025,R,Baku,101.821,0,street
+Charles Leclerc,Ferrari,10.0,9.0,17,2025,R,Baku,101.458,0,street
+Isack Hadjar,Racing Bulls,8.0,10.0,17,2025,R,Baku,101.647,0,street
+Gabriel Bortoleto,Kick Sauber,13.0,11.0,17,2025,R,Baku,102.277,0,street
+Oliver Bearman,Haas F1 Team,15.0,12.0,17,2025,R,Baku,102.666,0,street
+Alexander Albon,Williams,19.0,13.0,17,2025,R,Baku,103.778,0,street
+Esteban Ocon,Haas F1 Team,20.0,14.0,17,2025,R,Baku,103.004,0,street
+Fernando Alonso,Aston Martin,11.0,15.0,17,2025,R,Baku,101.857,0,street
+Nico Hulkenberg,Kick Sauber,17.0,16.0,17,2025,R,Baku,102.916,0,street
+Lance Stroll,Aston Martin,14.0,17.0,17,2025,R,Baku,102.101,0,street
+Pierre Gasly,Alpine,18.0,18.0,17,2025,R,Baku,103.139,0,street
+Franco Colapinto,Alpine,16.0,19.0,17,2025,R,Baku,102.779,0,street
+Oscar Piastri,McLaren,9.0,20.0,17,2025,R,Baku,101.414,0,street
+George Russell,Mercedes,1.0,1.0,18,2025,R,Marina Bay,89.158,1,street
+Max Verstappen,Red Bull Racing,2.0,2.0,18,2025,R,Marina Bay,89.34,1,street
+Lando Norris,McLaren,5.0,3.0,18,2025,R,Marina Bay,89.586,1,street
+Oscar Piastri,McLaren,3.0,4.0,18,2025,R,Marina Bay,89.524,0,street
+Kimi Antonelli,Mercedes,4.0,5.0,18,2025,R,Marina Bay,89.537,0,street
+Charles Leclerc,Ferrari,7.0,6.0,18,2025,R,Marina Bay,89.784,0,street
+Fernando Alonso,Aston Martin,10.0,7.0,18,2025,R,Marina Bay,89.955,0,street
+Lewis Hamilton,Ferrari,6.0,8.0,18,2025,R,Marina Bay,89.688,0,street
+Oliver Bearman,Haas F1 Team,9.0,9.0,18,2025,R,Marina Bay,89.868,0,street
+Carlos Sainz,Williams,18.0,10.0,18,2025,R,Marina Bay,90.235,0,street
+Isack Hadjar,Racing Bulls,8.0,11.0,18,2025,R,Marina Bay,89.846,0,street
+Yuki Tsunoda,Red Bull Racing,13.0,12.0,18,2025,R,Marina Bay,90.353,0,street
+Lance Stroll,Aston Martin,15.0,13.0,18,2025,R,Marina Bay,90.949,0,street
+Alexander Albon,Williams,20.0,14.0,18,2025,R,Marina Bay,90.202,0,street
+Liam Lawson,Racing Bulls,12.0,15.0,18,2025,R,Marina Bay,90.32,0,street
+Franco Colapinto,Alpine,16.0,16.0,18,2025,R,Marina Bay,90.982,0,street
+Gabriel Bortoleto,Kick Sauber,14.0,17.0,18,2025,R,Marina Bay,90.82,0,street
+Esteban Ocon,Haas F1 Team,17.0,18.0,18,2025,R,Marina Bay,90.989,0,street
+Pierre Gasly,Alpine,19.0,19.0,18,2025,R,Marina Bay,91.261,0,street
+Nico Hulkenberg,Kick Sauber,11.0,20.0,18,2025,R,Marina Bay,90.141,0,street
+Max Verstappen,Red Bull Racing,1.0,1.0,19,2025,R,Austin,92.51,1,permanent
+Lando Norris,McLaren,2.0,2.0,19,2025,R,Austin,92.801,1,permanent
+Charles Leclerc,Ferrari,3.0,3.0,19,2025,R,Austin,92.807,1,permanent
+Lewis Hamilton,Ferrari,5.0,4.0,19,2025,R,Austin,92.912,0,permanent
+Oscar Piastri,McLaren,6.0,5.0,19,2025,R,Austin,93.084,0,permanent
+George Russell,Mercedes,4.0,6.0,19,2025,R,Austin,92.826,0,permanent
+Yuki Tsunoda,Red Bull Racing,13.0,7.0,19,2025,R,Austin,93.466,0,permanent
+Nico Hulkenberg,Kick Sauber,11.0,8.0,19,2025,R,Austin,93.334,0,permanent
+Oliver Bearman,Haas F1 Team,8.0,9.0,19,2025,R,Austin,93.139,0,permanent
+Fernando Alonso,Aston Martin,10.0,10.0,19,2025,R,Austin,93.16,0,permanent
+Liam Lawson,Racing Bulls,12.0,11.0,19,2025,R,Austin,93.36,0,permanent
+Lance Stroll,Aston Martin,19.0,12.0,19,2025,R,Austin,94.54,0,permanent
+Kimi Antonelli,Mercedes,7.0,13.0,19,2025,R,Austin,93.044,0,permanent
+Alexander Albon,Williams,18.0,14.0,19,2025,R,Austin,94.69,0,permanent
+Esteban Ocon,Haas F1 Team,17.0,15.0,19,2025,R,Austin,94.136,0,permanent
+Isack Hadjar,Racing Bulls,20.0,16.0,19,2025,R,Austin,93.16,0,permanent
+Franco Colapinto,Alpine,15.0,17.0,19,2025,R,Austin,94.039,0,permanent
+Gabriel Bortoleto,Kick Sauber,16.0,18.0,19,2025,R,Austin,94.125,0,permanent
+Pierre Gasly,Alpine,14.0,19.0,19,2025,R,Austin,93.599,0,permanent
+Carlos Sainz,Williams,9.0,20.0,19,2025,R,Austin,93.124,0,permanent
+Lando Norris,McLaren,1.0,1.0,20,2025,R,Mexico City,75.586,1,permanent
+Charles Leclerc,Ferrari,2.0,2.0,20,2025,R,Mexico City,75.848,1,permanent
+Max Verstappen,Red Bull Racing,5.0,3.0,20,2025,R,Mexico City,76.07,1,permanent
+Oliver Bearman,Haas F1 Team,9.0,4.0,20,2025,R,Mexico City,76.46,0,permanent
+Oscar Piastri,McLaren,7.0,5.0,20,2025,R,Mexico City,76.174,0,permanent
+Kimi Antonelli,Mercedes,6.0,6.0,20,2025,R,Mexico City,76.118,0,permanent
+George Russell,Mercedes,4.0,7.0,20,2025,R,Mexico City,76.034,0,permanent
+Lewis Hamilton,Ferrari,3.0,8.0,20,2025,R,Mexico City,75.938,0,permanent
+Esteban Ocon,Haas F1 Team,11.0,9.0,20,2025,R,Mexico City,76.837,0,permanent
+Gabriel Bortoleto,Kick Sauber,16.0,10.0,20,2025,R,Mexico City,77.412,0,permanent
+Yuki Tsunoda,Red Bull Racing,10.0,11.0,20,2025,R,Mexico City,76.816,0,permanent
+Alexander Albon,Williams,17.0,12.0,20,2025,R,Mexico City,77.49,0,permanent
+Isack Hadjar,Racing Bulls,8.0,13.0,20,2025,R,Mexico City,76.252,0,permanent
+Lance Stroll,Aston Martin,19.0,14.0,20,2025,R,Mexico City,77.606,0,permanent
+Pierre Gasly,Alpine,18.0,15.0,20,2025,R,Mexico City,77.546,0,permanent
+Franco Colapinto,Alpine,20.0,16.0,20,2025,R,Mexico City,77.67,0,permanent
+Carlos Sainz,Williams,12.0,17.0,20,2025,R,Mexico City,76.172,0,permanent
+Fernando Alonso,Aston Martin,14.0,18.0,20,2025,R,Mexico City,77.103,0,permanent
+Nico Hulkenberg,Kick Sauber,13.0,19.0,20,2025,R,Mexico City,77.016,0,permanent
+Liam Lawson,Racing Bulls,15.0,20.0,20,2025,R,Mexico City,76.961,0,permanent
+Lando Norris,McLaren,1.0,1.0,21,2025,R,São Paulo,69.511,1,permanent
+Kimi Antonelli,Mercedes,2.0,2.0,21,2025,R,São Paulo,69.685,1,permanent
+Max Verstappen,Red Bull Racing,19.0,3.0,21,2025,R,São Paulo,70.403,1,permanent
+George Russell,Mercedes,6.0,4.0,21,2025,R,São Paulo,69.88,0,permanent
+Oscar Piastri,McLaren,4.0,5.0,21,2025,R,São Paulo,69.835,0,permanent
+Oliver Bearman,Haas F1 Team,8.0,6.0,21,2025,R,São Paulo,69.755,0,permanent
+Liam Lawson,Racing Bulls,7.0,7.0,21,2025,R,São Paulo,69.95,0,permanent
+Isack Hadjar,Racing Bulls,5.0,8.0,21,2025,R,São Paulo,69.931,0,permanent
+Nico Hulkenberg,Kick Sauber,10.0,9.0,21,2025,R,São Paulo,69.985,0,permanent
+Pierre Gasly,Alpine,9.0,10.0,21,2025,R,São Paulo,69.857,0,permanent
+Alexander Albon,Williams,12.0,11.0,21,2025,R,São Paulo,70.053,0,permanent
+Esteban Ocon,Haas F1 Team,20.0,12.0,21,2025,R,São Paulo,70.438,0,permanent
+Carlos Sainz,Williams,15.0,13.0,21,2025,R,São Paulo,70.184,0,permanent
+Fernando Alonso,Aston Martin,11.0,14.0,21,2025,R,São Paulo,70.001,0,permanent
+Franco Colapinto,Alpine,16.0,15.0,21,2025,R,São Paulo,70.632,0,permanent
+Lance Stroll,Aston Martin,14.0,16.0,21,2025,R,São Paulo,70.041,0,permanent
+Yuki Tsunoda,Red Bull Racing,17.0,17.0,21,2025,R,São Paulo,70.711,0,permanent
+Lewis Hamilton,Ferrari,13.0,18.0,21,2025,R,São Paulo,70.016,0,permanent
+Charles Leclerc,Ferrari,3.0,19.0,21,2025,R,São Paulo,69.801,0,permanent
+Gabriel Bortoleto,Kick Sauber,18.0,20.0,21,2025,R,São Paulo,69.985,0,permanent
+Max Verstappen,Red Bull Racing,2.0,1.0,22,2025,R,Las Vegas,108.257,1,street
+George Russell,Mercedes,4.0,2.0,22,2025,R,Las Vegas,108.803,1,street
+Kimi Antonelli,Mercedes,17.0,3.0,22,2025,R,Las Vegas,116.314,1,street
+Charles Leclerc,Ferrari,9.0,4.0,22,2025,R,Las Vegas,109.872,0,street
+Carlos Sainz,Williams,3.0,5.0,22,2025,R,Las Vegas,108.296,0,street
+Isack Hadjar,Racing Bulls,8.0,6.0,22,2025,R,Las Vegas,109.554,0,street
+Nico Hulkenberg,Kick Sauber,11.0,7.0,22,2025,R,Las Vegas,112.781,0,street
+Lewis Hamilton,Ferrari,19.0,8.0,22,2025,R,Las Vegas,117.115,0,street
+Esteban Ocon,Haas F1 Team,13.0,9.0,22,2025,R,Las Vegas,112.987,0,street
+Oliver Bearman,Haas F1 Team,14.0,10.0,22,2025,R,Las Vegas,113.094,0,street
+Fernando Alonso,Aston Martin,7.0,11.0,22,2025,R,Las Vegas,109.466,0,street
+Yuki Tsunoda,Red Bull Racing,20.0,12.0,22,2025,R,Las Vegas,116.798,0,street
+Pierre Gasly,Alpine,10.0,13.0,22,2025,R,Las Vegas,111.54,0,street
+Liam Lawson,Racing Bulls,6.0,14.0,22,2025,R,Las Vegas,109.062,0,street
+Franco Colapinto,Alpine,15.0,15.0,22,2025,R,Las Vegas,113.683,0,street
+Alexander Albon,Williams,16.0,16.0,22,2025,R,Las Vegas,116.22,0,street
+Gabriel Bortoleto,Kick Sauber,18.0,17.0,22,2025,R,Las Vegas,116.674,0,street
+Lance Stroll,Aston Martin,12.0,18.0,22,2025,R,Las Vegas,112.85,0,street
+Lando Norris,McLaren,1.0,19.0,22,2025,R,Las Vegas,107.934,0,street
+Oscar Piastri,McLaren,5.0,20.0,22,2025,R,Las Vegas,108.961,0,street
+Max Verstappen,Red Bull Racing,3.0,1.0,23,2025,R,Lusail,79.651,1,permanent
+Oscar Piastri,McLaren,1.0,2.0,23,2025,R,Lusail,79.387,1,permanent
+Carlos Sainz,Williams,7.0,3.0,23,2025,R,Lusail,80.251,1,permanent
+Lando Norris,McLaren,2.0,4.0,23,2025,R,Lusail,79.495,0,permanent
+Kimi Antonelli,Mercedes,5.0,5.0,23,2025,R,Lusail,79.846,0,permanent
+George Russell,Mercedes,4.0,6.0,23,2025,R,Lusail,79.662,0,permanent
+Fernando Alonso,Aston Martin,8.0,7.0,23,2025,R,Lusail,80.219,0,permanent
+Charles Leclerc,Ferrari,10.0,8.0,23,2025,R,Lusail,80.343,0,permanent
+Liam Lawson,Racing Bulls,12.0,9.0,23,2025,R,Lusail,80.433,0,permanent
+Yuki Tsunoda,Red Bull Racing,15.0,10.0,23,2025,R,Lusail,80.761,0,permanent
+Alexander Albon,Williams,14.0,11.0,23,2025,R,Lusail,80.629,0,permanent
+Lewis Hamilton,Ferrari,17.0,12.0,23,2025,R,Lusail,80.907,0,permanent
+Gabriel Bortoleto,Kick Sauber,19.0,13.0,23,2025,R,Lusail,80.534,0,permanent
+Franco Colapinto,Alpine,20.0,14.0,23,2025,R,Lusail,81.137,0,permanent
+Esteban Ocon,Haas F1 Team,16.0,15.0,23,2025,R,Lusail,80.864,0,permanent
+Pierre Gasly,Alpine,9.0,16.0,23,2025,R,Lusail,80.324,0,permanent
+Lance Stroll,Aston Martin,18.0,17.0,23,2025,R,Lusail,81.058,0,permanent
+Isack Hadjar,Racing Bulls,6.0,18.0,23,2025,R,Lusail,80.114,0,permanent
+Oliver Bearman,Haas F1 Team,13.0,19.0,23,2025,R,Lusail,80.438,0,permanent
+Nico Hulkenberg,Kick Sauber,11.0,20.0,23,2025,R,Lusail,80.353,0,permanent
+Max Verstappen,Red Bull Racing,1.0,1.0,24,2025,R,Yas Island,82.207,1,permanent
+Oscar Piastri,McLaren,3.0,2.0,24,2025,R,Yas Island,82.437,1,permanent
+Lando Norris,McLaren,2.0,3.0,24,2025,R,Yas Island,82.408,1,permanent
+Charles Leclerc,Ferrari,5.0,4.0,24,2025,R,Yas Island,82.73,0,permanent
+George Russell,Mercedes,4.0,5.0,24,2025,R,Yas Island,82.645,0,permanent
+Fernando Alonso,Aston Martin,6.0,6.0,24,2025,R,Yas Island,82.861,0,permanent
+Esteban Ocon,Haas F1 Team,8.0,7.0,24,2025,R,Yas Island,82.913,0,permanent
+Lewis Hamilton,Ferrari,16.0,8.0,24,2025,R,Yas Island,83.394,0,permanent
+Nico Hulkenberg,Kick Sauber,18.0,9.0,24,2025,R,Yas Island,83.45,0,permanent
+Lance Stroll,Aston Martin,15.0,10.0,24,2025,R,Yas Island,83.097,0,permanent
+Gabriel Bortoleto,Kick Sauber,7.0,11.0,24,2025,R,Yas Island,82.874,0,permanent
+Oliver Bearman,Haas F1 Team,11.0,12.0,24,2025,R,Yas Island,83.041,0,permanent
+Carlos Sainz,Williams,12.0,13.0,24,2025,R,Yas Island,83.042,0,permanent
+Yuki Tsunoda,Red Bull Racing,10.0,14.0,24,2025,R,Yas Island,83.034,0,permanent
+Kimi Antonelli,Mercedes,14.0,15.0,24,2025,R,Yas Island,82.894,0,permanent
+Alexander Albon,Williams,17.0,16.0,24,2025,R,Yas Island,83.416,0,permanent
+Isack Hadjar,Racing Bulls,9.0,17.0,24,2025,R,Yas Island,82.997,0,permanent
+Liam Lawson,Racing Bulls,13.0,18.0,24,2025,R,Yas Island,83.077,0,permanent
+Pierre Gasly,Alpine,19.0,19.0,24,2025,R,Yas Island,83.468,0,permanent
+Franco Colapinto,Alpine,20.0,20.0,24,2025,R,Yas Island,83.89,0,permanent
+George Russell,Mercedes,1.0,1.0,1,2026,R,Melbourne,78.518,1,street
+Kimi Antonelli,Mercedes,2.0,2.0,1,2026,R,Melbourne,78.811,1,street
+Charles Leclerc,Ferrari,4.0,3.0,1,2026,R,Melbourne,79.327,1,street
+Lewis Hamilton,Ferrari,7.0,4.0,1,2026,R,Melbourne,79.478,0,street
+Lando Norris,McLaren,6.0,5.0,1,2026,R,Melbourne,79.475,0,street
+Max Verstappen,Red Bull Racing,20.0,6.0,1,2026,R,Melbourne,80.221,0,street
+Oliver Bearman,Haas F1 Team,12.0,7.0,1,2026,R,Melbourne,80.311,0,street
+Arvid Lindblad,Racing Bulls,9.0,8.0,1,2026,R,Melbourne,79.971,0,street
+Gabriel Bortoleto,Audi,10.0,9.0,1,2026,R,Melbourne,80.221,0,street
+Pierre Gasly,Alpine,14.0,10.0,1,2026,R,Melbourne,80.501,0,street
+Esteban Ocon,Haas F1 Team,13.0,11.0,1,2026,R,Melbourne,80.491,0,street
+Alexander Albon,Williams,15.0,12.0,1,2026,R,Melbourne,80.941,0,street
+Liam Lawson,Racing Bulls,8.0,13.0,1,2026,R,Melbourne,79.994,0,street
+Franco Colapinto,Alpine,16.0,14.0,1,2026,R,Melbourne,81.2,0,street
+Carlos Sainz,Williams,21.0,15.0,1,2026,R,Melbourne,80.221,0,street
+Sergio Perez,Cadillac,18.0,16.0,1,2026,R,Melbourne,82.605,0,street
+Lance Stroll,Aston Martin,22.0,17.0,1,2026,R,Melbourne,80.221,0,street
+Fernando Alonso,Aston Martin,17.0,18.0,1,2026,R,Melbourne,81.969,0,street
+Valtteri Bottas,Cadillac,19.0,19.0,1,2026,R,Melbourne,83.244,0,street
+Isack Hadjar,Red Bull Racing,3.0,20.0,1,2026,R,Melbourne,79.303,0,street
+Oscar Piastri,McLaren,5.0,21.0,1,2026,R,Melbourne,79.38,0,street
+Nico Hulkenberg,Audi,11.0,22.0,1,2026,R,Melbourne,80.303,0,street
+Kimi Antonelli,Mercedes,1.0,1.0,2,2026,R,Shanghai,92.064,1,permanent
+George Russell,Mercedes,2.0,2.0,2,2026,R,Shanghai,92.286,1,permanent
+Lewis Hamilton,Ferrari,3.0,3.0,2,2026,R,Shanghai,92.415,1,permanent
+Charles Leclerc,Ferrari,4.0,4.0,2,2026,R,Shanghai,92.428,0,permanent
+Oliver Bearman,Haas F1 Team,10.0,5.0,2,2026,R,Shanghai,93.197,0,permanent
+Pierre Gasly,Alpine,7.0,6.0,2,2026,R,Shanghai,92.873,0,permanent
+Liam Lawson,Racing Bulls,14.0,7.0,2,2026,R,Shanghai,93.765,0,permanent
+Isack Hadjar,Red Bull Racing,9.0,8.0,2,2026,R,Shanghai,93.121,0,permanent
+Carlos Sainz,Williams,17.0,9.0,2,2026,R,Shanghai,94.317,0,permanent
+Franco Colapinto,Alpine,12.0,10.0,2,2026,R,Shanghai,93.357,0,permanent
+Nico Hulkenberg,Audi,11.0,11.0,2,2026,R,Shanghai,93.354,0,permanent
+Arvid Lindblad,Racing Bulls,15.0,12.0,2,2026,R,Shanghai,93.784,0,permanent
+Valtteri Bottas,Cadillac,19.0,13.0,2,2026,R,Shanghai,95.436,0,permanent
+Esteban Ocon,Haas F1 Team,13.0,14.0,2,2026,R,Shanghai,93.538,0,permanent
+Sergio Perez,Cadillac,21.0,15.0,2,2026,R,Shanghai,96.906,0,permanent
+Max Verstappen,Red Bull Racing,8.0,16.0,2,2026,R,Shanghai,93.002,0,permanent
+Fernando Alonso,Aston Martin,18.0,17.0,2,2026,R,Shanghai,95.203,0,permanent
+Lance Stroll,Aston Martin,20.0,18.0,2,2026,R,Shanghai,95.995,0,permanent
+Oscar Piastri,McLaren,5.0,19.0,2,2026,R,Shanghai,92.55,0,permanent
+Lando Norris,McLaren,6.0,20.0,2,2026,R,Shanghai,92.608,0,permanent
+Gabriel Bortoleto,Audi,16.0,21.0,2,2026,R,Shanghai,93.549,0,permanent
+Alexander Albon,Williams,22.0,22.0,2,2026,R,Shanghai,94.772,0,permanent
+Kimi Antonelli,Mercedes,1.0,1.0,3,2026,R,Suzuka,88.778,1,permanent
+Oscar Piastri,McLaren,3.0,2.0,3,2026,R,Suzuka,89.132,1,permanent
+Charles Leclerc,Ferrari,4.0,3.0,3,2026,R,Suzuka,89.303,1,permanent
+George Russell,Mercedes,2.0,4.0,3,2026,R,Suzuka,89.076,0,permanent
+Lando Norris,McLaren,5.0,5.0,3,2026,R,Suzuka,89.409,0,permanent
+Lewis Hamilton,Ferrari,6.0,6.0,3,2026,R,Suzuka,89.567,0,permanent
+Pierre Gasly,Alpine,7.0,7.0,3,2026,R,Suzuka,89.691,0,permanent
+Max Verstappen,Red Bull Racing,11.0,8.0,3,2026,R,Suzuka,90.262,0,permanent
+Liam Lawson,Racing Bulls,14.0,9.0,3,2026,R,Suzuka,90.495,0,permanent
+Esteban Ocon,Haas F1 Team,12.0,10.0,3,2026,R,Suzuka,90.309,0,permanent
+Nico Hulkenberg,Audi,13.0,11.0,3,2026,R,Suzuka,90.358,0,permanent
+Isack Hadjar,Red Bull Racing,8.0,12.0,3,2026,R,Suzuka,89.978,0,permanent
+Gabriel Bortoleto,Audi,9.0,13.0,3,2026,R,Suzuka,89.99,0,permanent
+Arvid Lindblad,Racing Bulls,10.0,14.0,3,2026,R,Suzuka,90.109,0,permanent
+Carlos Sainz,Williams,16.0,15.0,3,2026,R,Suzuka,90.927,0,permanent
+Franco Colapinto,Alpine,15.0,16.0,3,2026,R,Suzuka,90.627,0,permanent
+Sergio Perez,Cadillac,19.0,17.0,3,2026,R,Suzuka,92.206,0,permanent
+Fernando Alonso,Aston Martin,21.0,18.0,3,2026,R,Suzuka,92.646,0,permanent
+Valtteri Bottas,Cadillac,20.0,19.0,3,2026,R,Suzuka,92.33,0,permanent
+Alexander Albon,Williams,17.0,20.0,3,2026,R,Suzuka,91.088,0,permanent
+Lance Stroll,Aston Martin,22.0,21.0,3,2026,R,Suzuka,92.92,0,permanent
+Oliver Bearman,Haas F1 Team,18.0,22.0,3,2026,R,Suzuka,91.09,0,permanent

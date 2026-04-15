@@ -26,28 +26,21 @@ if DATABASE_URL:
         return _pool
 
     def get_conn():
-        conn = get_pool().getconn()
-        try:
-            conn.isolation_level  # test if connection is alive
-            cur = conn.cursor()
-            cur.execute("SELECT 1")
-            cur.close()
-        except Exception:
-            # Connection is stale — discard it and get a fresh one
-            try:
-                get_pool().putconn(conn, close=True)
-            except Exception:
-                pass
-            conn = get_pool().getconn()
-        return conn
+        # No probe query — TCP keepalives (configured on the pool) detect
+        # dead connections. Saves one round-trip per DB call.
+        return get_pool().getconn()
 
     def release_conn(conn):
         try:
             if conn.closed:
+                # Discard dead connection so the pool recreates it.
+                try: get_pool().putconn(conn, close=True)
+                except Exception: pass
                 return
             get_pool().putconn(conn)
         except Exception:
-            pass
+            try: get_pool().putconn(conn, close=True)
+            except Exception: pass
 
     def init_db():
         conn = get_conn()

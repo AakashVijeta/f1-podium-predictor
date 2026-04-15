@@ -1,107 +1,140 @@
 @keyframes stripIn {
-  from { opacity: 0; transform: translateX(-12px); }
+  from { opacity: 0; transform: translateX(-14px); }
   to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes goldShine {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
 }
 
 .winner-strip {
   margin-top: 2px;
-  background: var(--bg1);
-  padding: 2rem;
-  border-left: 1px solid;
+  background: linear-gradient(180deg, #121212 0%, #090909 100%);
+  padding: 2.1rem 2rem;
+  border-top: 3px solid;
   display: flex;
   align-items: center;
   gap: 2rem;
   position: relative;
   overflow: hidden;
   flex-wrap: wrap;
-  animation: stripIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: stripIn 0.55s var(--ease) both;
+  box-shadow: 0 20px 50px -25px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+/* Checkered strip at top */
+.winner-strip::before {
+  content: '';
+  position: absolute;
+  top: -3px; left: 0; right: 0;
+  height: 3px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Crect width='3' height='3' fill='%23ffd24a'/%3E%3Crect x='3' y='3' width='3' height='3' fill='%23ffd24a'/%3E%3C/svg%3E");
+  background-size: 6px 6px;
+  opacity: 0.8;
+  pointer-events: none;
 }
 
 .winner-bg-code {
   position: absolute;
-  right: -1rem;
+  right: -1.5rem;
   top: 50%;
   transform: translateY(-50%);
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 14rem;
+  font-size: 16rem;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.015);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, transparent 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   line-height: 1;
   pointer-events: none;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.06em;
 }
 
 .winner-label {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 18px currentColor;
+}
+
+.winner-label::before {
+  content: '';
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+  animation: goldShine 2s ease-in-out infinite;
 }
 
 .winner-divider {
   width: 1px;
-  height: 40px;
-  background: var(--border);
+  height: 48px;
+  background: linear-gradient(180deg, transparent 0%, var(--border-hi) 50%, transparent 100%);
   flex-shrink: 0;
 }
 
 .winner-name-fn {
-  font-size: 0.65rem;
-  color: #888;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.55);
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
 }
 
 .winner-name-ln {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 2.8rem;
+  font-size: 3.1rem;
   font-weight: 900;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  line-height: 0.9;
+  line-height: 0.88;
+  text-shadow: 0 2px 24px color-mix(in srgb, currentColor 45%, transparent);
 }
 
 .winner-meta-lbl {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.62rem;
-  color: #888;
-  letter-spacing: 0.15em;
+  font-size: 0.66rem;
+  color: rgba(255,255,255,0.42);
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
 }
 
 .winner-meta-val {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #e0e0e0;
-  letter-spacing: 0.06em;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #f0f0f0;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .winner-number {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 900;
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 18px currentColor;
 }
 
 /* ── Mobile ── */
 @media (max-width: 640px) {
   .winner-strip {
-    padding: 1.25rem;
+    padding: 1.35rem 1.25rem;
     gap: 1rem;
   }
-
-  .winner-divider {
-    display: none;
-  }
-
-  .winner-name-ln {
-    font-size: 2rem;
-  }
-
-  .winner-bg-code {
-    font-size: 8rem;
-  }
+  .winner-divider  { display: none; }
+  .winner-name-ln  { font-size: 2.2rem; }
+  .winner-bg-code  { font-size: 9rem; }
 }

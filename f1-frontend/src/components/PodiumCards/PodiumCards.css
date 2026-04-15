@@ -1,46 +1,99 @@
 .podium-wrap {
-  padding: 2rem 2rem 0;
+  padding: 2.25rem 2rem 0;
 }
 
 .podium-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 2px;
+  gap: 3px;
 }
 
-/* ── Entrance animation ── */
+/* ── Entrance ── */
 @keyframes cardIn {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes shine {
+  0%   { transform: translateX(-150%) skewX(-20deg); }
+  100% { transform: translateX(250%)  skewX(-20deg); }
+}
+
 .pc {
-  background: var(--bg1);
-  padding: 2rem 1.75rem;
+  background: var(--bg-card);
+  padding: 2rem 1.85rem 1.85rem;
   position: relative;
   overflow: hidden;
   border-top: 3px solid;
-  transition: background 0.15s, transform 0.15s;
+  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
   cursor: default;
-  animation: cardIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: cardIn 0.5s var(--ease) both;
+  isolation: isolate;
+}
+
+/* Gradient top accent (replaces flat border) */
+.pc::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, currentColor 15%, currentColor 85%, transparent 100%);
+  color: inherit;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+
+/* Shimmer sweep on hover */
+.pc::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 40%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+  transform: translateX(-150%) skewX(-20deg);
+  pointer-events: none;
+  z-index: 2;
 }
 
 .pc:hover {
-  background: var(--bg2);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
+  box-shadow:
+    0 20px 50px -20px rgba(0,0,0,0.9),
+    0 0 0 1px rgba(255,255,255,0.06),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+.pc:hover::after {
+  animation: shine 0.9s var(--ease);
+}
+
+/* Radial team-colour glow background — set via border-top-color */
+.pc {
+  background:
+    radial-gradient(ellipse 80% 60% at 80% 100%, color-mix(in srgb, currentColor 18%, transparent) 0%, transparent 70%),
+    linear-gradient(180deg, #121212 0%, #090909 100%);
+  color: #fff;
+}
+
+.pc[style*="borderTopColor"] {
+  /* Let JSX inline styles drive the accent */
 }
 
 .pc-bgnum {
   position: absolute;
-  right: -0.75rem;
-  bottom: -2rem;
+  right: -1rem;
+  bottom: -2.5rem;
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 11rem;
+  font-size: 13rem;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.018);
+  color: rgba(255, 255, 255, 0.022);
   line-height: 1;
   pointer-events: none;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.06em;
+  background: linear-gradient(180deg, rgba(255,255,255,0.045) 0%, transparent 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .pc-top {
@@ -52,110 +105,152 @@
 
 .pc-plabel {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  color: #252525;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  color: #656565;
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.pc-plabel::before {
+  content: '';
+  width: 10px;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.6;
 }
 
 .pc-conf {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  padding: 2px 6px;
-  border-radius: 2px;
+  font-size: 0.58rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  padding: 3px 8px 3px 9px;
+  clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
   text-transform: uppercase;
+  position: relative;
 }
 
-.conf-high { background: rgba(0, 209, 102, 0.12); color: #00d166; }
-.conf-med  { background: rgba(245, 166, 35, 0.12); color: #f5a623; }
-.conf-low  { background: rgba(255, 255, 255, 0.05); color: #666; }
+.pc-conf::before {
+  content: '';
+  position: absolute;
+  left: 5px; top: 50%;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: currentColor;
+  box-shadow: 0 0 6px currentColor;
+}
+
+.pc-conf { padding-left: 18px; }
+
+.conf-high { background: rgba(0, 209, 102, 0.14); color: var(--green); }
+.conf-med  { background: rgba(245, 166, 35, 0.14); color: var(--amber); }
+.conf-low  { background: rgba(255, 255, 255, 0.06); color: #888; }
 
 .pc-short {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 900;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 16px currentColor;
+  filter: drop-shadow(0 0 2px currentColor);
 }
 
 .pc-fn {
-  font-size: 0.65rem;
-  color: #383838;
+  font-size: 0.68rem;
+  color: #6e6e6e;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   line-height: 1;
+  margin-top: 0.35rem;
+  font-weight: 500;
 }
 
 .pc-ln {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 2.6rem;
+  font-size: 2.9rem;
   font-weight: 900;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
-  line-height: 0.9;
-  margin-top: 0.12rem;
+  line-height: 0.88;
+  margin-top: 0.15rem;
+  text-shadow: 0 2px 20px color-mix(in srgb, currentColor 40%, transparent);
 }
 
 .pc-team {
-  font-size: 0.62rem;
-  color: #2e2e2e;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.68rem;
+  color: #777;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-top: 0.35rem;
+  letter-spacing: 0.16em;
+  margin-top: 0.55rem;
+  font-weight: 600;
 }
 
 .pc-prob {
   display: flex;
   align-items: baseline;
-  gap: 0.3rem;
-  margin-top: 1.5rem;
+  gap: 0.4rem;
+  margin-top: 1.75rem;
 }
 
 .pc-pnum {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 3.2rem;
+  font-size: 3.6rem;
   font-weight: 700;
   line-height: 1;
+  letter-spacing: -0.01em;
+  text-shadow: 0 0 24px color-mix(in srgb, currentColor 40%, transparent);
 }
 
 .pc-plbl {
-  font-size: 0.58rem;
-  color: #252525;
-  letter-spacing: 0.12em;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.64rem;
+  color: #5e5e5e;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  padding-bottom: 0.4rem;
+  padding-bottom: 0.45rem;
+  font-weight: 600;
 }
 
-.pc-bar  { height: 2px; background: rgba(255,255,255,0.04); margin-top: 1rem; }
-.pc-fill { height: 100%; transition: width 1s cubic-bezier(0.16,1,0.3,1); }
+.pc-bar {
+  height: 3px;
+  background: rgba(255,255,255,0.05);
+  margin-top: 1.1rem;
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.pc-fill {
+  height: 100%;
+  transition: width 1.1s var(--ease);
+  border-radius: 2px;
+  position: relative;
+  box-shadow: 0 0 12px currentColor;
+}
+
+.pc-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+  animation: shine 2.4s ease-in-out infinite;
+}
 
 /* ── Mobile ── */
 @media (max-width: 640px) {
-  .podium-wrap {
-    padding: 1.25rem 1rem 0;
-  }
-
-  .podium-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .pc {
-    padding: 1.5rem 1.25rem;
-  }
-
-  .pc-ln {
-    font-size: 2rem;
-  }
-
-  .pc-pnum {
-    font-size: 2.4rem;
-  }
+  .podium-wrap { padding: 1.5rem 1rem 0; }
+  .podium-grid { grid-template-columns: 1fr; }
+  .pc         { padding: 1.5rem 1.25rem; }
+  .pc-ln      { font-size: 2.15rem; }
+  .pc-pnum    { font-size: 2.6rem; }
 }
 
 @media (min-width: 641px) and (max-width: 900px) {
-  .podium-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+  .podium-grid { grid-template-columns: 1fr 1fr; }
 }
