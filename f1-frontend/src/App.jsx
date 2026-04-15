@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ROUNDS_2026 } from "./constants/rounds";
 import { API_BASE } from "./constants/drivers";
 import Header from "./components/Header/Header";
@@ -24,26 +24,49 @@ export default function App() {
   const [error, setError] = useState(null);
   const [hovered, setHovered] = useState(null);
   const [actualResults, setActualResults] = useState(null);
+  const cacheRef = useRef(new Map()); // round -> { data, actualResults }
 
   const race = ROUNDS_2026.find(r => r.round === round);
 
   useEffect(() => {
+    const cached = cacheRef.current.get(round);
+    if (cached) {
+      setData(cached.data);
+      setActualResults(cached.actualResults);
+      setLoading(false);
+      setError(null);
+      return;
+    }
+
+    const ac = new AbortController();
     setLoading(true);
     setError(null);
     setData(null);
     setActualResults(null);
 
-    fetch(`${API_BASE}/predict/2026/${round}`)
-      .then(r => r.json())
-      .then(d => {
+    Promise.all([
+      fetch(`${API_BASE}/predict/2026/${round}`, { signal: ac.signal }).then(r => r.json()),
+      fetch(`${API_BASE}/results/2026/${round}`, { signal: ac.signal }).then(r => r.json()),
+    ])
+      .then(([d, r]) => {
+        if (ac.signal.aborted) return;
+        const actual = r.available ? r.results : null;
         setData(d);
-        // Fetch actual results regardless of status — Jolpica returns empty if not yet done
-        return fetch(`${API_BASE}/results/2026/${round}`);
+        setActualResults(actual);
+        // Only cache terminal states; pre_quali/pre_race may change soon.
+        if (d?.status === "post_race") {
+          cacheRef.current.set(round, { data: d, actualResults: actual });
+        }
       })
-      .then(r => r.json())
-      .then(r => setActualResults(r.available ? r.results : null))
-      .catch(() => setError("Cannot reach API — make sure uvicorn is running."))
-      .finally(() => setLoading(false));
+      .catch(err => {
+        if (err.name === "AbortError") return;
+        setError("Cannot reach API — make sure uvicorn is running.");
+      })
+      .finally(() => {
+        if (!ac.signal.aborted) setLoading(false);
+      });
+
+    return () => ac.abort();
   }, [round]);
 
   const sorted = data?.predictions

@@ -128,7 +128,14 @@ async def get_quali(year: int, round: int, max_wait_minutes: int = 60, poll_inte
         attempt += 1
         print(f"[QUALI] Attempt {attempt}/{max_attempts} — fetching from FastF1 for {year} R{round}")
 
-        result = await asyncio.to_thread(fetch_qualifying_data, year, round)
+        try:
+            result = await asyncio.wait_for(
+                asyncio.to_thread(fetch_qualifying_data, year, round),
+                timeout=45,
+            )
+        except asyncio.TimeoutError:
+            print(f"[QUALI] FastF1 timeout for {year} R{round}")
+            result = None
 
         if result is not None:
             quali_df, circuit_name = result
@@ -217,7 +224,11 @@ async def predict(year: int, round: int, response: Response):
         if needs_quali:
             task_keys.append("quali"); tasks.append(get_quali(year, round))
         if needs_race:
-            task_keys.append("race");  tasks.append(asyncio.to_thread(fetch_race_results, year, round))
+            task_keys.append("race")
+            tasks.append(asyncio.wait_for(
+                asyncio.to_thread(fetch_race_results, year, round),
+                timeout=30,
+            ))
 
         fetched = dict(zip(task_keys, await asyncio.gather(*tasks, return_exceptions=True)))
 
