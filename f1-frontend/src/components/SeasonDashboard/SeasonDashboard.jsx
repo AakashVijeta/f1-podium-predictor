@@ -1,11 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SectionHeader from "../SectionHeader/SectionHeader";
 import { API_BASE } from "../../constants/drivers";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./SeasonDashboard.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function SeasonDashboard({ year }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const sdRef = useRef(null);
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
     setLoading(true);
@@ -20,6 +26,39 @@ export default function SeasonDashboard({ year }) {
         setLoading(false);
       });
   }, [year]);
+
+  useEffect(() => {
+    if (!sdRef.current || !data || hasAnimated.current) return;
+    hasAnimated.current = true;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(".sd-statbox",
+        { opacity: 0, y: 25 },
+        {
+          opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.15,
+          scrollTrigger: { trigger: ".sd-stats", start: "top 90%", once: true },
+        }
+      );
+      sdRef.current.querySelectorAll(".sd-sbig").forEach((el) => {
+        const val = parseInt(el.textContent, 10);
+        gsap.fromTo(el,
+          { textContent: 0 },
+          {
+            textContent: val, duration: 1.2, ease: "power2.out",
+            snap: { textContent: 1 },
+            scrollTrigger: { trigger: el, start: "top 90%", once: true },
+          }
+        );
+      });
+      gsap.fromTo(".sd-card",
+        { opacity: 0, y: 20, scale: 0.9 },
+        {
+          opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.2)", stagger: 0.06,
+          scrollTrigger: { trigger: ".sd-grid", start: "top 90%", once: true },
+        }
+      );
+    }, sdRef.current);
+    return () => ctx.revert();
+  }, [data]);
 
   if (loading) {
     return (
@@ -38,12 +77,12 @@ export default function SeasonDashboard({ year }) {
   const podiumPct = ((data.podium_correct / data.total_podium_slots) * 100).toFixed(0);
 
   return (
-    <div className="sd-wrap fade">
+    <div className="sd-wrap" ref={sdRef}>
       <SectionHeader
         label={`${year} Season`}
         sub="Model Accuracy Tracker"
       />
-      
+
       <div className="sd-stats">
         <div className="sd-statbox">
           <div className="sd-slabel">Winner Correct</div>

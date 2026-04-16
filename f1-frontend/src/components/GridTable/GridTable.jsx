@@ -1,5 +1,10 @@
+import { useEffect, useRef } from "react";
 import { gd, fn, ln } from "../../constants/drivers";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./GridTable.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyStats }) {
   const { podiumCorrect, winnerCorrect, actualResults } = accuracyStats ?? {};
@@ -13,8 +18,60 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
   };
 
   const showActual = !!actualResults;
+  const gridRef = useRef(null);
+  const hasAnimated = useRef(false);
 
-  // Winner name for display in accuracy card
+  useEffect(() => {
+    if (!gridRef.current || hasAnimated.current) return;
+    hasAnimated.current = true;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(".gr",
+        { opacity: 0, x: -16 },
+        {
+          opacity: 1, x: 0,
+          duration: 0.4, ease: "power3.out",
+          stagger: 0.03,
+          scrollTrigger: {
+            trigger: ".gtbl",
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
+
+      if (gridRef.current.querySelector(".acc-bar")) {
+        gsap.fromTo(".acc-card",
+          { opacity: 0, y: 20, scale: 0.95 },
+          {
+            opacity: 1, y: 0, scale: 1,
+            duration: 0.5, ease: "back.out(1.4)",
+            stagger: 0.1,
+            scrollTrigger: {
+              trigger: ".acc-bar",
+              start: "top 90%",
+              once: true,
+            },
+          }
+        );
+      }
+
+      gsap.fromTo(".bf",
+        { width: 0 },
+        {
+          width: (i, el) => el.style.getPropertyValue("--target-width"),
+          duration: 1, ease: "expo.out",
+          stagger: 0.04,
+          scrollTrigger: {
+            trigger: ".gtbl",
+            start: "top 85%",
+            once: true,
+          },
+        }
+      );
+    }, gridRef.current);
+    return () => ctx.revert();
+  }, [showActual]);
+
   const winnerName = actualResults?.[0]?.driver_name?.split(" ").slice(-1)[0].toUpperCase() ?? "—";
 
   const podiumClass = podiumCorrect === 3 ? "correct" : podiumCorrect >= 2 ? "partial" : "wrong";
@@ -23,7 +80,7 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
   const podiumBadge = podiumCorrect === 3 ? "Perfect" : podiumCorrect >= 2 ? "Partial" : "Wrong";
 
   return (
-    <div className="grid-wrap">
+    <div className="grid-wrap" ref={gridRef}>
 
       {/* Section header */}
       <div className="gh-head">
@@ -80,7 +137,6 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
             const predRank = i + 1;
             const isCorrectPodium = actualPos !== null && predRank <= 3 && actualPos <= 3;
             const isWrongPodium = actualPos !== null && predRank <= 3 && actualPos > 3;
-            // Position delta: positive = over-performed vs prediction, negative = under
             const delta = actualPos !== null && !isDNF ? predRank - actualPos : null;
 
             return (
@@ -90,7 +146,6 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
                 onMouseEnter={() => onHover(d.FullName)}
                 onMouseLeave={() => onHover(null)}
               >
-                {/* Actual result column — leftmost */}
                 <td className="td-actual">
                   {!showActual ? null : isDNF ? (
                     <span className="actual-chip actual-dnf">DNF</span>
@@ -120,13 +175,13 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
                 </td>
                 <td className="td-barcol">
                   <div className="bt">
-                    <div 
-                      className="bf" 
-                      style={{ 
-                        "--target-width": `${rel}%`, 
+                    <div
+                      className="bf"
+                      style={{
+                        "--target-width": `${rel}%`,
                         "--row-index": i,
-                        background: drv.color 
-                      }} 
+                        background: drv.color
+                      }}
                     />
                   </div>
                 </td>

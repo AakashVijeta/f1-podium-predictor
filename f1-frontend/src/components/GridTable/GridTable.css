@@ -36,7 +36,7 @@
 .gr {
   border-bottom: 1px solid rgba(255, 255, 255, 0.035);
   transition: background 0.2s var(--ease), transform 0.2s var(--ease);
-  animation: rowIn 0.4s var(--ease) both;
+  /* entrance handled by GSAP */
   position: relative;
 }
 
@@ -125,8 +125,7 @@
 .bf {
   height: 100%;
   width: var(--target-width);
-  animation: barGrow 1.2s var(--ease) both;
-  animation-delay: calc(var(--row-index) * 45ms);
+  /* bar fill handled by GSAP */
   border-radius: 3px;
   box-shadow: 0 0 8px currentColor;
   position: relative;
@@ -359,11 +358,25 @@
 /* ── Mobile ── */
 @media (max-width: 640px) {
   .grid-wrap {
-    padding: 1.4rem 1rem 1.5rem;
+    padding: 1rem 0.75rem 1.25rem;
     overflow-x: auto;
   }
+  .gh-head { padding: 0 0 12px 0; gap: 10px; }
+  .gh-title { font-size: 14px; }
+  .gh-count { font-size: 10px; padding: 3px 7px; }
+  .acc-bar { grid-template-columns: 1fr; gap: 8px; }
+  .acc-card { padding: 10px 14px; }
+  .acc-value { font-size: 18px; }
+  .acc-badge { font-size: 9px; padding: 4px 8px 4px 9px; }
   .td-team-inline { display: none; }
   .td-barcol      { width: 20%; }
   .td-code        { font-size: 0.85rem; }
   .td-drv .ln2    { font-size: 13px; }
+  .td-drv .fn2    { font-size: 10px; }
+  .gr td          { padding: 0.5rem 0.35rem; }
+  .td-i           { width: 36px; font-size: 12px; }
+  .td-actual      { width: 56px; padding-right: 2px; }
+  .actual-chip    { font-size: 10px; padding: 2px 5px; }
+  .td-pct         { font-size: 11px; width: 44px; min-width: 40px; }
+  .gh-row th      { font-size: 8px; padding: 0 0.3rem 8px; }
 }

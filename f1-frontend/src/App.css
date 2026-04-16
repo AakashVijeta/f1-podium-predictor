@@ -145,6 +145,14 @@ html, body {
 
 .postrace-wrap { padding: 2rem; }
 
+@media (max-width: 640px) {
+  .postrace-wrap { padding: 1rem; }
+  .state-s { min-height: 40vh; }
+  .state-ico { font-size: 2rem; }
+  .state-t { font-size: 0.9rem; letter-spacing: 0.14em; }
+  .state-sub2 { font-size: 0.65rem; }
+}
+
 select option { background: #0f0f0f; color: var(--text); }
 
 html, body, #root { min-height: 100vh; }

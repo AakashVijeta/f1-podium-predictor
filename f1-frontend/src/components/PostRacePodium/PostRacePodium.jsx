@@ -1,10 +1,38 @@
+import { useEffect, useRef } from "react";
 import SectionHeader from "../SectionHeader/SectionHeader";
 import { gd, fn, ln, MEDALS, MEDAL_LABELS } from "../../constants/drivers";
+import gsap from "gsap";
 import "./PostRacePodium.css";
 
 export default function PostRacePodium({ raceResults, race, top3 }) {
+  const podRef = useRef(null);
+
+  useEffect(() => {
+    if (!podRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(".vs-side:first-child .vs-row",
+        { opacity: 0, x: -30 },
+        { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", stagger: 0.1, delay: 0.2 }
+      );
+      gsap.fromTo(".vs-divider",
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)", delay: 0.4 }
+      );
+      gsap.fromTo(".vs-side:last-child .vs-row",
+        { opacity: 0, x: 30 },
+        { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", stagger: 0.1, delay: 0.5 }
+      );
+      gsap.fromTo(".vs-status",
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(3)", stagger: 0.12, delay: 0.7 }
+      );
+    }, podRef.current);
+    return () => ctx.revert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <>
+    <div ref={podRef}>
       <SectionHeader
         label="Podium Results"
         sub={`Predicted vs Actual · ${race?.name}`}
@@ -20,14 +48,13 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
               {top3.slice(0, 3).map((d, i) => {
                 const drv = gd(d.FullName);
                 const medalColor = MEDALS[i];
-                // Check if this driver ended up in the actual top 3
                 const actualIndex = raceResults.slice(0, 3).findIndex(r => {
                   const actualName = r.FullName || r.driver_name || "";
                   const rLastName = actualName.split(" ").slice(-1)[0].toUpperCase();
                   const dLastName = d.FullName.split(" ").slice(-1)[0].toUpperCase();
                   return rLastName.includes(dLastName) || dLastName.includes(rLastName);
                 });
-                
+
                 let matchStatus = "miss";
                 let matchIcon = "✗";
                 if (actualIndex === i) {
@@ -79,6 +106,6 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

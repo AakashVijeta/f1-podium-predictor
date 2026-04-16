@@ -9,3 +9,8 @@
 .sh-lbl  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.25em; color: #333; text-transform: uppercase; white-space: nowrap; }
 .sh-line { flex: 1; height: 1px; background: var(--border); }
 .sh-sub  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; color: #252525; letter-spacing: 0.1em; white-space: nowrap; }
+
+@media (max-width: 640px) {
+  .sh { gap: 0.5rem; margin-bottom: 1rem; }
+  .sh-sub { display: none; }
+}

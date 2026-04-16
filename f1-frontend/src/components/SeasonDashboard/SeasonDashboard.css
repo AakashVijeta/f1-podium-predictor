@@ -140,3 +140,14 @@
     gap: 1rem;
   }
 }
+
+@media (max-width: 640px) {
+  .sd-wrap { padding: 1.25rem 1rem; }
+  .sd-statbox { padding: 1rem; }
+  .sd-sbig { font-size: 2.2rem; }
+  .sd-sval { font-size: 1rem; }
+  .sd-grid { gap: 0.65rem; }
+  .sd-card { min-width: 110px; padding: 0.6rem 0.75rem; }
+  .sd-rnum { font-size: 1.1rem; margin-bottom: 0.35rem; }
+  .sd-h-title { font-size: 0.75rem; }
+}

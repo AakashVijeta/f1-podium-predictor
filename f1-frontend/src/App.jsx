@@ -153,7 +153,6 @@ export default function App() {
             top3={top3} 
             accuracyStats={accuracyStats} 
           />
-          <InfoStrip race={race} round={round} />
           <WinnerStrip winner={raceResults[0]} />
           {/* Prediction vs Actual grid */}
           {sorted.length > 0 && (

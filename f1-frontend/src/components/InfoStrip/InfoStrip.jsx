@@ -1,8 +1,23 @@
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import "./InfoStrip.css";
 
 export default function InfoStrip({ race, round }) {
+  const stripRef = useRef(null);
+
+  useEffect(() => {
+    if (!stripRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(".istat",
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", stagger: 0.08 }
+      );
+    }, stripRef.current);
+    return () => ctx.revert();
+  }, [round]);
+
   return (
-    <div className="info-strip" style={{ marginTop: "2px" }}>
+    <div className="info-strip" ref={stripRef} style={{ marginTop: "2px" }}>
       <div className="istat">
         <div className="istat-lbl">Grand Prix</div>
         <div
