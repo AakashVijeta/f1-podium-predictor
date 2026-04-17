@@ -7,6 +7,34 @@
   overflow: hidden;
 }
 
+.hero-flag    { animation: heroFlag 0.6s var(--ease) both; }
+.hero-round   { animation: heroFadeX 0.5s var(--ease) 0.15s both; }
+.hero-name    { animation: heroReveal 0.7s var(--ease) 0.2s both; }
+.hero-circuit { animation: heroFadeX 0.4s var(--ease) 0.3s both; }
+.hero-badge   { animation: heroFadeUp 0.4s var(--ease) 0.4s both; }
+.hero-sel     { animation: heroFadeRight 0.5s var(--ease) 0.1s both; }
+
+@keyframes heroFlag {
+  from { opacity: 0; transform: scale(0.8); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes heroFadeX {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes heroFadeRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(15px); clip-path: inset(0 100% 0 0); }
+  to   { opacity: 1; transform: translateY(0); clip-path: inset(0 0 0 0); }
+}
+
 /* Checker strip at the bottom right */
 .hero::after {
   content: '';
@@ -74,7 +102,7 @@
 
 .hero-name {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 2rem;
+  font-size: clamp(1.55rem, 4.2vw, 2.4rem);
   font-weight: 900;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -149,8 +177,9 @@
   appearance: none;
   cursor: pointer;
   min-width: 280px;
+  min-height: 44px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
-  transition: all 0.2s var(--ease);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 
 .race-sel:hover {
@@ -190,8 +219,6 @@
   .hero-info {
     padding: 1rem 1.25rem;
   }
-
-  .hero-name { font-size: 1.55rem; }
 
   .hero-sel {
     border-left: none;

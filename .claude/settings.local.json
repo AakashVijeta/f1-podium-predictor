@@ -3,7 +3,8 @@
     "allow": [
       "Bash(ls c:\\\\Users\\\\Aakash\\\\Desktop\\\\F1/f1-frontend/.env*)",
       "Bash(ls \"c:/Users/Aakash/Desktop/F1/f1-frontend/.env\"*)",
-      "WebFetch(domain:api.aakashvijeta.me)"
+      "WebFetch(domain:api.aakashvijeta.me)",
+      "Bash(npm run *)"
     ]
   }
 }

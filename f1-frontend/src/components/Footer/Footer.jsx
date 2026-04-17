@@ -1,12 +1,15 @@
 import "./Footer.css";
-import f1Logo from "../../../public/logo.png";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   return (
-    <div className="footer">
+    <footer className="footer">
       <div className="footer-left">
-        <img src={f1Logo} alt="F1 Logo" />
+        <picture>
+          <source srcSet="/logo.avif" type="image/avif" />
+          <source srcSet="/logo.webp" type="image/webp" />
+          <img src="/logo.png" alt="F1 Logo" width="40" height="40" loading="lazy" decoding="async" />
+        </picture>
         <div className="footer-divider" />
         <div className="footer-bar" />
         <div>
@@ -15,6 +18,6 @@ export default function Footer() {
         </div>
       </div>
       <div className="footer-right">F1 Podium Predictor · {currentYear}</div>
-    </div>
+    </footer>
   );
 }

@@ -7,8 +7,28 @@
   background: linear-gradient(180deg, #0c0c0c 0%, #070707 100%);
   border-bottom: 1px solid var(--border-hi);
   height: 56px;
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
   backdrop-filter: blur(8px);
   box-shadow: 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px -12px rgba(0,0,0,0.8);
+  animation: hdrSlide 0.5s var(--ease) both;
+}
+
+@keyframes hdrSlide {
+  from { transform: translateY(-60px); }
+  to   { transform: translateY(0); }
+}
+
+.hdr-logo img { animation: hdrLogo 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both; }
+.hdr-app      { animation: hdrFadeIn 0.4s var(--ease) 0.3s both; }
+
+@keyframes hdrLogo {
+  from { opacity: 0; transform: scale(0.6) rotate(-10deg); }
+  to   { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes hdrFadeIn {
+  from { opacity: 0; transform: translateX(-15px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 /* Thin red racing line at bottom edge */
@@ -37,6 +57,7 @@
 
 .hdr-logo img {
   height: 24px;
+  width: auto;
   filter: drop-shadow(0 0 12px rgba(225,6,0,0.35));
 }
 

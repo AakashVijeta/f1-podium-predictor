@@ -1,13 +1,15 @@
 import { useEffect, useRef } from "react";
-import { gd, fn, ln, MEDALS } from "../../constants/drivers";
 import gsap from "gsap";
+import { gd, fn, ln, MEDALS } from "../../constants/drivers";
+import { useShouldAnimate } from "../../hooks/useMotion";
 import "./WinnerStrip.css";
 
 export default function WinnerStrip({ winner }) {
   const stripRef = useRef(null);
+  const shouldAnimate = useShouldAnimate({ skipOnMobile: true });
 
   useEffect(() => {
-    if (!stripRef.current) return;
+    if (!stripRef.current || !shouldAnimate) return;
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
       tl.fromTo(".winner-strip", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.6 })
@@ -17,8 +19,7 @@ export default function WinnerStrip({ winner }) {
         .fromTo(".winner-number", { opacity: 0, scale: 1.5 }, { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" }, "-=0.2");
     }, stripRef.current);
     return () => ctx.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [shouldAnimate]);
 
   if (!winner) return null;
   const drv = gd(winner.FullName);

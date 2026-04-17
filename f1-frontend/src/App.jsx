@@ -1,22 +1,24 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback, Suspense, lazy } from "react";
 import { ROUNDS_2026 } from "./constants/rounds";
 import { API_BASE } from "./constants/drivers";
 import Header from "./components/Header/Header";
 import RaceHero from "./components/RaceHero/RaceHero";
-import PodiumCards from "./components/PodiumCards/PodiumCards";
-import CircuitMap from "./components/CircuitMap/CircuitMap";
-import GridTable from "./components/GridTable/GridTable";
-import PostRacePodium from "./components/PostRacePodium/PostRacePodium";
 import InfoStrip from "./components/InfoStrip/InfoStrip";
-import WinnerStrip from "./components/WinnerStrip/WinnerStrip";
 import {
   InfoStripSkeleton,
   PodiumCardsSkeleton,
   GridTableSkeleton,
 } from "./components/SkeletonLoader/SkeletonLoader";
-import SeasonDashboard from "./components/SeasonDashboard/SeasonDashboard";
 import Footer from "./components/Footer/Footer";
+import { useInView } from "./hooks/useInView";
 import "./App.css";
+
+const CircuitMap       = lazy(() => import("./components/CircuitMap/CircuitMap"));
+const PodiumCards      = lazy(() => import("./components/PodiumCards/PodiumCards"));
+const GridTable        = lazy(() => import("./components/GridTable/GridTable"));
+const PostRacePodium   = lazy(() => import("./components/PostRacePodium/PostRacePodium"));
+const WinnerStrip      = lazy(() => import("./components/WinnerStrip/WinnerStrip"));
+const SeasonDashboard  = lazy(() => import("./components/SeasonDashboard/SeasonDashboard"));
 
 export default function App() {
   const [round, setRound] = useState(1);
@@ -25,9 +27,10 @@ export default function App() {
   const [error, setError] = useState(null);
   const [hovered, setHovered] = useState(null);
   const [actualResults, setActualResults] = useState(null);
-  const cacheRef = useRef(new Map()); // round -> { data, actualResults }
+  const cacheRef = useRef(new Map());
+  const [seasonRef, seasonInView] = useInView({ rootMargin: "300px" });
 
-  const race = ROUNDS_2026.find(r => r.round === round);
+  const race = useMemo(() => ROUNDS_2026.find(r => r.round === round), [round]);
 
   useEffect(() => {
     const cached = cacheRef.current.get(round);
@@ -54,7 +57,6 @@ export default function App() {
         const actual = r.available ? r.results : null;
         setData(d);
         setActualResults(actual);
-        // Only cache terminal states; pre_quali/pre_race may change soon.
         if (d?.status === "post_race") {
           cacheRef.current.set(round, { data: d, actualResults: actual });
         }
@@ -70,25 +72,22 @@ export default function App() {
     return () => ac.abort();
   }, [round]);
 
-  const sorted = data?.predictions
-    ? [...data.predictions].sort((a, b) => b.PodiumProbability - a.PodiumProbability)
-    : [];
-  const top3 = sorted.slice(0, 3);
+  const sorted = useMemo(() => (
+    data?.predictions
+      ? [...data.predictions].sort((a, b) => b.PodiumProbability - a.PodiumProbability)
+      : []
+  ), [data]);
+
+  const top3 = useMemo(() => sorted.slice(0, 3), [sorted]);
   const raceResults = data?.results || [];
   const maxProb = sorted[0]?.PodiumProbability || 1;
 
-  // Accuracy stats — only computed when we have both predictions and actuals
-  const accuracyStats = (() => {
+  const accuracyStats = useMemo(() => {
     if (!actualResults || sorted.length === 0) return null;
-    // Build map: driver_code → finishing position from Jolpica
     const actualMap = Object.fromEntries(
       actualResults.map(r => [r.driver_code.toUpperCase(), r.position])
     );
-    // Predicted podium = top 3 by probability; need driver codes
-    // FullName in predictions e.g. "Max Verstappen" — map via gd() short code
-    // We'll pass actualMap + actualResults down and let GridTable handle per-row matching
     const predictedTop3Codes = top3.map(d => {
-      // Extract last name to match — use driver_code from actualResults by name fuzzy
       const lastName = d.FullName.split(" ").slice(-1)[0].toUpperCase();
       return actualResults.find(r =>
         r.driver_name.toUpperCase().includes(lastName)
@@ -100,23 +99,26 @@ export default function App() {
     const winnerCorrect = predictedTop3Codes[0] === actualTop3Codes[0];
 
     return { podiumCorrect, winnerCorrect, actualMap, actualResults };
-  })();
+  }, [actualResults, sorted, top3]);
+
+  const handleHover = useCallback((name) => setHovered(name), []);
+  const handleRoundChange = useCallback((r) => setRound(r), []);
 
   return (
     <div className="app">
       <Header data={data} />
-      <RaceHero race={race} round={round} onRoundChange={setRound} />
+      <RaceHero race={race} round={round} onRoundChange={handleRoundChange} />
 
-      {/* Info strip */}
       {loading ? <InfoStripSkeleton /> : <InfoStrip race={race} round={round} />}
 
-      {/* Circuit map — always visible, independent of race state */}
-      {!loading && race && <CircuitMap race={race} />}
+      {!loading && race && (
+        <Suspense fallback={<div className="lazy-ph" />}>
+          <CircuitMap race={race} />
+        </Suspense>
+      )}
 
-      {/* Error */}
       {error && <div className="err-s">{error}</div>}
 
-      {/* Pre-qualifying: no predictions yet */}
       {!loading && data?.status === "pre_quali" && (
         <div className="state-s fade">
           <div className="state-ico">⏱</div>
@@ -125,7 +127,6 @@ export default function App() {
         </div>
       )}
 
-      {/* Pre-race: show predictions skeleton → then real cards */}
       {loading ? (
         <>
           <PodiumCardsSkeleton />
@@ -133,42 +134,55 @@ export default function App() {
         </>
       ) : data?.status === "pre_race" && sorted.length > 0 ? (
         <div className="fade">
-          <PodiumCards top3={top3} maxProb={maxProb} hovered={hovered} onHover={setHovered} />
-          <GridTable
-            sorted={sorted}
-            maxProb={maxProb}
-            hovered={hovered}
-            onHover={setHovered}
-            accuracyStats={accuracyStats}
-          />
-        </div>
-      ) : null}
-
-      {/* Post-race Status*/}
-      {!loading && data?.status === "post_race" && raceResults.length > 0 && (
-        <div className="postrace-wrap fade">
-          <PostRacePodium 
-            raceResults={raceResults} 
-            race={race} 
-            top3={top3} 
-            accuracyStats={accuracyStats} 
-          />
-          <WinnerStrip winner={raceResults[0]} />
-          {/* Prediction vs Actual grid */}
-          {sorted.length > 0 && (
+          <Suspense fallback={<PodiumCardsSkeleton />}>
+            <PodiumCards top3={top3} maxProb={maxProb} hovered={hovered} onHover={handleHover} />
+          </Suspense>
+          <Suspense fallback={<GridTableSkeleton rows={20} />}>
             <GridTable
               sorted={sorted}
               maxProb={maxProb}
               hovered={hovered}
-              onHover={setHovered}
+              onHover={handleHover}
               accuracyStats={accuracyStats}
             />
+          </Suspense>
+        </div>
+      ) : null}
+
+      {!loading && data?.status === "post_race" && raceResults.length > 0 && (
+        <div className="postrace-wrap fade">
+          <Suspense fallback={<PodiumCardsSkeleton />}>
+            <PostRacePodium
+              raceResults={raceResults}
+              race={race}
+              top3={top3}
+              accuracyStats={accuracyStats}
+            />
+          </Suspense>
+          <Suspense fallback={<div className="lazy-ph" />}>
+            <WinnerStrip winner={raceResults[0]} />
+          </Suspense>
+          {sorted.length > 0 && (
+            <Suspense fallback={<GridTableSkeleton rows={20} />}>
+              <GridTable
+                sorted={sorted}
+                maxProb={maxProb}
+                hovered={hovered}
+                onHover={handleHover}
+                accuracyStats={accuracyStats}
+              />
+            </Suspense>
           )}
         </div>
       )}
 
-      {/* Season-level tracking */}
-      <SeasonDashboard year={2026} />
+      <div ref={seasonRef}>
+        {seasonInView && (
+          <Suspense fallback={<div className="lazy-ph" />}>
+            <SeasonDashboard year={2026} />
+          </Suspense>
+        )}
+      </div>
 
       <Footer />
     </div>

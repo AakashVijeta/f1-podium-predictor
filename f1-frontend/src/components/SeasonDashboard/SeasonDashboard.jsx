@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import SectionHeader from "../SectionHeader/SectionHeader";
-import { API_BASE } from "../../constants/drivers";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SectionHeader from "../SectionHeader/SectionHeader";
+import { API_BASE } from "../../constants/drivers";
+import { useShouldAnimate } from "../../hooks/useMotion";
 import "./SeasonDashboard.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,23 +13,32 @@ export default function SeasonDashboard({ year }) {
   const [loading, setLoading] = useState(true);
   const sdRef = useRef(null);
   const hasAnimated = useRef(false);
+  const shouldAnimate = useShouldAnimate({ skipOnMobile: true });
 
   useEffect(() => {
     setLoading(true);
-    fetch(`${API_BASE}/accuracy/${year}`)
+    const ac = new AbortController();
+    fetch(`${API_BASE}/accuracy/${year}`, { signal: ac.signal })
       .then((res) => res.json())
       .then((d) => {
+        if (ac.signal.aborted) return;
         setData(d);
         setLoading(false);
       })
       .catch((err) => {
+        if (err.name === "AbortError") return;
         console.error("Failed to fetch accuracy data", err);
         setLoading(false);
       });
+    return () => ac.abort();
   }, [year]);
 
   useEffect(() => {
     if (!sdRef.current || !data || hasAnimated.current) return;
+    if (!shouldAnimate) {
+      hasAnimated.current = true;
+      return;
+    }
     hasAnimated.current = true;
     const ctx = gsap.context(() => {
       gsap.fromTo(".sd-statbox",
@@ -58,7 +68,7 @@ export default function SeasonDashboard({ year }) {
       );
     }, sdRef.current);
     return () => ctx.revert();
-  }, [data]);
+  }, [data, shouldAnimate]);
 
   if (loading) {
     return (
@@ -69,19 +79,14 @@ export default function SeasonDashboard({ year }) {
     );
   }
 
-  if (!data || data.rounds_analyzed === 0) {
-    return null;
-  }
+  if (!data || data.rounds_analyzed === 0) return null;
 
   const winnerPct = ((data.winner_correct / data.rounds_analyzed) * 100).toFixed(0);
   const podiumPct = ((data.podium_correct / data.total_podium_slots) * 100).toFixed(0);
 
   return (
     <div className="sd-wrap" ref={sdRef}>
-      <SectionHeader
-        label={`${year} Season`}
-        sub="Model Accuracy Tracker"
-      />
+      <SectionHeader label={`${year} Season`} sub="Model Accuracy Tracker" />
 
       <div className="sd-stats">
         <div className="sd-statbox">

@@ -1,14 +1,27 @@
 import { useEffect, useRef } from "react";
+import gsap from "gsap";
 import SectionHeader from "../SectionHeader/SectionHeader";
 import { gd, fn, ln } from "../../constants/drivers";
-import gsap from "gsap";
+import { useShouldAnimate } from "../../hooks/useMotion";
 import "./PodiumCards.css";
 
 export default function PodiumCards({ top3, maxProb, hovered, onHover }) {
   const wrapRef = useRef(null);
+  const shouldAnimate = useShouldAnimate({ skipOnMobile: true });
 
   useEffect(() => {
     if (!wrapRef.current) return;
+
+    if (!shouldAnimate) {
+      wrapRef.current.querySelectorAll(".pc-pnum").forEach((el) => {
+        el.textContent = parseFloat(el.dataset.target).toFixed(1);
+      });
+      wrapRef.current.querySelectorAll(".pc-fill").forEach((el) => {
+        el.style.width = el.dataset.width;
+      });
+      return;
+    }
+
     const ctx = gsap.context(() => {
       gsap.fromTo(".pc",
         { opacity: 0, y: 40, scale: 0.92, rotateX: 8 },
@@ -35,9 +48,9 @@ export default function PodiumCards({ top3, maxProb, hovered, onHover }) {
         { width: (i, el) => el.dataset.width, duration: 1.2, delay: 0.4, ease: "expo.out", stagger: 0.1 }
       );
     }, wrapRef.current);
+
     return () => ctx.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [shouldAnimate]);
 
   return (
     <div className="podium-wrap" ref={wrapRef}>

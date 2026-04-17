@@ -1,14 +1,16 @@
 import { useEffect, useRef } from "react";
-import SectionHeader from "../SectionHeader/SectionHeader";
-import { gd, fn, ln, MEDALS, MEDAL_LABELS } from "../../constants/drivers";
 import gsap from "gsap";
+import SectionHeader from "../SectionHeader/SectionHeader";
+import { gd, fn, ln, MEDALS } from "../../constants/drivers";
+import { useShouldAnimate } from "../../hooks/useMotion";
 import "./PostRacePodium.css";
 
 export default function PostRacePodium({ raceResults, race, top3 }) {
   const podRef = useRef(null);
+  const shouldAnimate = useShouldAnimate({ skipOnMobile: true });
 
   useEffect(() => {
-    if (!podRef.current) return;
+    if (!podRef.current || !shouldAnimate) return;
     const ctx = gsap.context(() => {
       gsap.fromTo(".vs-side:first-child .vs-row",
         { opacity: 0, x: -30 },
@@ -28,8 +30,7 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
       );
     }, podRef.current);
     return () => ctx.revert();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [shouldAnimate]);
 
   return (
     <div ref={podRef}>

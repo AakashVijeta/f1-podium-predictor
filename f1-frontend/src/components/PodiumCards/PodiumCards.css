@@ -1,11 +1,23 @@
 .podium-wrap {
   padding: 2.25rem 2rem 0;
+  container-type: inline-size;
+  container-name: podium;
 }
 
 .podium-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 3px;
+}
+
+/* Container-based: narrow container → tighter cards (regardless of viewport) */
+@container podium (max-width: 900px) {
+  .podium-grid { grid-template-columns: 1fr 1fr; gap: 3px; }
+  .pc          { padding: 1.5rem 1.25rem; }
+}
+@container podium (max-width: 600px) {
+  .podium-grid { grid-template-columns: 1fr; }
+  .pc-bgnum    { font-size: 9rem; right: -0.25rem; bottom: -1rem; }
 }
 
 /* ── Entrance ── */
@@ -200,7 +212,7 @@
 
 .pc-pnum {
   font-family: 'Barlow Condensed', sans-serif;
-  font-size: 3.6rem;
+  font-size: clamp(2.2rem, 4.8cqi, 3.6rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.01em;

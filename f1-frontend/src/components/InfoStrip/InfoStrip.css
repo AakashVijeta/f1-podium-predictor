@@ -61,6 +61,22 @@
   letter-spacing: 0.02em;
 }
 
+.istat-val--name {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #e0e0e0;
+}
+
+.istat-val--circuit {
+  font-family: 'Titillium Web', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #e0e0e0;
+}
+
 .istat-sub {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.68rem;

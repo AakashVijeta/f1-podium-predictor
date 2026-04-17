@@ -2,7 +2,11 @@
   margin-top: auto;
   background: var(--bg1);
   border-top: 1px solid var(--border);
-  padding: 1.25rem 2rem;
+  padding:
+    1.25rem
+    max(2rem, env(safe-area-inset-right))
+    max(1.25rem, env(safe-area-inset-bottom))
+    max(2rem, env(safe-area-inset-left));
   display: flex;
   align-items: center;
   justify-content: space-between;
