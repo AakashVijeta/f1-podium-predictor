@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useMemo, useCallback, Suspense, lazy } from "react";
+import SeasonDashboard from "./components/SeasonDashboard/SeasonDashboard";
 import { ROUNDS_2026 } from "./constants/rounds";
 import { API_BASE } from "./constants/drivers";
 import Header from "./components/Header/Header";
@@ -18,7 +19,6 @@ const PodiumCards      = lazy(() => import("./components/PodiumCards/PodiumCards
 const GridTable        = lazy(() => import("./components/GridTable/GridTable"));
 const PostRacePodium   = lazy(() => import("./components/PostRacePodium/PostRacePodium"));
 const WinnerStrip      = lazy(() => import("./components/WinnerStrip/WinnerStrip"));
-const SeasonDashboard  = lazy(() => import("./components/SeasonDashboard/SeasonDashboard"));
 
 export default function App() {
   const [round, setRound] = useState(1);
@@ -28,7 +28,7 @@ export default function App() {
   const [hovered, setHovered] = useState(null);
   const [actualResults, setActualResults] = useState(null);
   const cacheRef = useRef(new Map());
-  const [seasonRef, seasonInView] = useInView({ rootMargin: "300px" });
+  const [seasonRef, seasonInView] = useInView({ rootMargin: "1000px" });
 
   const race = useMemo(() => ROUNDS_2026.find(r => r.round === round), [round]);
 
@@ -177,11 +177,7 @@ export default function App() {
       )}
 
       <div ref={seasonRef}>
-        {seasonInView && (
-          <Suspense fallback={<div className="lazy-ph" />}>
-            <SeasonDashboard year={2026} />
-          </Suspense>
-        )}
+        {seasonInView && <SeasonDashboard year={2026} />}
       </div>
 
       <Footer />

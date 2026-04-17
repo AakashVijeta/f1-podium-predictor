@@ -40,15 +40,21 @@ export default function SeasonDashboard({ year }) {
       return;
     }
     hasAnimated.current = true;
+    const root = sdRef.current;
+    const statsEl = root.querySelector(".sd-stats");
+    const gridEl  = root.querySelector(".sd-grid");
+    const statboxEls = root.querySelectorAll(".sd-statbox");
+    const cardEls    = root.querySelectorAll(".sd-card");
+
     const ctx = gsap.context(() => {
-      gsap.fromTo(".sd-statbox",
+      gsap.fromTo(statboxEls,
         { opacity: 0, y: 25 },
         {
           opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.15,
-          scrollTrigger: { trigger: ".sd-stats", start: "top 90%", once: true },
+          scrollTrigger: { trigger: statsEl, start: "top 90%", once: true },
         }
       );
-      sdRef.current.querySelectorAll(".sd-sbig").forEach((el) => {
+      root.querySelectorAll(".sd-sbig").forEach((el) => {
         const val = parseInt(el.textContent, 10);
         gsap.fromTo(el,
           { textContent: 0 },
@@ -59,14 +65,14 @@ export default function SeasonDashboard({ year }) {
           }
         );
       });
-      gsap.fromTo(".sd-card",
+      gsap.fromTo(cardEls,
         { opacity: 0, y: 20, scale: 0.9 },
         {
           opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.2)", stagger: 0.06,
-          scrollTrigger: { trigger: ".sd-grid", start: "top 90%", once: true },
+          scrollTrigger: { trigger: gridEl, start: "top 90%", once: true },
         }
       );
-    }, sdRef.current);
+    }, root);
     return () => ctx.revert();
   }, [data, shouldAnimate]);
 

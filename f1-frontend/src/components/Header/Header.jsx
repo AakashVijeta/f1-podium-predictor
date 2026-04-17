@@ -20,7 +20,7 @@ function Header({ data }) {
         <picture>
           <source srcSet="/logo.avif" type="image/avif" />
           <source srcSet="/logo.webp" type="image/webp" />
-          <img src="/logo.png" alt="F1 Logo" width="44" height="44" fetchpriority="high" decoding="async" />
+          <img src="/logo.png" alt="F1 Logo" width="44" height="44" fetchPriority="high" decoding="async" />
         </picture>
         <div className="header-divider" />
       </div>

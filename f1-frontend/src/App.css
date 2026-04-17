@@ -65,7 +65,7 @@ html, body {
 .lazy-ph { min-height: 120px; contain: size layout; }
 
 /* Defer paint for heavy off-screen sections */
-.cm-wrap, .postrace-wrap, .sd-wrap, .grid-wrap {
+.cm-wrap, .postrace-wrap, .grid-wrap {
   content-visibility: auto;
   contain-intrinsic-size: 1px 600px;
 }
