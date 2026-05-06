@@ -147,7 +147,7 @@ def get_session_times(year: int, round_num: int) -> dict:
         race  = event["Session5DateUtc"].to_pydatetime().replace(tzinfo=timezone.utc).isoformat()
         return {"qualifying": quali, "race": race}
     except Exception as e:
-        print(f"[SCHEDULE] get_session_times failed: {e}")
+        print(f"[SCHEDULE] get_session_times failed for {year} R{round_num}: {e}")
         return {"qualifying": None, "race": None}
 
 
