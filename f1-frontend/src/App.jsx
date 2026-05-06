@@ -20,6 +20,17 @@ const GridTable        = lazy(() => import("./components/GridTable/GridTable"));
 const PostRacePodium   = lazy(() => import("./components/PostRacePodium/PostRacePodium"));
 const WinnerStrip      = lazy(() => import("./components/WinnerStrip/WinnerStrip"));
 
+const formatSessionTime = (isoString) => {
+  if (!isoString) return "—";
+  return new Intl.DateTimeFormat(undefined, {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(isoString));
+};
+
 export default function App() {
   const [round, setRound] = useState(1);
   const [data, setData] = useState(null);
@@ -38,6 +49,7 @@ export default function App() {
     if (cached) {
       setData(cached.data);
       setActualResults(cached.actualResults);
+      setSchedule(null);
       setLoading(false);
       setError(null);
       return;
@@ -107,17 +119,6 @@ export default function App() {
 
   const handleHover = useCallback((name) => setHovered(name), []);
   const handleRoundChange = useCallback((r) => setRound(r), []);
-
-  const formatSessionTime = (isoString) => {
-    if (!isoString) return "—";
-    return new Intl.DateTimeFormat(undefined, {
-      weekday: "short",
-      day: "numeric",
-      month: "short",
-      hour: "2-digit",
-      minute: "2-digit",
-    }).format(new Date(isoString));
-  };
 
   return (
     <div className="app">
