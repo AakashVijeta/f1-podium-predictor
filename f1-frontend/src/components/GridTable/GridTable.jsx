@@ -11,7 +11,7 @@ const GridRow = memo(function GridRow({
   d, i, hovered, onHover, getActual, showActual, maxProb,
 }) {
   const drv = gd(d.FullName);
-  const pct = d.PodiumProbability * 100;
+  const pct = d.CombinedScore * 100;
   const rel = (pct / (maxProb * 100)) * 100;
   const cls = pct > 55 ? "t" : pct > 30 ? "h" : pct > 12 ? "m" : "";
 
@@ -160,7 +160,7 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
         <div className="gh-pipe" />
         <div className="gh-title-block">
           <span className="gh-title">Full Grid</span>
-          <span className="gh-sub">Podium Probability</span>
+          <span className="gh-sub">Prediction Score</span>
         </div>
         <span className="gh-count">{sorted.length} Drivers</span>
       </div>
@@ -190,7 +190,7 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
             <th className="th-actual">{showActual ? "Finished" : ""}</th>
             <th className="th-rank">Predicted</th>
             <th colSpan={3} className="th-driver">Driver</th>
-            <th className="th-bar">Podium Probability</th>
+            <th className="th-bar">Prediction Score</th>
             <th className="th-pct"></th>
           </tr>
         </thead>
