@@ -356,5 +356,8 @@ async def health():
 # /schedule/{year}/{round}
 # ---------------------------------------------------------------------------
 @app.get("/schedule/{year}/{round}")
-async def schedule(year: int, round: int):
-    return await asyncio.to_thread(get_session_times, year, round)
+async def schedule(year: int, round: int, response: Response):
+    result = await asyncio.to_thread(get_session_times, year, round)
+    has_data = result.get("qualifying") is not None
+    _set_cache_headers(response, 3600 if has_data else 30)
+    return result
