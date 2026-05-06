@@ -56,12 +56,12 @@ export default function PodiumCards({ top3, maxProb, hovered, onHover }) {
     <div className="podium-wrap" ref={wrapRef}>
       <SectionHeader
         label="Predicted Podium"
-        sub="ML · GradientBoostingClassifier · v5.0"
+        sub="ML · LightGBM · v8.0"
       />
       <div className="podium-grid">
         {top3.map((d, i) => {
           const drv = gd(d.FullName);
-          const pct = d.PodiumProbability * 100;
+          const pct = d.CombinedScore * 100;
           const rel = (pct / (maxProb * 100)) * 100;
 
           let confLabel = "LOW CONFIDENCE";
@@ -93,7 +93,7 @@ export default function PodiumCards({ top3, maxProb, hovered, onHover }) {
               <div className="pc-team">{drv.team}</div>
               <div className="pc-prob">
                 <div className="pc-pnum" style={{ color: drv.color }} data-target={pct.toFixed(1)}>0.0</div>
-                <div className="pc-plbl">% podium<br />probability</div>
+                <div className="pc-plbl">% prediction<br />score</div>
               </div>
               <div className="pc-bar">
                 <div className="pc-fill" data-width={`${rel}%`} style={{ width: 0, background: drv.color }} />
