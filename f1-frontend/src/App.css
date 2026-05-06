@@ -113,6 +113,41 @@ html, body {
 .state-t    { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.22em; color: #cfcfcf; text-transform: uppercase; }
 .state-sub2 { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.12em; }
 
+.schedule-times {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem;
+  width: 100%;
+  max-width: 340px;
+}
+
+.sched-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sched-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.sched-time {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
 .loading-s {
   display: flex;
   align-items: center;

@@ -27,6 +27,7 @@ export default function App() {
   const [error, setError] = useState(null);
   const [hovered, setHovered] = useState(null);
   const [actualResults, setActualResults] = useState(null);
+  const [schedule, setSchedule] = useState(null);
   const cacheRef = useRef(new Map());
   const [seasonRef, seasonInView] = useInView({ rootMargin: "1000px" });
 
@@ -47,16 +48,19 @@ export default function App() {
     setError(null);
     setData(null);
     setActualResults(null);
+    setSchedule(null);
 
     Promise.all([
       fetch(`${API_BASE}/predict/2026/${round}`, { signal: ac.signal }).then(r => r.json()),
       fetch(`${API_BASE}/results/2026/${round}`, { signal: ac.signal }).then(r => r.json()),
+      fetch(`${API_BASE}/schedule/2026/${round}`, { signal: ac.signal }).then(r => r.json()),
     ])
-      .then(([d, r]) => {
+      .then(([d, r, s]) => {
         if (ac.signal.aborted) return;
         const actual = r.available ? r.results : null;
         setData(d);
         setActualResults(actual);
+        setSchedule(s);
         if (d?.status === "post_race") {
           cacheRef.current.set(round, { data: d, actualResults: actual });
         }
@@ -74,13 +78,13 @@ export default function App() {
 
   const sorted = useMemo(() => (
     data?.predictions
-      ? [...data.predictions].sort((a, b) => b.PodiumProbability - a.PodiumProbability)
+      ? [...data.predictions].sort((a, b) => b.CombinedScore - a.CombinedScore)
       : []
   ), [data]);
 
   const top3 = useMemo(() => sorted.slice(0, 3), [sorted]);
   const raceResults = data?.results || [];
-  const maxProb = sorted[0]?.PodiumProbability || 1;
+  const maxProb = sorted[0]?.CombinedScore || 1;
 
   const accuracyStats = useMemo(() => {
     if (!actualResults || sorted.length === 0) return null;
@@ -104,6 +108,17 @@ export default function App() {
   const handleHover = useCallback((name) => setHovered(name), []);
   const handleRoundChange = useCallback((r) => setRound(r), []);
 
+  const formatSessionTime = (isoString) => {
+    if (!isoString) return "—";
+    return new Intl.DateTimeFormat(undefined, {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(new Date(isoString));
+  };
+
   return (
     <div className="app">
       <Header data={data} />
@@ -124,6 +139,18 @@ export default function App() {
           <div className="state-ico">⏱</div>
           <div className="state-t">Qualifying not yet started</div>
           <div className="state-sub2">Predictions will appear after the qualifying session</div>
+          {(schedule?.qualifying || schedule?.race) && (
+            <div className="schedule-times">
+              <div className="sched-row">
+                <span className="sched-label">Qualifying</span>
+                <span className="sched-time">{formatSessionTime(schedule.qualifying)}</span>
+              </div>
+              <div className="sched-row">
+                <span className="sched-label">Race</span>
+                <span className="sched-time">{formatSessionTime(schedule.race)}</span>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
