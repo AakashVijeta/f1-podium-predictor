@@ -15,10 +15,11 @@ from db import (
     get_all_predictions_by_year, get_race_result, save_race_result,
     get_quali_data, save_quali_data
 )
-from predict import fetch_qualifying_data, predict_podium, fetch_race_results, get_session_status
+from predict import fetch_qualifying_data, predict_podium, fetch_race_results, get_session_status, get_session_times
 
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-model = None
+BASE_DIR     = os.path.dirname(os.path.abspath(__file__))
+model        = None
+winner_model = None
 
 # ── In-process response cache (hot path) ──────────────────────────────
 # Keyed by (year, round). Value: (expires_at_monotonic, ttl_seconds, payload).
@@ -65,8 +66,9 @@ def _cached_status(year: int, round: int) -> str:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    global model
-    model = joblib.load(os.path.join(BASE_DIR, 'models', 'model_v5.pkl'))
+    global model, winner_model
+    model        = joblib.load(os.path.join(BASE_DIR, "models", "model_v8.pkl"))
+    winner_model = joblib.load(os.path.join(BASE_DIR, "models", "model_v8_winner.pkl"))
     init_db()  # also opens the pool and runs CREATE TABLE IF NOT EXISTS
     # Pre-warm: schedule cache + a no-op query so the pool's first conn is hot
     await asyncio.to_thread(get_session_status, 2026, 1)
@@ -200,7 +202,7 @@ async def predict(year: int, round: int, response: Response):
             return {"status": "error", "message": "Qualifying data not available yet — try again shortly"}
 
         quali_data, circuit_name = quali_result
-        predictions = await asyncio.to_thread(predict_podium, quali_data, circuit_name, model)
+        predictions = await asyncio.to_thread(predict_podium, quali_data, circuit_name, model, winner_model)
         stored = predictions.to_dict(orient="records")
         asyncio.create_task(asyncio.to_thread(save_prediction, year, round, stored))
 
@@ -236,7 +238,7 @@ async def predict(year: int, round: int, response: Response):
             qr = fetched.get("quali")
             if qr and not isinstance(qr, Exception):
                 quali_data, circuit_name = qr
-                predictions_df = await asyncio.to_thread(predict_podium, quali_data, circuit_name, model)
+                predictions_df = await asyncio.to_thread(predict_podium, quali_data, circuit_name, model, winner_model)
                 stored = predictions_df.to_dict(orient="records")
                 asyncio.create_task(asyncio.to_thread(save_prediction, year, round, stored))
 
@@ -296,7 +298,7 @@ async def fetch_accuracy(year: int):
         preds        = round_data["predictions"]
         actual_results = actual["results"]
 
-        preds_sorted  = sorted(preds, key=lambda x: x["PodiumProbability"], reverse=True)
+        preds_sorted  = sorted(preds, key=lambda x: x.get("CombinedScore", x.get("PodiumProbability", 0)), reverse=True)
         top3_preds    = preds_sorted[:3]
         top3_actual   = actual_results[:3]
 
@@ -348,3 +350,11 @@ async def fetch_accuracy(year: int):
 @app.get("/health")
 async def health():
     return {}
+
+
+# ---------------------------------------------------------------------------
+# /schedule/{year}/{round}
+# ---------------------------------------------------------------------------
+@app.get("/schedule/{year}/{round}")
+async def schedule(year: int, round: int):
+    return await asyncio.to_thread(get_session_times, year, round)
