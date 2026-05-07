@@ -62,17 +62,20 @@ export default function App() {
     setActualResults(null);
     setSchedule(null);
 
+    fetch(`${API_BASE}/schedule/2026/${round}`, { signal: ac.signal })
+      .then(r => r.json())
+      .then(s => { if (!ac.signal.aborted) setSchedule(s); })
+      .catch(() => {});
+
     Promise.all([
       fetch(`${API_BASE}/predict/2026/${round}`, { signal: ac.signal }).then(r => r.json()),
       fetch(`${API_BASE}/results/2026/${round}`, { signal: ac.signal }).then(r => r.json()),
-      fetch(`${API_BASE}/schedule/2026/${round}`, { signal: ac.signal }).then(r => r.json()),
     ])
-      .then(([d, r, s]) => {
+      .then(([d, r]) => {
         if (ac.signal.aborted) return;
         const actual = r.available ? r.results : null;
         setData(d);
         setActualResults(actual);
-        setSchedule(s);
         if (d?.status === "post_race") {
           cacheRef.current.set(round, { data: d, actualResults: actual });
         }
