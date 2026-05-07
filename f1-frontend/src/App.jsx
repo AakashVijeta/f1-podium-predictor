@@ -46,26 +46,30 @@ export default function App() {
 
   useEffect(() => {
     const cached = cacheRef.current.get(round);
-    if (cached) {
-      setData(cached.data);
-      setActualResults(cached.actualResults);
-      setSchedule(null);
-      setLoading(false);
-      setError(null);
-      return;
-    }
-
     const ac = new AbortController();
-    setLoading(true);
     setError(null);
-    setData(null);
-    setActualResults(null);
     setSchedule(null);
 
     fetch(`${API_BASE}/schedule/2026/${round}`, { signal: ac.signal })
       .then(r => r.json())
-      .then(s => { if (!ac.signal.aborted) setSchedule(s); })
+      .then(s => {
+        if (ac.signal.aborted) return;
+        setSchedule(s);
+        const entry = cacheRef.current.get(round);
+        if (entry) cacheRef.current.set(round, { ...entry, schedule: s });
+      })
       .catch(() => {});
+
+    if (cached) {
+      setData(cached.data);
+      setActualResults(cached.actualResults);
+      setLoading(false);
+      return () => ac.abort();
+    }
+
+    setLoading(true);
+    setData(null);
+    setActualResults(null);
 
     Promise.all([
       fetch(`${API_BASE}/predict/2026/${round}`, { signal: ac.signal }).then(r => r.json()),
@@ -143,18 +147,6 @@ export default function App() {
           <div className="state-ico">⏱</div>
           <div className="state-t">Qualifying not yet started</div>
           <div className="state-sub2">Predictions will appear after the qualifying session</div>
-          {(schedule?.qualifying || schedule?.race) && (
-            <div className="schedule-times">
-              <div className="sched-row">
-                <span className="sched-label">Qualifying</span>
-                <span className="sched-time">{formatSessionTime(schedule.qualifying)}</span>
-              </div>
-              <div className="sched-row">
-                <span className="sched-label">Race</span>
-                <span className="sched-time">{formatSessionTime(schedule.race)}</span>
-              </div>
-            </div>
-          )}
         </div>
       )}
 
