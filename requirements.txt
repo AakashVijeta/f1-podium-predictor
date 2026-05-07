@@ -17,3 +17,4 @@ signalrcore==1.0.2
 msgpack==1.1.2
 httpx==0.28.1
 psycopg2-binary==2.9.11
+lightgbm==4.6.0
