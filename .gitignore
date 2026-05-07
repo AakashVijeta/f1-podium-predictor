@@ -54,6 +54,7 @@ fastf1_cache/
 # ── Trained model artifacts ──────────────────────────────────────────────────
 *.pkl
 *.pickle
+!models/*.pkl
 
 # ── Local databases ──────────────────────────────────────────────────────────
 *.db
