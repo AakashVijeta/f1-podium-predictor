@@ -32,8 +32,8 @@ graph TD
     Frontend -->|REST API| Backend[FastAPI Service]
     
     subgraph "Inference Engine"
-        Backend -->|Load| Model[GradientBoostingClassifier v5]
-        Model -->|Predict| Probs[Podium Probabilities]
+        Backend -->|Load| Model[LightGBM v8 + Winner Model]
+        Model -->|Predict| Probs[Podium Probabilities + CombinedScore]
     end
 
     subgraph "Data Orchestration"
@@ -52,40 +52,49 @@ graph TD
 ## 🧠 Machine Learning Pipeline
 
 ### Feature Engineering
-The model operates on 9 engineered features designed to be era-agnostic, ensuring stability across regulation changes:
+The model uses 15 engineered features designed to be era-agnostic, ensuring stability across regulation changes (including the 2026 reset):
 
 | Feature | Description |
 | :--- | :--- |
-| **GridPosition** | The driver's starting position on the grid. |
-| **QualiGapNormalized** | Qualifying lap time expressed as a % of the pole lap. |
-| **MidfieldFlag** | Binary flag for P8–P15 starters (high traffic risk). |
-| **AvgFinishLast3** | Rolling average finish position over the last 3 events. |
-| **PodiumRateLast5** | Frequency of podium finishes in recent history. |
-| **TrackType** | Circuit classification (Street vs. Permanent). |
+| **GridPosition** | Starting position on the grid. |
+| **QualiGapNormalized** | Quali lap time as % of pole lap. |
+| **AvgPositionGainLast3** | Rolling avg positions gained/lost over last 3 races. |
+| **FinishStdLast5** | Finish position variance — consistency signal. |
+| **DNFRateLast5** | Retirement rate over last 5 races. |
+| **AvgFinishLast3** | Rolling average finish position. |
+| **PodiumRateLast5** | Podium frequency in recent history. |
+| **BeatTeammateRate** | How often driver out-finishes their teammate. |
+| **CurrentSeasonAvgFinish** | Season-to-date average finish. |
+| **ConstructorPodiumRate** | Constructor's podium rate. |
+| **ConstructorAvgFinish** | Constructor's average finish. |
+| **ConstructorDevelopmentRate** | Constructor improvement trend. |
+| **TrackType_street** | Street circuit flag. |
+| **TrackType_permanent** | Permanent circuit flag. |
+| **RainFlag** | Wet/mixed conditions flag. |
 
 ### Model Specs
--   **Algorithm**: Gradient Boosting Classifier (Scikit-Learn).
--   **Calibration**: Sigmoid calibration for reliable probability scoring.
--   **Training Set**: 2023–2025 historical data + active 2026 updates.
--   **Accuracy**: Evaluated via Brier Score Loss and ROC AUC.
+-   **Algorithm**: LightGBM (`LGBMClassifier`) with Optuna hyperparameter tuning.
+-   **Calibration**: `CalibratedClassifierCV` for reliable probability scoring.
+-   **Dual model**: Podium model + dedicated winner model; outputs merged into `CombinedScore`.
+-   **Training Set**: 2023–2026 historical data with time-decay weighting (factor 0.38).
+-   **Accuracy**: Evaluated via Brier Score Loss, ROC AUC, and Average Precision.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Backend (Python)
--   **FastAPI**: Async web framework for high-performance I/O.
--   **FastF1**: Real-time telemetry and timing data ingestion.
--   **SQLAlchemy / Psycopg2**: Dual-backend support (PostgreSQL for Prod, SQLite for Dev).
+-   **FastAPI + Uvicorn**: Async web framework for high-performance I/O.
+-   **LightGBM + Optuna**: Gradient boosting with automated HPO.
+-   **FastF1**: Real-time telemetry and qualifying/race data ingestion.
+-   **Psycopg2 / SQLite**: Dual-backend DB (PostgreSQL prod, SQLite local).
 -   **Joblib**: Model serialization and low-latency loading.
--   **LRU TTL Cache**: In-process memory caching for hot paths.
+-   **OrderedDict TTL cache**: In-process response cache (30s / 5min / 1hr TTLs by race phase).
 
 ### Frontend (JavaScript)
--   **React 19**: Modern component architecture with concurrent features.
--   **GSAP**: Premium motion design and scramble animations.
--   **Framer Motion**: Spring-based layout transitions.
--   **Vite 8**: Ultra-fast build tool and dev server.
--   **Sharp**: On-the-fly image optimization for circuit maps and flags.
+-   **React + Vite**: Component architecture with HMR dev server.
+-   **GSAP**: Motion design — entrance staggers, probability counters.
+-   **CSS custom properties**: Asphalt-textured UI with SVG noise filters and chevron patterns.
 
 ---
 
@@ -93,23 +102,30 @@ The model operates on 9 engineered features designed to be era-agnostic, ensurin
 
 ### Backend
 ```bash
-# Initialize environment
-python -m venv venv
-source venv/bin/activate  # or venv\Scripts\activate on Windows
-
-# Install dependencies
+python -m venv sklearn-env
+sklearn-env\Scripts\activate   # Windows
+# source sklearn-env/bin/activate  # macOS/Linux
 pip install -r requirements.txt
-
-# Start development server
 uvicorn main:app --reload
 ```
+
+Set `VITE_API_URL` in `f1-frontend/.env` to point at your backend.
 
 ### Frontend
 ```bash
 cd f1-frontend
 npm install
-npm run dev
+npm run dev   # http://localhost:5173
 ```
+
+### Training
+```bash
+python train.py --year 2026 --round 8   # fetch new round + retrain
+python train.py --retrain-only           # retrain on existing data
+python train.py --rebuild                # full rebuild from scratch
+```
+
+Model artifacts are saved to `models/` and excluded from git (`*.pkl`).
 
 ---
 
@@ -128,15 +144,17 @@ npm run dev
 .
 ├── main.py              # FastAPI entry point & orchestration
 ├── predict.py           # Feature engineering & inference logic
-├── train.py             # ML training pipeline CLI
-├── db.py                # Database abstraction layer
-├── models/              # Serialized model artifacts (.pkl)
-├── data/                # Cleaned datasets for training
+├── train.py             # ML training pipeline CLI (LightGBM v8)
+├── db.py                # Database abstraction layer (PostgreSQL + SQLite)
+├── routers/
+│   └── results.py       # Jolpica/Ergast race results integration
+├── models/              # Serialized model artifacts — gitignored (*.pkl)
+├── data/                # Cleaned training dataset (2023–2026)
+├── notebooks/           # Per-version training experiments
 ├── .github/workflows/   # CI/CD & keep-alive automation
-└── f1-frontend/         # React application source
+└── f1-frontend/         # React + Vite application
     ├── src/components/  # Modular UI components
-    ├── src/constants/   # 2026 Season metadata
-    └── scripts/         # Build and optimization scripts
+    └── src/constants/   # 2026 Season metadata & driver roster
 ```
 
 ---

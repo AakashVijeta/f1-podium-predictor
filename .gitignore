@@ -51,6 +51,10 @@ fastf1_cache/
 *.onnx
 *.pb
 
+# ── Trained model artifacts ──────────────────────────────────────────────────
+*.pkl
+*.pickle
+
 # ── Local databases ──────────────────────────────────────────────────────────
 *.db
 *.sqlite

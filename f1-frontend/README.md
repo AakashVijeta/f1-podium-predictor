@@ -1,16 +1,33 @@
-# React + Vite
+# F1 Podium Predictor — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite frontend for the F1 Podium Predictor. Deployed to GitHub Pages at [f1.aakashvijeta.me](https://f1.aakashvijeta.me).
 
-Currently, two official plugins are available:
+## Dev
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build
+npm run preview
+```
 
-## React Compiler
+Set `VITE_API_URL` in `.env` to point at the FastAPI backend (default: `http://localhost:8000`).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Components
 
-## Expanding the ESLint configuration
+| Component | Purpose |
+|-----------|---------|
+| `RaceHero` | Hero banner with circuit name and round info |
+| `InfoStrip` | Session schedule strip (quali / race times) |
+| `PodiumCards` | Pre-race prediction cards with probabilities |
+| `PostRacePodium` | Post-race actual results podium |
+| `GridTable` | Full driver grid with CombinedScore ranking |
+| `WinnerStrip` | Season winner accuracy strip |
+| `SeasonDashboard` | Full-season accuracy and history view |
+| `Header` / `Footer` | Chrome |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Key files
+
+- `src/App.jsx` — root app, race lifecycle state machine, API orchestration
+- `src/constants/drivers.js` — driver roster, team colors, flag codes, `API_BASE`
+- `src/constants/rounds.js` — 2026 calendar round metadata

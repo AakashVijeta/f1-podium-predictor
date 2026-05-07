@@ -1,7 +1,33 @@
 import { memo } from "react";
 import "./InfoStrip.css";
 
-function InfoStrip({ race, round }) {
+function fmtTime(iso) {
+  if (!iso) return null;
+  const d = new Date(iso);
+  const day   = new Intl.DateTimeFormat(undefined, { weekday: "short" }).format(d);
+  const date  = new Intl.DateTimeFormat(undefined, { day: "numeric", month: "short" }).format(d);
+  const time  = new Intl.DateTimeFormat(undefined, { hour: "2-digit", minute: "2-digit" }).format(d);
+  return { day, date, time };
+}
+
+function SessionStat({ label, iso }) {
+  const fmt = fmtTime(iso);
+  return (
+    <div className="istat">
+      <div className="istat-lbl">{label}</div>
+      {fmt ? (
+        <>
+          <div className="istat-val istat-val--time">{fmt.day} · {fmt.time}</div>
+          <div className="istat-sub">{fmt.date}</div>
+        </>
+      ) : (
+        <div className="istat-val istat-val--dim">TBD</div>
+      )}
+    </div>
+  );
+}
+
+function InfoStrip({ race, round, schedule }) {
   return (
     <div className="info-strip" style={{ marginTop: "2px" }} key={round}>
       <div className="istat">
@@ -27,6 +53,8 @@ function InfoStrip({ race, round }) {
           {race?.type === "street" ? "Street" : "Permanent"}
         </div>
       </div>
+      <SessionStat label="Qualifying" iso={schedule?.qualifying} />
+      <SessionStat label="Race" iso={schedule?.race} />
     </div>
   );
 }

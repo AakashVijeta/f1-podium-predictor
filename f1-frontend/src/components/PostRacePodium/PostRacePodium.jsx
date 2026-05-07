@@ -12,21 +12,30 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
   useEffect(() => {
     if (!podRef.current || !shouldAnimate) return;
     const ctx = gsap.context(() => {
-      gsap.fromTo(".vs-side:first-child .vs-row",
-        { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", stagger: 0.1, delay: 0.2 }
-      );
-      gsap.fromTo(".vs-divider",
-        { opacity: 0, scale: 0 },
-        { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)", delay: 0.4 }
-      );
-      gsap.fromTo(".vs-side:last-child .vs-row",
-        { opacity: 0, x: 30 },
-        { opacity: 1, x: 0, duration: 0.5, ease: "power3.out", stagger: 0.1, delay: 0.5 }
-      );
-      gsap.fromTo(".vs-status",
-        { opacity: 0, scale: 0 },
-        { opacity: 1, scale: 1, duration: 0.3, ease: "back.out(3)", stagger: 0.12, delay: 0.7 }
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.fromTo(".vs-header",
+        { opacity: 0, y: -8 },
+        { opacity: 1, y: 0, duration: 0.4, stagger: 0.15 }
+      )
+      .fromTo(".vs-side:first-child .vs-row",
+        { opacity: 0, x: -24 },
+        { opacity: 1, x: 0, duration: 0.45, stagger: 0.08 },
+        "-=0.15"
+      )
+      .fromTo(".vs-divider",
+        { opacity: 0, scale: 0.6 },
+        { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.5)" },
+        "-=0.3"
+      )
+      .fromTo(".vs-side:last-child .vs-row",
+        { opacity: 0, x: 24 },
+        { opacity: 1, x: 0, duration: 0.45, stagger: 0.08 },
+        "-=0.35"
+      )
+      .fromTo(".vs-status",
+        { opacity: 0, scale: 0.4, rotation: -15 },
+        { opacity: 1, scale: 1, rotation: 0, duration: 0.3, ease: "back.out(3)", stagger: 0.1 },
+        "-=0.2"
       );
     }, podRef.current);
     return () => ctx.revert();
@@ -43,7 +52,7 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
           <div className="vs-side">
             <div className="vs-header">
               <span className="vs-title">Predicted Podium</span>
-              <span className="vs-sub">ML Model v5</span>
+              <span className="vs-sub">ML Model v8</span>
             </div>
             <div className="vs-podium">
               {top3.slice(0, 3).map((d, i) => {

@@ -128,7 +128,7 @@ export default function App() {
       <Header data={data} />
       <RaceHero race={race} round={round} onRoundChange={handleRoundChange} />
 
-      {loading ? <InfoStripSkeleton /> : <InfoStrip race={race} round={round} />}
+      {loading ? <InfoStripSkeleton /> : <InfoStrip race={race} round={round} schedule={schedule} />}
 
       {!loading && race && (
         <Suspense fallback={<div className="lazy-ph" />}>

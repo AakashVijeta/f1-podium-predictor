@@ -110,7 +110,9 @@ if DATABASE_URL:
                 cur.execute("""
                     INSERT INTO predictions (year, round, predictions)
                     VALUES (%s, %s, %s)
-                    ON CONFLICT (year, round) DO NOTHING
+                    ON CONFLICT (year, round) DO UPDATE
+                        SET predictions = EXCLUDED.predictions,
+                            predicted_at = NOW()
                 """, (year, round, json.dumps(predictions)))
             conn.commit()
         finally:
@@ -248,9 +250,8 @@ else:
         try:
             cur = conn.cursor()
             cur.execute("""
-                INSERT INTO predictions (year, round, predictions)
+                INSERT OR REPLACE INTO predictions (year, round, predictions)
                 VALUES (?, ?, ?)
-                ON CONFLICT (year, round) DO NOTHING
             """, (year, round, json.dumps(predictions)))
             conn.commit()
         finally:
