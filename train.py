@@ -50,6 +50,12 @@ FEATURE_COLS = [
     "RainFlag",
 ]
 
+RAW_COLS = [
+    "FullName", "TeamName", "GridPosition", "Position", "Status",
+    "Year", "Round", "Location", "RainFlag", "BestQualiTime",
+    "Podium", "TrackType",
+]
+
 TRACK_TYPE = {
     "Jeddah":        "street",
     "Baku":          "street",
@@ -364,6 +370,7 @@ def train(df_model):
 
 
 def _pipeline(df_raw):
+    df_raw   = df_raw[[c for c in RAW_COLS if c in df_raw.columns]].copy()
     df_clean = clean(df_raw)
     df_feat  = engineer_features(df_clean)
     df_feat  = add_constructor_development(df_feat)
