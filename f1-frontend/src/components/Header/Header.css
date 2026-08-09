@@ -4,12 +4,12 @@
   z-index: 100;
   display: flex;
   align-items: stretch;
-  background: linear-gradient(180deg, #0c0c0c 0%, #070707 100%);
+  background: rgba(10,10,10,0.78);
   border-bottom: 1px solid var(--border-hi);
   height: 56px;
   padding-left: env(safe-area-inset-left);
   padding-right: env(safe-area-inset-right);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(18px) saturate(160%);
   box-shadow: 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px -12px rgba(0,0,0,0.8);
   animation: hdrSlide 0.5s var(--ease) both;
 }
@@ -19,7 +19,7 @@
   to   { transform: translateY(0); }
 }
 
-.hdr-logo img { animation: hdrLogo 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both; }
+.hdr-logo img { animation: hdrLogo 0.45s var(--ease) 0.1s both; }
 .hdr-app      { animation: hdrFadeIn 0.4s var(--ease) 0.3s both; }
 
 @keyframes hdrLogo {
@@ -82,7 +82,7 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-weight: 700;
   font-size: 0.8rem;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.18em;
   color: #888;
   text-transform: uppercase;
   white-space: nowrap;
@@ -132,7 +132,7 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   padding: 5px 12px 5px 10px;
   border: 1px solid;
@@ -162,6 +162,10 @@
   .hdr-status {
     font-size: 0.62rem;
     padding: 3px 9px 3px 7px;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.08em;
   }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .hdr { background: #0b0b0b; }
 }

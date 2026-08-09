@@ -8,6 +8,17 @@ import "./SeasonDashboard.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function normalizeBool(value) {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "number") return value !== 0;
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    if (["true", "correct", "1", "yes"].includes(normalized)) return true;
+    if (["false", "wrong", "missed", "0", "no"].includes(normalized)) return false;
+  }
+  return null;
+}
+
 export default function SeasonDashboard({ year }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -80,7 +91,7 @@ export default function SeasonDashboard({ year }) {
           y: 0,
           scale: 1,
           duration: 0.4,
-          ease: "back.out(1.2)",
+          ease: "power3.out",
           stagger: 0.06,
           scrollTrigger: { trigger: gridEl, start: "top 90%", once: true },
         }
@@ -130,11 +141,30 @@ export default function SeasonDashboard({ year }) {
         <div className="sd-h-title">Per-Round Breakdown</div>
         <div className="sd-grid">
           {data.history.map((h) => {
+            const winnerCorrect = normalizeBool(h.winner_correct);
+            const podiumHits = Number(h.podium_hits);
+            const podiumTotalValue = Number(h.podium_total);
+            const hasPodiumScore =
+              Number.isFinite(podiumHits) &&
+              Number.isFinite(podiumTotalValue) &&
+              podiumTotalValue > 0;
             const hasResults =
-              h.results_available !== false &&
-              (h.status === "evaluated" || typeof h.winner_correct === "boolean");
-            const cardState = hasResults ? (h.winner_correct ? "sd-hit" : "sd-miss") : "sd-pending";
-            const podiumTotal = h.podium_total || 3;
+              h.results_available === true ||
+              h.status === "evaluated" ||
+              winnerCorrect !== null ||
+              hasPodiumScore;
+            const cardState = hasResults
+              ? (winnerCorrect ? "sd-hit" : "sd-miss")
+              : h.status === "missing_results" ? "sd-missing" : "sd-pending";
+            const podiumTotal = hasPodiumScore ? podiumTotalValue : 3;
+            const unavailableText =
+              h.status === "missing_results" ? "Results Missing" :
+              h.status === "insufficient_predictions" ? "Insufficient Data" :
+              "Pending";
+            const podiumUnavailableText =
+              h.status === "missing_results" ? "Actual Results Missing" :
+              h.status === "insufficient_predictions" ? "Predictions Missing" :
+              "Results Pending";
 
             return (
               <div className={`sd-card ${cardState}`} key={h.round}>
@@ -143,8 +173,8 @@ export default function SeasonDashboard({ year }) {
                   <div className="sd-rmetric">
                     <span className="sd-mlbl">Winner</span>
                     {!hasResults ? (
-                      <span className="sd-mtext">Pending</span>
-                    ) : h.winner_correct ? (
+                      <span className="sd-mtext">{unavailableText}</span>
+                    ) : winnerCorrect ? (
                       <span className="sd-tick">Correct</span>
                     ) : (
                       <span className="sd-cross">Missed</span>
@@ -153,7 +183,7 @@ export default function SeasonDashboard({ year }) {
                   <div className="sd-rmetric">
                     <span className="sd-mlbl">Podium</span>
                     <span className="sd-mtext">
-                      {hasResults ? `${h.podium_hits} / ${podiumTotal} Hit` : "Results Pending"}
+                      {hasResults ? `${h.podium_hits} / ${podiumTotal} Hit` : podiumUnavailableText}
                     </span>
                   </div>
                 </div>

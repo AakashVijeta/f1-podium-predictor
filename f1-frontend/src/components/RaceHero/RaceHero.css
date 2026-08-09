@@ -84,7 +84,7 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.68rem;
   font-weight: 800;
-  letter-spacing: 0.28em;
+  letter-spacing: 0.16em;
   color: var(--red-hot);
   text-transform: uppercase;
   display: flex;
@@ -104,7 +104,7 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-size: clamp(1.55rem, 4.2vw, 2.4rem);
   font-weight: 900;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
   text-transform: uppercase;
   line-height: 0.95;
   background: linear-gradient(180deg, #ffffff 0%, #c0c0c0 100%);
@@ -117,7 +117,7 @@
 .hero-circuit {
   font-size: 0.74rem;
   color: var(--muted);
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-top: 0.15rem;
 }
@@ -129,7 +129,7 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.1em;
   color: #bbb;
   border: 1px solid var(--border-hi);
   background: rgba(255,255,255,0.02);
@@ -179,12 +179,17 @@
   min-width: 280px;
   min-height: 44px;
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
-  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.12s ease-out;
 }
 
 .race-sel:hover {
   border-left-color: var(--red-hot);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 0 0 1px rgba(225,6,0,0.25), 0 4px 16px -4px rgba(225,6,0,0.3);
+}
+
+.race-sel:active {
+  transform: scale(0.99);
+  transition-duration: 90ms;
 }
 
 .race-sel:focus {

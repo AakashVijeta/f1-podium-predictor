@@ -95,9 +95,9 @@ html, body {
   clip-path: polygon(0 0, 100% 0, 100% 100%, 20% 100%);
   box-shadow: 0 0 14px rgba(225,6,0,0.45);
 }
-.sh-lbl  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.28em; color: #d0d0d0; text-transform: uppercase; white-space: nowrap; }
+.sh-lbl  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; color: #d0d0d0; text-transform: uppercase; white-space: nowrap; }
 .sh-line { flex: 1; height: 1px; background: linear-gradient(90deg, var(--border) 0%, transparent 100%); }
-.sh-sub  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.18em; white-space: nowrap; text-transform: uppercase; }
+.sh-sub  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.62rem; color: var(--muted); letter-spacing: 0.1em; white-space: nowrap; text-transform: uppercase; }
 
 /* ── States ── */
 .state-s {
@@ -110,8 +110,8 @@ html, body {
   gap: 1rem;
 }
 .state-ico  { font-size: 3rem; filter: drop-shadow(0 0 24px rgba(225,6,0,0.4)); }
-.state-t    { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.22em; color: #cfcfcf; text-transform: uppercase; }
-.state-sub2 { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.12em; }
+.state-t    { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.14em; color: #cfcfcf; text-transform: uppercase; }
+.state-sub2 { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.04em; }
 
 .schedule-times {
   margin-top: 1.5rem;
@@ -135,7 +135,7 @@ html, body {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.62rem;
   font-weight: 700;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -155,7 +155,7 @@ html, body {
   min-height: 60vh;
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.7rem;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.18em;
   color: #666;
   text-transform: uppercase;
   animation: pulse 1.2s infinite;
@@ -203,7 +203,7 @@ html, body {
   .postrace-wrap { padding: 1rem; }
   .state-s { min-height: 40vh; }
   .state-ico { font-size: 2rem; }
-  .state-t { font-size: 0.9rem; letter-spacing: 0.14em; }
+  .state-t { font-size: 0.9rem; letter-spacing: 0.1em; }
   .state-sub2 { font-size: 0.65rem; }
 }
 
@@ -222,3 +222,39 @@ html, body, #root { min-height: 100vh; }
 ::-webkit-scrollbar-track { background: #000; }
 ::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--red-deep); }
+
+@media (prefers-reduced-transparency: reduce) {
+  .hdr,
+  .hdr-status,
+  .hero-badge,
+  .cm-stage,
+  .pc,
+  .istat,
+  .acc-card,
+  .vs-row,
+  .winner-strip {
+    backdrop-filter: none !important;
+    background: #101010 !important;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --border: rgba(255, 255, 255, 0.24);
+    --border-hi: rgba(255, 255, 255, 0.42);
+    --muted: rgba(255, 255, 255, 0.72);
+  }
+
+  .hdr,
+  .hero,
+  .info-strip > *,
+  .cm-stage,
+  .pc,
+  .gtbl,
+  .acc-card,
+  .vs-row,
+  .sd-card,
+  .winner-strip {
+    border-color: var(--border-hi) !important;
+  }
+}

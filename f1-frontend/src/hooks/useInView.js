@@ -8,7 +8,7 @@ export function useInView({ rootMargin = "200px", once = true } = {}) {
     const el = ref.current;
     if (!el || (once && inView)) return;
     if (typeof IntersectionObserver === "undefined") {
-      setInView(true);
+      queueMicrotask(() => setInView(true));
       return;
     }
     const io = new IntersectionObserver(

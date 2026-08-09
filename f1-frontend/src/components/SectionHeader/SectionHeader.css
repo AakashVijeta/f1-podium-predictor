@@ -6,7 +6,7 @@
 }
 
 .sh-bar  { width: 3px; height: 16px; background: var(--red); flex-shrink: 0; transform-origin: bottom; animation: shBar 0.4s var(--ease) both; }
-.sh-lbl  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.25em; color: #333; text-transform: uppercase; white-space: nowrap; animation: shFadeX 0.35s var(--ease) 0.25s both; }
+.sh-lbl  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; color: #333; text-transform: uppercase; white-space: nowrap; animation: shFadeX 0.35s var(--ease) 0.25s both; }
 .sh-line { flex: 1; height: 1px; background: var(--border); transform-origin: left; animation: shLine 0.5s var(--ease) 0.2s both; }
 .sh-sub  { font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; color: #252525; letter-spacing: 0.1em; white-space: nowrap; animation: shFade 0.3s var(--ease) 0.55s both; }
 

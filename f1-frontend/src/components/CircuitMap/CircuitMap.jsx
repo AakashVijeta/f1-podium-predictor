@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useShouldAnimate } from "../../hooks/useMotion";
 import "./CircuitMap.css";
 
 // bacinger/f1-circuits — MIT-licensed GeoJSONs, served via jsdelivr CDN.
@@ -33,10 +34,26 @@ const _cache = new Map();
 
 async function fetchCircuit(code) {
   if (_cache.has(code)) return _cache.get(code);
+  const storageKey = `f1-circuit:${code}:v1`;
+  try {
+    const cached = sessionStorage.getItem(storageKey);
+    if (cached) {
+      const json = JSON.parse(cached);
+      _cache.set(code, json);
+      return json;
+    }
+  } catch {
+    // Session storage is an opportunistic cache only.
+  }
   const res = await fetch(`${BASE}/${code}.geojson`);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const json = await res.json();
   _cache.set(code, json);
+  try {
+    sessionStorage.setItem(storageKey, JSON.stringify(json));
+  } catch {
+    // Ignore storage quota and private browsing failures.
+  }
   return json;
 }
 
@@ -68,14 +85,20 @@ export default function CircuitMap({ race }) {
   const [err, setErr] = useState(false);
   const [drawn, setDrawn] = useState(false);
   const pathRef = useRef(null);
+  const shouldAnimate = useShouldAnimate();
 
   const code = CIRCUIT_CODE[race?.round];
 
   useEffect(() => {
-    setGeo(null);
-    setErr(false);
-    setDrawn(false);
-    if (!code) { setErr(true); return; }
+    queueMicrotask(() => {
+      setGeo(null);
+      setErr(false);
+      setDrawn(false);
+    });
+    if (!code) {
+      queueMicrotask(() => setErr(true));
+      return;
+    }
 
     let cancelled = false;
     fetchCircuit(code)
@@ -100,15 +123,23 @@ export default function CircuitMap({ race }) {
     if (!d || !pathRef.current) return;
     const len = pathRef.current.getTotalLength();
     pathRef.current.style.strokeDasharray = len;
+    if (!shouldAnimate) {
+      pathRef.current.style.transition = "none";
+      pathRef.current.style.strokeDashoffset = "0";
+      queueMicrotask(() => setDrawn(true));
+      return;
+    }
     pathRef.current.style.strokeDashoffset = len;
-    // force reflow then animate
-    // eslint-disable-next-line no-unused-expressions
+    // Force reflow before applying the stroke transition.
     pathRef.current.getBoundingClientRect();
     pathRef.current.style.transition = "stroke-dashoffset 1.8s cubic-bezier(0.7, 0, 0.3, 1)";
     pathRef.current.style.strokeDashoffset = "0";
     const t = setTimeout(() => setDrawn(true), 1800);
     return () => clearTimeout(t);
-  }, [d]);
+  }, [d, shouldAnimate]);
+
+  const titleId = `circuit-map-title-${race?.round ?? "unknown"}`;
+  const descId = `circuit-map-desc-${race?.round ?? "unknown"}`;
 
   return (
     <div className="cm-wrap">
@@ -125,7 +156,17 @@ export default function CircuitMap({ race }) {
       </div>
 
       <div className="cm-stage">
-        <svg viewBox="0 0 800 360" className="cm-svg" preserveAspectRatio="xMidYMid meet" aria-hidden>
+        <svg
+          viewBox="0 0 800 360"
+          className="cm-svg"
+          preserveAspectRatio="xMidYMid meet"
+          role="img"
+          aria-labelledby={`${titleId} ${descId}`}
+        >
+          <title id={titleId}>{race?.circuit || "Circuit"} layout</title>
+          <desc id={descId}>
+            Track outline for {race?.name || "the selected Grand Prix"} in {race?.location || "the selected location"}.
+          </desc>
           <defs>
             <linearGradient id="cm-stroke" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%"   stopColor="#ffffff" stopOpacity="0.85" />

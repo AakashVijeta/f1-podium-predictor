@@ -5,7 +5,7 @@ import "./RaceHero.css";
 
 function RaceHero({ race, round, onRoundChange }) {
   return (
-    <div className="hero" key={round}>
+    <div className="hero">
       <div className="hero-flag">
         <FlagImg code={race?.countryCode} size="xl" />
       </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo, useCallback, Suspense, lazy } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback, useReducer, Suspense, lazy } from "react";
 import SeasonDashboard from "./components/SeasonDashboard/SeasonDashboard";
 import { ROUNDS_2026 } from "./constants/rounds";
 import { API_BASE } from "./constants/drivers";
@@ -20,56 +20,99 @@ const GridTable        = lazy(() => import("./components/GridTable/GridTable"));
 const PostRacePodium   = lazy(() => import("./components/PostRacePodium/PostRacePodium"));
 const WinnerStrip      = lazy(() => import("./components/WinnerStrip/WinnerStrip"));
 
-const formatSessionTime = (isoString) => {
-  if (!isoString) return "—";
-  return new Intl.DateTimeFormat(undefined, {
-    weekday: "short",
-    day: "numeric",
-    month: "short",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(new Date(isoString));
+const initialRaceState = {
+  data: null,
+  dataRound: null,
+  actualResults: null,
+  schedule: null,
+  scheduleRound: null,
+  loading: false,
+  loadingRound: null,
+  error: null,
 };
+
+function raceReducer(state, action) {
+  switch (action.type) {
+    case "start":
+      return {
+        ...state,
+        loading: true,
+        loadingRound: action.round,
+        error: null,
+        schedule: state.scheduleRound === action.round ? state.schedule : null,
+        scheduleRound: state.scheduleRound === action.round ? state.scheduleRound : null,
+      };
+    case "schedule":
+      return {
+        ...state,
+        schedule: action.schedule,
+        scheduleRound: action.round,
+      };
+    case "cached":
+      return {
+        ...state,
+        data: action.entry.data,
+        dataRound: action.round,
+        actualResults: action.entry.actualResults,
+        loading: false,
+        loadingRound: null,
+        error: null,
+      };
+    case "success":
+      return {
+        ...state,
+        data: action.data,
+        dataRound: action.round,
+        actualResults: action.actualResults,
+        loading: false,
+        loadingRound: null,
+        error: null,
+      };
+    case "error":
+      return {
+        ...state,
+        loading: false,
+        loadingRound: null,
+        error: action.message,
+      };
+    default:
+      return state;
+  }
+}
 
 export default function App() {
   const [round, setRound] = useState(1);
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [hovered, setHovered] = useState(null);
-  const [actualResults, setActualResults] = useState(null);
-  const [schedule, setSchedule] = useState(null);
+  const [raceState, dispatchRace] = useReducer(raceReducer, initialRaceState);
   const cacheRef = useRef(new Map());
   const [seasonRef, seasonInView] = useInView({ rootMargin: "1000px" });
 
   const race = useMemo(() => ROUNDS_2026.find(r => r.round === round), [round]);
+  const data = raceState.dataRound === round ? raceState.data : null;
+  const actualResults = raceState.dataRound === round ? raceState.actualResults : null;
+  const schedule = raceState.scheduleRound === round ? raceState.schedule : null;
+  const loading = raceState.loading && raceState.loadingRound === round;
+  const initialLoading = loading && !data;
 
   useEffect(() => {
     const cached = cacheRef.current.get(round);
     const ac = new AbortController();
-    setError(null);
-    setSchedule(null);
+    dispatchRace({ type: "start", round });
 
     fetch(`${API_BASE}/schedule/2026/${round}`, { signal: ac.signal })
       .then(r => r.json())
       .then(s => {
         if (ac.signal.aborted) return;
-        setSchedule(s);
+        dispatchRace({ type: "schedule", round, schedule: s });
         const entry = cacheRef.current.get(round);
         if (entry) cacheRef.current.set(round, { ...entry, schedule: s });
       })
       .catch(() => {});
 
     if (cached) {
-      setData(cached.data);
-      setActualResults(cached.actualResults);
-      setLoading(false);
+      dispatchRace({ type: "cached", round, entry: cached });
       return () => ac.abort();
     }
-
-    setLoading(true);
-    setData(null);
-    setActualResults(null);
 
     Promise.all([
       fetch(`${API_BASE}/predict/2026/${round}`, { signal: ac.signal }).then(r => r.json()),
@@ -78,18 +121,14 @@ export default function App() {
       .then(([d, r]) => {
         if (ac.signal.aborted) return;
         const actual = r.available ? r.results : null;
-        setData(d);
-        setActualResults(actual);
+        dispatchRace({ type: "success", round, data: d, actualResults: actual });
         if (d?.status === "post_race") {
           cacheRef.current.set(round, { data: d, actualResults: actual });
         }
       })
       .catch(err => {
         if (err.name === "AbortError") return;
-        setError("Cannot reach API — make sure uvicorn is running.");
-      })
-      .finally(() => {
-        if (!ac.signal.aborted) setLoading(false);
+        dispatchRace({ type: "error", message: "Cannot reach API - make sure uvicorn is running." });
       });
 
     return () => ac.abort();
@@ -132,17 +171,17 @@ export default function App() {
       <Header data={data} />
       <RaceHero race={race} round={round} onRoundChange={handleRoundChange} />
 
-      {loading ? <InfoStripSkeleton /> : <InfoStrip race={race} round={round} schedule={schedule} />}
+      {race ? <InfoStrip race={race} round={round} schedule={schedule} /> : <InfoStripSkeleton />}
 
-      {!loading && race && (
+      {race && (
         <Suspense fallback={<div className="lazy-ph" />}>
           <CircuitMap race={race} />
         </Suspense>
       )}
 
-      {error && <div className="err-s">{error}</div>}
+      {raceState.error && <div className="err-s">{raceState.error}</div>}
 
-      {!loading && data?.status === "pre_quali" && (
+      {!initialLoading && data?.status === "pre_quali" && (
         <div className="state-s fade">
           <div className="state-ico">⏱</div>
           <div className="state-t">Qualifying not yet started</div>
@@ -150,7 +189,7 @@ export default function App() {
         </div>
       )}
 
-      {loading ? (
+      {initialLoading ? (
         <>
           <PodiumCardsSkeleton />
           <GridTableSkeleton rows={20} />
@@ -172,7 +211,7 @@ export default function App() {
         </div>
       ) : null}
 
-      {!loading && data?.status === "post_race" && raceResults.length > 0 && (
+      {!initialLoading && data?.status === "post_race" && raceResults.length > 0 && (
         <div className="postrace-wrap fade">
           <Suspense fallback={<PodiumCardsSkeleton />}>
             <PostRacePodium

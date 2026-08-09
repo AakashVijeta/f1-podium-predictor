@@ -1,4 +1,4 @@
-import { memo, useEffect, useMemo, useRef } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { gd, fn, ln } from "../../constants/drivers";
@@ -26,8 +26,12 @@ const GridRow = memo(function GridRow({
   return (
     <tr
       className={`gr ${hovered === d.FullName ? "hl" : ""}`}
-      onMouseEnter={() => onHover(d.FullName)}
-      onMouseLeave={() => onHover(null)}
+      tabIndex={0}
+      aria-label={`Predicted P${i + 1}: ${d.FullName}, ${pct.toFixed(1)} percent prediction score`}
+      onPointerEnter={() => onHover(d.FullName)}
+      onPointerLeave={() => onHover(null)}
+      onFocus={() => onHover(d.FullName)}
+      onBlur={() => onHover(null)}
     >
       <td className="td-actual">
         {!showActual ? null : isDNF ? (
@@ -90,12 +94,10 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
     return map;
   }, [actualResults]);
 
-  const getActual = useMemo(() => {
-    if (!actualByLast) return () => null;
-    return (fullName) => {
-      const lastName = fullName.split(" ").slice(-1)[0].toUpperCase();
-      return actualByLast.get(lastName) ?? null;
-    };
+  const getActual = useCallback((fullName) => {
+    if (!actualByLast) return null;
+    const lastName = fullName.split(" ").slice(-1)[0].toUpperCase();
+    return actualByLast.get(lastName) ?? null;
   }, [actualByLast]);
 
   useEffect(() => {
@@ -126,7 +128,7 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
           { opacity: 0, y: 20, scale: 0.95 },
           {
             opacity: 1, y: 0, scale: 1,
-            duration: 0.5, ease: "back.out(1.4)",
+            duration: 0.4, ease: "power3.out",
             stagger: 0.1,
             scrollTrigger: { trigger: ".acc-bar", start: "top 90%", once: true },
           }
@@ -137,7 +139,7 @@ export default function GridTable({ sorted, maxProb, hovered, onHover, accuracyS
         { width: 0 },
         {
           width: (i, el) => el.style.getPropertyValue("--target-width"),
-          duration: 1, ease: "expo.out",
+          duration: 0.75, ease: "power3.out",
           stagger: 0.04,
           scrollTrigger: { trigger: ".gtbl", start: "top 85%", once: true },
         }

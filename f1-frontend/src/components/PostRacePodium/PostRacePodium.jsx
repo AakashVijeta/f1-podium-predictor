@@ -24,7 +24,7 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
       )
       .fromTo(".vs-divider",
         { opacity: 0, scale: 0.6 },
-        { opacity: 1, scale: 1, duration: 0.35, ease: "back.out(2.5)" },
+        { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" },
         "-=0.3"
       )
       .fromTo(".vs-side:last-child .vs-row",
@@ -34,7 +34,7 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
       )
       .fromTo(".vs-status",
         { opacity: 0, scale: 0.4, rotation: -15 },
-        { opacity: 1, scale: 1, rotation: 0, duration: 0.3, ease: "back.out(3)", stagger: 0.1 },
+        { opacity: 1, scale: 1, rotation: 0, duration: 0.25, ease: "power3.out", stagger: 0.08 },
         "-=0.2"
       );
     }, podRef.current);
@@ -76,7 +76,14 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
                 }
 
                 return (
-                  <div className={`vs-row ${matchStatus}`} key={d.FullName} style={{ borderLeftColor: drv.color }}>
+                  <div
+                    className={`vs-row ${matchStatus}`}
+                    key={d.FullName}
+                    style={{ borderLeftColor: drv.color }}
+                    tabIndex={0}
+                    role="group"
+                    aria-label={`Predicted P${i + 1}: ${d.FullName}, ${matchStatus}`}
+                  >
                     <div className="vs-pos" style={{ color: medalColor }}>P{i + 1}</div>
                     <div className="vs-code" style={{ color: drv.color }}>{drv.short}</div>
                     <div className="vs-name">
@@ -103,7 +110,14 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
               const drv = gd(r.FullName);
               const medalColor = MEDALS[i];
               return (
-                <div className="vs-row hit" key={r.FullName} style={{ borderLeftColor: drv.color }}>
+                <div
+                  className="vs-row hit"
+                  key={r.FullName}
+                  style={{ borderLeftColor: drv.color }}
+                  tabIndex={0}
+                  role="group"
+                  aria-label={`Actual P${r.RacePosition}: ${r.FullName}`}
+                >
                   <div className="vs-pos" style={{ color: medalColor }}>P{r.RacePosition}</div>
                   <div className="vs-code" style={{ color: drv.color }}>{drv.short}</div>
                   <div className="vs-name">

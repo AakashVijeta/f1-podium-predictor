@@ -341,11 +341,14 @@ def _prediction_score(row):
         return 0
 
 
-async def _get_accuracy_actual_top3(year: int, round_num: int):
+async def _get_accuracy_actual_top3(year: int, round_num: int, session_status: str = "unknown"):
     stored_results = await asyncio.to_thread(get_race_result, year, round_num)
     stored_top3 = _normalize_top3_results(stored_results)
     if stored_top3:
         return {"source": "stored", "top3": stored_top3}
+
+    if session_status in {"pre_quali", "pre_race"}:
+        return {"source": "not_yet_raced", "top3": []}
 
     try:
         live_payload = await asyncio.wait_for(
@@ -360,6 +363,21 @@ async def _get_accuracy_actual_top3(year: int, round_num: int):
     if live_top3:
         await asyncio.to_thread(save_race_result, year, round_num, live_results)
         return {"source": "live", "top3": live_top3}
+
+    if session_status == "post_race":
+        try:
+            fastf1_results = await asyncio.wait_for(
+                asyncio.to_thread(fetch_race_results, year, round_num),
+                timeout=45,
+            )
+            if fastf1_results is not None:
+                fastf1_rows = fastf1_results.to_dict(orient="records")
+                fastf1_top3 = _normalize_top3_results(fastf1_rows)
+                if fastf1_top3:
+                    await asyncio.to_thread(save_race_result, year, round_num, fastf1_rows)
+                    return {"source": "fastf1", "top3": fastf1_top3}
+        except Exception as exc:
+            return {"source": "unavailable", "top3": [], "error": str(exc)}
 
     return {
         "source": "unavailable",
@@ -384,18 +402,39 @@ async def fetch_accuracy(year: int):
             "history": []
         }
 
-    tasks = [_get_accuracy_actual_top3(year, r["round"]) for r in predictions]
+    session_statuses = {}
+    for row in predictions:
+        r_num = row["round"]
+        try:
+            session_statuses[r_num] = await asyncio.to_thread(_cached_status, year, r_num)
+        except Exception:
+            session_statuses[r_num] = "unknown"
+
+    result_lookup_sem = asyncio.Semaphore(3)
+
+    async def limited_actual_lookup(round_num: int):
+        async with result_lookup_sem:
+            return await _get_accuracy_actual_top3(
+                year,
+                round_num,
+                session_statuses.get(round_num, "unknown"),
+            )
+
+    tasks = [limited_actual_lookup(r["round"]) for r in predictions]
     all_actual_results = await asyncio.gather(*tasks, return_exceptions=True)
 
     rounds_analyzed    = 0
     winner_correct     = 0
     podium_correct     = 0
     total_podium_slots = 0
+    rounds_pending     = 0
+    rounds_missing     = 0
     history            = []
 
     for round_data, actual in zip(predictions, all_actual_results):
         r_num        = round_data["round"]
         preds        = round_data.get("predictions") or []
+        session_status = session_statuses.get(r_num, "unknown")
 
         preds_sorted  = sorted(preds, key=_prediction_score, reverse=True)
         top3_preds    = preds_sorted[:3]
@@ -411,17 +450,40 @@ async def fetch_accuracy(year: int):
         top3_actual = actual.get("top3", []) if isinstance(actual, dict) else []
         source = actual.get("source", "unavailable") if isinstance(actual, dict) else "unavailable"
 
-        if len(top3_preds) < 3 or len(top3_actual) < 3:
+        if len(top3_preds) < 3:
             history.append({
                 "round": r_num,
-                "status": "pending_results" if len(top3_actual) < 3 else "insufficient_predictions",
-                "results_available": False,
+                "status": "insufficient_predictions",
+                "session_status": session_status,
+                "results_available": len(top3_actual) == 3,
                 "result_source": source,
                 "winner_correct": None,
                 "podium_hits": 0,
                 "podium_total": 0,
                 "predicted_top3": pred_last_names,
                 "actual_top3": [_last_name(a.get("driver_name")) for a in top3_actual],
+                "error": actual.get("error") if isinstance(actual, dict) else None,
+            })
+            continue
+
+        if len(top3_actual) < 3:
+            is_future_or_live = session_status != "post_race"
+            if is_future_or_live:
+                rounds_pending += 1
+            else:
+                rounds_missing += 1
+
+            history.append({
+                "round": r_num,
+                "status": "pending_results" if is_future_or_live else "missing_results",
+                "session_status": session_status,
+                "results_available": False,
+                "result_source": source,
+                "winner_correct": None,
+                "podium_hits": 0,
+                "podium_total": 0,
+                "predicted_top3": pred_last_names,
+                "actual_top3": [],
                 "error": actual.get("error") if isinstance(actual, dict) else None,
             })
             continue
@@ -447,6 +509,7 @@ async def fetch_accuracy(year: int):
         history.append({
             "round": r_num,
             "status": "evaluated",
+            "session_status": session_status,
             "results_available": True,
             "result_source": source,
             "winner_correct": is_winner_correct,
@@ -461,7 +524,8 @@ async def fetch_accuracy(year: int):
         "year": year,
         "rounds_tracked": len(predictions),
         "rounds_analyzed": rounds_analyzed,
-        "rounds_pending": len(predictions) - rounds_analyzed,
+        "rounds_pending": rounds_pending,
+        "rounds_missing_results": rounds_missing,
         "podium_correct": podium_correct,
         "total_podium_slots": total_podium_slots,
         "winner_correct": winner_correct,

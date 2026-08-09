@@ -25,7 +25,7 @@ export default function PodiumCards({ top3, maxProb, hovered, onHover }) {
     const ctx = gsap.context(() => {
       gsap.fromTo(".pc",
         { opacity: 0, y: 40, scale: 0.92, rotateX: 8 },
-        { opacity: 1, y: 0, scale: 1, rotateX: 0, duration: 0.7, ease: "expo.out", stagger: 0.12 }
+        { opacity: 1, y: 0, scale: 1, rotateX: 0, duration: 0.45, ease: "power3.out", stagger: 0.08 }
       );
 
       wrapRef.current.querySelectorAll(".pc-pnum").forEach((el) => {
@@ -34,8 +34,8 @@ export default function PodiumCards({ top3, maxProb, hovered, onHover }) {
           { textContent: 0 },
           {
             textContent: target,
-            duration: 1.4,
-            delay: 0.3,
+            duration: 0.9,
+            delay: 0.2,
             ease: "power2.out",
             snap: { textContent: 0.1 },
             onUpdate() { el.textContent = parseFloat(el.textContent).toFixed(1); },
@@ -45,7 +45,7 @@ export default function PodiumCards({ top3, maxProb, hovered, onHover }) {
 
       gsap.fromTo(".pc-fill",
         { width: 0 },
-        { width: (i, el) => el.dataset.width, duration: 1.2, delay: 0.4, ease: "expo.out", stagger: 0.1 }
+        { width: (i, el) => el.dataset.width, duration: 0.8, delay: 0.25, ease: "power3.out", stagger: 0.06 }
       );
     }, wrapRef.current);
 
@@ -76,11 +76,16 @@ export default function PodiumCards({ top3, maxProb, hovered, onHover }) {
 
           return (
             <div
-              className="pc"
+              className={`pc ${hovered === d.FullName ? "hl" : ""}`}
               key={d.FullName}
               style={{ borderTopColor: drv.color }}
-              onMouseEnter={() => onHover(d.FullName)}
-              onMouseLeave={() => onHover(null)}
+              tabIndex={0}
+              role="group"
+              aria-label={`Predicted P${i + 1}: ${d.FullName}, ${pct.toFixed(1)} percent prediction score`}
+              onPointerEnter={() => onHover(d.FullName)}
+              onPointerLeave={() => onHover(null)}
+              onFocus={() => onHover(d.FullName)}
+              onBlur={() => onHover(null)}
             >
               <div className="pc-bgnum">0{i + 1}</div>
               <div className="pc-top">

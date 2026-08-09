@@ -9,7 +9,7 @@ function Sk({ className, style }) {
 export function InfoStripSkeleton() {
   return (
     <div className="sk-info-strip" style={{ marginTop: "2px" }}>
-      {[0, 1, 2, 3].map((i) => (
+      {[0, 1, 2, 3, 4, 5].map((i) => (
         <div className="sk-istat" key={i}>
           <Sk className="sk-lbl" />
           <Sk className="sk-val" />

@@ -37,7 +37,7 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.38);
   text-align: left;
@@ -58,11 +58,24 @@
 }
 
 .gr:hover,
-.gr.hl {
+.gr.hl,
+.gr:focus-visible {
   background: linear-gradient(90deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
 }
 
-.gr:hover .td-code {
+.gr:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.22);
+  outline-offset: -2px;
+}
+
+.gr:active {
+  transform: scale(0.995);
+  transition-duration: 90ms;
+}
+
+.gr:hover .td-code,
+.gr.hl .td-code,
+.gr:focus-visible .td-code {
   text-shadow: 0 0 12px currentColor;
 }
 
@@ -94,7 +107,7 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 0.95rem;
   font-weight: 900;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
   transition: text-shadow 0.25s var(--ease);
 }
 
@@ -114,7 +127,7 @@
 .td-drv .fn2 {
   font-size: 11px;
   color: rgba(255,255,255,0.5);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-weight: 500;
 }
@@ -124,7 +137,7 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 10px;
   color: rgba(255, 255, 255, 0.38);
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   margin-top: 3px;
   font-weight: 600;
@@ -221,7 +234,7 @@
 .gh-sub {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 10px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.4);
   font-weight: 700;
@@ -232,7 +245,7 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 11px;
   color: rgba(255, 255, 255, 0.35);
-  letter-spacing: 0.16em;
+  letter-spacing: 0.1em;
   font-weight: 700;
   text-transform: uppercase;
   padding: 4px 10px;
@@ -284,7 +297,7 @@
 .acc-type {
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 10px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.4);
   font-weight: 700;
@@ -307,7 +320,7 @@
   font-family: 'Barlow Condensed', sans-serif;
   font-size: 10px;
   font-weight: 800;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 5px 11px 5px 12px;
   clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%);
@@ -355,7 +368,7 @@
   background: rgba(255,176,32,0.08);
   border-color: rgba(255,176,32,0.25);
   font-size: 10px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.1em;
 }
 .actual-pending {
   color: rgba(255,255,255,0.25);
