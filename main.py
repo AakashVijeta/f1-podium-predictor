@@ -268,6 +268,106 @@ async def predict(year: int, round: int, response: Response):
 # ---------------------------------------------------------------------------
 # /accuracy/{year}
 # ---------------------------------------------------------------------------
+def _coerce_position(value, fallback=None):
+    if value is None or value == "":
+        return fallback
+    try:
+        return int(float(value))
+    except (TypeError, ValueError):
+        return fallback
+
+
+def _driver_name_from_result(row):
+    if not isinstance(row, dict):
+        return None
+
+    driver = row.get("Driver")
+    if isinstance(driver, dict):
+        given = driver.get("givenName", "")
+        family = driver.get("familyName", "")
+        full_name = f"{given} {family}".strip()
+        if full_name:
+            return full_name
+        if driver.get("fullName"):
+            return driver["fullName"]
+    elif isinstance(driver, str) and driver.strip():
+        return driver.strip()
+
+    for key in ("driver_name", "FullName", "DriverName", "name"):
+        value = row.get(key)
+        if isinstance(value, str) and value.strip():
+            return value.strip()
+
+    return None
+
+
+def _result_rows(raw_results):
+    if isinstance(raw_results, dict):
+        raw_results = raw_results.get("results")
+    return raw_results if isinstance(raw_results, list) else []
+
+
+def _normalize_top3_results(raw_results):
+    normalized = []
+    for idx, row in enumerate(_result_rows(raw_results)):
+        if not isinstance(row, dict):
+            continue
+        driver_name = _driver_name_from_result(row)
+        position = _coerce_position(
+            row.get("position", row.get("RacePosition", row.get("Position"))),
+            idx + 1,
+        )
+        if driver_name and position is not None:
+            normalized.append({"driver_name": driver_name, "position": position})
+
+    normalized.sort(key=lambda row: row["position"])
+    top3 = normalized[:3]
+    return top3 if len(top3) == 3 else []
+
+
+def _last_name(value):
+    if not isinstance(value, str) or not value.strip():
+        return ""
+    return value.strip().split()[-1].upper()
+
+
+def _prediction_score(row):
+    if not isinstance(row, dict):
+        return 0
+    score = row.get("CombinedScore", row.get("PodiumProbability", 0)) or 0
+    try:
+        return float(score)
+    except (TypeError, ValueError):
+        return 0
+
+
+async def _get_accuracy_actual_top3(year: int, round_num: int):
+    stored_results = await asyncio.to_thread(get_race_result, year, round_num)
+    stored_top3 = _normalize_top3_results(stored_results)
+    if stored_top3:
+        return {"source": "stored", "top3": stored_top3}
+
+    try:
+        live_payload = await asyncio.wait_for(
+            results.get_race_results(year, round_num),
+            timeout=12,
+        )
+    except Exception as exc:
+        return {"source": "unavailable", "top3": [], "error": str(exc)}
+
+    live_results = live_payload.get("results") if isinstance(live_payload, dict) else []
+    live_top3 = _normalize_top3_results(live_results)
+    if live_top3:
+        await asyncio.to_thread(save_race_result, year, round_num, live_results)
+        return {"source": "live", "top3": live_top3}
+
+    return {
+        "source": "unavailable",
+        "top3": [],
+        "error": live_payload.get("error") if isinstance(live_payload, dict) else None,
+    }
+
+
 @app.get("/accuracy/{year}")
 async def fetch_accuracy(year: int):
     predictions = await asyncio.to_thread(get_all_predictions_by_year, year)
@@ -275,13 +375,16 @@ async def fetch_accuracy(year: int):
         return {
             "status": "ok",
             "year": year,
+            "rounds_tracked": 0,
             "rounds_analyzed": 0,
+            "rounds_pending": 0,
             "podium_correct": 0,
+            "total_podium_slots": 0,
             "winner_correct": 0,
             "history": []
         }
 
-    tasks = [results.get_race_results(year, r["round"]) for r in predictions]
+    tasks = [_get_accuracy_actual_top3(year, r["round"]) for r in predictions]
     all_actual_results = await asyncio.gather(*tasks, return_exceptions=True)
 
     rounds_analyzed    = 0
@@ -291,22 +394,39 @@ async def fetch_accuracy(year: int):
     history            = []
 
     for round_data, actual in zip(predictions, all_actual_results):
-        if isinstance(actual, Exception) or not actual.get("available") or not actual.get("results"):
-            continue
-
         r_num        = round_data["round"]
-        preds        = round_data["predictions"]
-        actual_results = actual["results"]
+        preds        = round_data.get("predictions") or []
 
-        preds_sorted  = sorted(preds, key=lambda x: x.get("CombinedScore", x.get("PodiumProbability", 0)), reverse=True)
+        preds_sorted  = sorted(preds, key=_prediction_score, reverse=True)
         top3_preds    = preds_sorted[:3]
-        top3_actual   = actual_results[:3]
+        pred_last_names = [
+            _last_name(p.get("FullName"))
+            for p in top3_preds
+            if isinstance(p, dict) and _last_name(p.get("FullName"))
+        ]
 
-        if not top3_preds or not top3_actual:
+        if isinstance(actual, Exception):
+            actual = {"source": "unavailable", "top3": [], "error": str(actual)}
+
+        top3_actual = actual.get("top3", []) if isinstance(actual, dict) else []
+        source = actual.get("source", "unavailable") if isinstance(actual, dict) else "unavailable"
+
+        if len(top3_preds) < 3 or len(top3_actual) < 3:
+            history.append({
+                "round": r_num,
+                "status": "pending_results" if len(top3_actual) < 3 else "insufficient_predictions",
+                "results_available": False,
+                "result_source": source,
+                "winner_correct": None,
+                "podium_hits": 0,
+                "podium_total": 0,
+                "predicted_top3": pred_last_names,
+                "actual_top3": [_last_name(a.get("driver_name")) for a in top3_actual],
+                "error": actual.get("error") if isinstance(actual, dict) else None,
+            })
             continue
 
-        pred_last_names   = [p["FullName"].split()[-1].upper() for p in top3_preds]
-        actual_last_names = [a["driver_name"].split()[-1].upper() for a in top3_actual]
+        actual_last_names = [_last_name(a.get("driver_name")) for a in top3_actual]
 
         hits = 0
         for p_name in pred_last_names:
@@ -326,8 +446,12 @@ async def fetch_accuracy(year: int):
 
         history.append({
             "round": r_num,
+            "status": "evaluated",
+            "results_available": True,
+            "result_source": source,
             "winner_correct": is_winner_correct,
             "podium_hits": hits,
+            "podium_total": min(3, len(top3_actual)),
             "predicted_top3": pred_last_names,
             "actual_top3": actual_last_names
         })
@@ -335,7 +459,9 @@ async def fetch_accuracy(year: int):
     return {
         "status": "ok",
         "year": year,
+        "rounds_tracked": len(predictions),
         "rounds_analyzed": rounds_analyzed,
+        "rounds_pending": len(predictions) - rounds_analyzed,
         "podium_correct": podium_correct,
         "total_podium_slots": total_podium_slots,
         "winner_correct": winner_correct,

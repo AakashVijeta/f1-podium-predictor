@@ -89,6 +89,7 @@
 
 .sd-hit { border-top: 3px solid #00d166; }
 .sd-miss { border-top: 3px solid #e10600; }
+.sd-pending { border-top: 3px solid rgba(255, 255, 255, 0.25); }
 
 .sd-rnum {
   font-family: 'Barlow Condensed', sans-serif;

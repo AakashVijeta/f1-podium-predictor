@@ -16,7 +16,6 @@ export default function SeasonDashboard({ year }) {
   const shouldAnimate = useShouldAnimate({ skipOnMobile: true });
 
   useEffect(() => {
-    setLoading(true);
     const ac = new AbortController();
     fetch(`${API_BASE}/accuracy/${year}`, { signal: ac.signal })
       .then((res) => res.json())
@@ -42,33 +41,47 @@ export default function SeasonDashboard({ year }) {
     hasAnimated.current = true;
     const root = sdRef.current;
     const statsEl = root.querySelector(".sd-stats");
-    const gridEl  = root.querySelector(".sd-grid");
+    const gridEl = root.querySelector(".sd-grid");
     const statboxEls = root.querySelectorAll(".sd-statbox");
-    const cardEls    = root.querySelectorAll(".sd-card");
+    const cardEls = root.querySelectorAll(".sd-card");
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(statboxEls,
+      gsap.fromTo(
+        statboxEls,
         { opacity: 0, y: 25 },
         {
-          opacity: 1, y: 0, duration: 0.5, ease: "power3.out", stagger: 0.15,
+          opacity: 1,
+          y: 0,
+          duration: 0.5,
+          ease: "power3.out",
+          stagger: 0.15,
           scrollTrigger: { trigger: statsEl, start: "top 90%", once: true },
         }
       );
       root.querySelectorAll(".sd-sbig").forEach((el) => {
         const val = parseInt(el.textContent, 10);
-        gsap.fromTo(el,
+        gsap.fromTo(
+          el,
           { textContent: 0 },
           {
-            textContent: val, duration: 1.2, ease: "power2.out",
+            textContent: val,
+            duration: 1.2,
+            ease: "power2.out",
             snap: { textContent: 1 },
             scrollTrigger: { trigger: el, start: "top 90%", once: true },
           }
         );
       });
-      gsap.fromTo(cardEls,
+      gsap.fromTo(
+        cardEls,
         { opacity: 0, y: 20, scale: 0.9 },
         {
-          opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.2)", stagger: 0.06,
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.4,
+          ease: "back.out(1.2)",
+          stagger: 0.06,
           scrollTrigger: { trigger: gridEl, start: "top 90%", once: true },
         }
       );
@@ -85,10 +98,12 @@ export default function SeasonDashboard({ year }) {
     );
   }
 
-  if (!data || data.rounds_analyzed === 0) return null;
+  if (!data || !data.history?.length) return null;
 
-  const winnerPct = ((data.winner_correct / data.rounds_analyzed) * 100).toFixed(0);
-  const podiumPct = ((data.podium_correct / data.total_podium_slots) * 100).toFixed(0);
+  const roundsAnalyzed = data.rounds_analyzed || 0;
+  const totalPodiumSlots = data.total_podium_slots || 0;
+  const winnerPct = roundsAnalyzed ? ((data.winner_correct / roundsAnalyzed) * 100).toFixed(0) : "0";
+  const podiumPct = totalPodiumSlots ? ((data.podium_correct / totalPodiumSlots) * 100).toFixed(0) : "0";
 
   return (
     <div className="sd-wrap" ref={sdRef}>
@@ -98,14 +113,14 @@ export default function SeasonDashboard({ year }) {
         <div className="sd-statbox">
           <div className="sd-slabel">Winner Correct</div>
           <div className="sd-sval">
-            <span className="sd-sbig">{data.winner_correct}</span> / {data.rounds_analyzed}
+            <span className="sd-sbig">{data.winner_correct}</span> / {roundsAnalyzed}
             <span className="sd-spct">({winnerPct}%)</span>
           </div>
         </div>
         <div className="sd-statbox">
           <div className="sd-slabel">Podium Drivers Predicted</div>
           <div className="sd-sval">
-            <span className="sd-sbig">{data.podium_correct}</span> / {data.total_podium_slots}
+            <span className="sd-sbig">{data.podium_correct}</span> / {totalPodiumSlots}
             <span className="sd-spct">({podiumPct}%)</span>
           </div>
         </div>
@@ -114,21 +129,37 @@ export default function SeasonDashboard({ year }) {
       <div className="sd-history">
         <div className="sd-h-title">Per-Round Breakdown</div>
         <div className="sd-grid">
-          {data.history.map((h, i) => (
-            <div className={`sd-card ${h.winner_correct ? "sd-hit" : "sd-miss"}`} key={i}>
-              <div className="sd-rnum">R{String(h.round).padStart(2, "0")}</div>
-              <div className="sd-rdetail">
-                <div className="sd-rmetric">
-                  <span className="sd-mlbl">Winner</span>
-                  {h.winner_correct ? <span className="sd-tick">✓ Correct</span> : <span className="sd-cross">✗ Missed</span>}
-                </div>
-                <div className="sd-rmetric">
-                  <span className="sd-mlbl">Podium</span>
-                  <span className="sd-mtext">{h.podium_hits} / 3 Hit</span>
+          {data.history.map((h) => {
+            const hasResults =
+              h.results_available !== false &&
+              (h.status === "evaluated" || typeof h.winner_correct === "boolean");
+            const cardState = hasResults ? (h.winner_correct ? "sd-hit" : "sd-miss") : "sd-pending";
+            const podiumTotal = h.podium_total || 3;
+
+            return (
+              <div className={`sd-card ${cardState}`} key={h.round}>
+                <div className="sd-rnum">R{String(h.round).padStart(2, "0")}</div>
+                <div className="sd-rdetail">
+                  <div className="sd-rmetric">
+                    <span className="sd-mlbl">Winner</span>
+                    {!hasResults ? (
+                      <span className="sd-mtext">Pending</span>
+                    ) : h.winner_correct ? (
+                      <span className="sd-tick">Correct</span>
+                    ) : (
+                      <span className="sd-cross">Missed</span>
+                    )}
+                  </div>
+                  <div className="sd-rmetric">
+                    <span className="sd-mlbl">Podium</span>
+                    <span className="sd-mtext">
+                      {hasResults ? `${h.podium_hits} / ${podiumTotal} Hit` : "Results Pending"}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
