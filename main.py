@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import results
 from db import (
     init_db, get_prediction, save_prediction,
-    get_all_predictions_by_year, get_race_result, save_race_result,
+    get_all_predictions_by_year, get_race_result, get_all_race_results_by_year, save_race_result,
     get_quali_data, save_quali_data
 )
 from predict import fetch_qualifying_data, predict_podium, fetch_race_results, get_session_status, get_session_times
@@ -26,6 +26,7 @@ winner_model = None
 # pre_quali: 30s, pre_race: 300s, post_race: 3600s.
 _PREDICT_CACHE: "OrderedDict[tuple, tuple[float, int, dict]]" = OrderedDict()
 _PREDICT_CACHE_MAX = 256
+_NO_STORED_RESULTS = object()
 
 # Status cache — schedule boundaries shift slowly, 60s is safe.
 _STATUS_CACHE: dict = {}
@@ -341,27 +342,44 @@ def _prediction_score(row):
         return 0
 
 
-async def _get_accuracy_actual_top3(year: int, round_num: int, session_status: str = "unknown"):
-    stored_results = await asyncio.to_thread(get_race_result, year, round_num)
+async def _get_accuracy_actual_top3(
+    year: int,
+    round_num: int,
+    session_status: str = "unknown",
+    stored_results=_NO_STORED_RESULTS,
+):
+    db_error = None
+    if stored_results is _NO_STORED_RESULTS:
+        try:
+            stored_results = await asyncio.to_thread(get_race_result, year, round_num)
+        except Exception as exc:
+            stored_results = None
+            db_error = str(exc)
+
     stored_top3 = _normalize_top3_results(stored_results)
     if stored_top3:
         return {"source": "stored", "top3": stored_top3}
 
     if session_status in {"pre_quali", "pre_race"}:
-        return {"source": "not_yet_raced", "top3": []}
+        return {"source": "not_yet_raced", "top3": [], "error": db_error}
 
+    live_error = None
+    live_payload = None
     try:
         live_payload = await asyncio.wait_for(
             results.get_race_results(year, round_num),
             timeout=12,
         )
     except Exception as exc:
-        return {"source": "unavailable", "top3": [], "error": str(exc)}
+        live_error = str(exc)
 
     live_results = live_payload.get("results") if isinstance(live_payload, dict) else []
     live_top3 = _normalize_top3_results(live_results)
     if live_top3:
-        await asyncio.to_thread(save_race_result, year, round_num, live_results)
+        try:
+            await asyncio.to_thread(save_race_result, year, round_num, live_results)
+        except Exception:
+            pass
         return {"source": "live", "top3": live_top3}
 
     if session_status == "post_race":
@@ -374,23 +392,40 @@ async def _get_accuracy_actual_top3(year: int, round_num: int, session_status: s
                 fastf1_rows = fastf1_results.to_dict(orient="records")
                 fastf1_top3 = _normalize_top3_results(fastf1_rows)
                 if fastf1_top3:
-                    await asyncio.to_thread(save_race_result, year, round_num, fastf1_rows)
+                    try:
+                        await asyncio.to_thread(save_race_result, year, round_num, fastf1_rows)
+                    except Exception:
+                        pass
                     return {"source": "fastf1", "top3": fastf1_top3}
         except Exception as exc:
-            return {"source": "unavailable", "top3": [], "error": str(exc)}
+            live_error = live_error or str(exc)
 
     return {
         "source": "unavailable",
         "top3": [],
-        "error": live_payload.get("error") if isinstance(live_payload, dict) else None,
+        "error": (
+            live_payload.get("error")
+            if isinstance(live_payload, dict) and live_payload.get("error")
+            else live_error or db_error
+        ),
     }
 
 
 @app.get("/accuracy/{year}")
-async def fetch_accuracy(year: int):
-    predictions = await asyncio.to_thread(get_all_predictions_by_year, year)
+async def fetch_accuracy(year: int, response: Response):
+    cache_key = ("accuracy", year)
+    cached = _cache_get(cache_key)
+    if cached is not None:
+        payload, remaining, ttl = cached
+        _set_cache_headers(response, remaining)
+        return payload
+
+    predictions, stored_result_rows = await asyncio.gather(
+        asyncio.to_thread(get_all_predictions_by_year, year),
+        asyncio.to_thread(get_all_race_results_by_year, year),
+    )
     if not predictions:
-        return {
+        payload = {
             "status": "ok",
             "year": year,
             "rounds_tracked": 0,
@@ -401,6 +436,15 @@ async def fetch_accuracy(year: int):
             "winner_correct": 0,
             "history": []
         }
+        _cache_put(cache_key, payload, 300)
+        _set_cache_headers(response, 300)
+        return payload
+
+    stored_results_by_round = {
+        row["round"]: row.get("results")
+        for row in stored_result_rows
+        if isinstance(row, dict) and row.get("round") is not None
+    }
 
     session_statuses = {}
     for row in predictions:
@@ -418,6 +462,7 @@ async def fetch_accuracy(year: int):
                 year,
                 round_num,
                 session_statuses.get(round_num, "unknown"),
+                stored_results_by_round.get(round_num),
             )
 
     tasks = [limited_actual_lookup(r["round"]) for r in predictions]
@@ -519,7 +564,7 @@ async def fetch_accuracy(year: int):
             "actual_top3": actual_last_names
         })
 
-    return {
+    payload = {
         "status": "ok",
         "year": year,
         "rounds_tracked": len(predictions),
@@ -531,6 +576,10 @@ async def fetch_accuracy(year: int):
         "winner_correct": winner_correct,
         "history": sorted(history, key=lambda x: x["round"])
     }
+    ttl = 60 if rounds_pending or rounds_missing else 900
+    _cache_put(cache_key, payload, ttl)
+    _set_cache_headers(response, ttl)
+    return payload
 
 
 # ---------------------------------------------------------------------------

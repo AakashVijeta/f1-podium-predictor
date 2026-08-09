@@ -143,6 +143,18 @@ if DATABASE_URL:
         finally:
             release_conn(conn)
 
+    def get_all_race_results_by_year(year: int):
+        conn = get_conn()
+        try:
+            with conn.cursor() as cur:
+                cur.execute(
+                    "SELECT round, results FROM race_results WHERE year = %s ORDER BY round ASC",
+                    (year,)
+                )
+                return cur.fetchall()
+        finally:
+            release_conn(conn)
+
     def save_race_result(year: int, round: int, results: list):
         conn = get_conn()
         try:
@@ -280,6 +292,19 @@ else:
             )
             row = cur.fetchone()
             return json.loads(row["results"]) if row else None
+        finally:
+            release_conn(conn)
+
+    def get_all_race_results_by_year(year: int):
+        conn = get_conn()
+        try:
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT round, results FROM race_results WHERE year = ? ORDER BY round ASC",
+                (year,)
+            )
+            rows = cur.fetchall()
+            return [{"round": r["round"], "results": json.loads(r["results"])} for r in rows]
         finally:
             release_conn(conn)
 
