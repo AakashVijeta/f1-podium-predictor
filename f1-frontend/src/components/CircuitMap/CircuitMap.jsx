@@ -18,7 +18,7 @@ const CIRCUIT_CODE = {
   11: "hu-1986",  // Hungaroring
   12: "nl-1948",  // Zandvoort
   13: "it-1922",  // Monza
-  // 14: Madrid — no map yet
+  14: "es-2026",  // Madrid
   15: "az-2016",  // Baku
   16: "sg-2008",  // Marina Bay
   17: "us-2012",  // COTA
@@ -26,7 +26,7 @@ const CIRCUIT_CODE = {
   19: "br-1940",  // Interlagos
   20: "us-2023",  // Las Vegas
   21: "qa-2004",  // Lusail
-  22: "ae-2009",  // Yas Marina
+  22: "ae-2009",  // Yas Marina~
 };
 
 const BASE = "https://cdn.jsdelivr.net/gh/bacinger/f1-circuits@master/circuits";
