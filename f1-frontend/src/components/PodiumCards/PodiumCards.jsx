@@ -56,7 +56,7 @@ export default function PodiumCards({ top3, maxProb, hovered, onHover }) {
     <div className="podium-wrap" ref={wrapRef}>
       <SectionHeader
         label="Predicted Podium"
-        sub="ML · LightGBM · v8.0"
+        sub="ML · GradientBoosting · v5.0"
       />
       <div className="podium-grid">
         {top3.map((d, i) => {

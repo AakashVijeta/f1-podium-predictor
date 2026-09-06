@@ -14,43 +14,25 @@ fastf1.Cache.enable_cache(cache_path)
 
 FEATURE_COLS = [
     "GridPosition",
+    "GridPositionSquared",
+    "QualiGapToPole",
     "QualiGapNormalized",
-    "AvgPositionGainLast3",
-    "FinishStdLast5",
-    "DNFRateLast5",
+    "MidfieldFlag",
     "AvgFinishLast3",
     "PodiumRateLast5",
-    "BeatTeammateRate",
-    "CurrentSeasonAvgFinish",
-    "ConstructorPodiumRate",
-    "ConstructorAvgFinish",
-    "ConstructorDevelopmentRate",
     "TrackType_street",
     "TrackType_permanent",
-    "RainFlag",
 ]
 
 _DRIVER_FEATURE_COLS = [
-    "AvgPositionGainLast3", "FinishStdLast5", "DNFRateLast5",
-    "AvgFinishLast3", "PodiumRateLast5", "BeatTeammateRate", "CurrentSeasonAvgFinish",
+    "AvgFinishLast3", "PodiumRateLast5",
 ]
-_TEAM_FEATURE_COLS = [
-    "ConstructorPodiumRate", "ConstructorAvgFinish", "ConstructorDevelopmentRate",
-]
+_TEAM_FEATURE_COLS = []
 _DRIVER_DEFAULTS = {
-    "AvgPositionGainLast3":   0.0,
-    "FinishStdLast5":         5.0,
-    "DNFRateLast5":           0.1,
     "AvgFinishLast3":         10.0,
     "PodiumRateLast5":        0.15,
-    "BeatTeammateRate":       0.5,
-    "CurrentSeasonAvgFinish": 11.0,
 }
-_TEAM_DEFAULTS = {
-    "ConstructorPodiumRate":      0.1,
-    "ConstructorAvgFinish":       10.0,
-    "ConstructorDevelopmentRate": 0.0,
-}
+_TEAM_DEFAULTS = {}
 
 track_type = {
     "Jeddah":        "street",
@@ -182,7 +164,7 @@ def fetch_qualifying_data(year, round):
         return None
 
 
-def predict_podium(df, circuit_name, podium_model, winner_model):
+def predict_podium(df, circuit_name, podium_model, winner_model=None):
     load_history()
     df = df.copy()
 
@@ -195,10 +177,13 @@ def predict_podium(df, circuit_name, podium_model, winner_model):
         worst = df["BestQualiTime"].max()
         df["BestQualiTime"] = df["BestQualiTime"].fillna(worst + 5.0)
 
+    # V5-specific computed features
+    df["GridPositionSquared"] = df["GridPosition"] ** 2
+    df["QualiGapToPole"] = df["BestQualiTime"] - df["BestQualiTime"].min()
     df["QualiGapNormalized"] = (
         (df["BestQualiTime"] - df["BestQualiTime"].min()) / df["BestQualiTime"].min() * 100
     )
-    df["RainFlag"] = 0
+    df["MidfieldFlag"] = ((df["GridPosition"] >= 6) & (df["GridPosition"] <= 12)).astype(int)
 
     tt = track_type.get(circuit_name)
     if tt is None:
@@ -225,12 +210,10 @@ def predict_podium(df, circuit_name, podium_model, winner_model):
             df[col] = 0.0
 
     podium_proba = podium_model.predict_proba(df[FEATURE_COLS])[:, 1]
-    winner_proba = winner_model.predict_proba(df[FEATURE_COLS])[:, 1]
-    combined     = 0.6 * podium_proba + 0.4 * winner_proba
 
     df["PodiumProbability"] = podium_proba
-    df["WinnerProbability"] = winner_proba
-    df["CombinedScore"]     = combined
+    df["WinnerProbability"] = podium_proba  # V5 uses single model
+    df["CombinedScore"]     = podium_proba
 
     return df[["FullName", "PodiumProbability", "WinnerProbability", "CombinedScore"]].sort_values(
         by="CombinedScore", ascending=False

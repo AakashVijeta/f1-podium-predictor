@@ -68,8 +68,8 @@ def _cached_status(year: int, round: int) -> str:
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global model, winner_model
-    model        = joblib.load(os.path.join(BASE_DIR, "models", "model_v8.pkl"))
-    winner_model = joblib.load(os.path.join(BASE_DIR, "models", "model_v8_winner.pkl"))
+    model        = joblib.load(os.path.join(BASE_DIR, "models", "model_v5.pkl"))
+    winner_model = None  
     init_db()  # also opens the pool and runs CREATE TABLE IF NOT EXISTS
     # Pre-warm: schedule cache + a no-op query so the pool's first conn is hot
     await asyncio.to_thread(get_session_status, 2026, 1)

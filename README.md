@@ -32,8 +32,8 @@ graph TD
     Frontend -->|REST API| Backend[FastAPI Service]
     
     subgraph "Inference Engine"
-        Backend -->|Load| Model[LightGBM v8 + Winner Model]
-        Model -->|Predict| Probs[Podium Probabilities + CombinedScore]
+        Backend -->|Load| Model[GradientBoosting v5]
+        Model -->|Predict| Probs[Podium Probabilities]
     end
 
     subgraph "Data Orchestration"
@@ -52,30 +52,23 @@ graph TD
 ## 🧠 Machine Learning Pipeline
 
 ### Feature Engineering
-The model uses 15 engineered features designed to be era-agnostic, ensuring stability across regulation changes (including the 2026 reset):
+The model uses 9 engineered features heavily focused on qualifying performance, which has proven to be the strongest predictor for the 2026 reset:
 
 | Feature | Description |
 | :--- | :--- |
 | **GridPosition** | Starting position on the grid. |
+| **GridPositionSquared** | Grid position squared (penalizes midfield/back starts heavily). |
+| **QualiGapToPole** | Absolute time gap to pole position. |
 | **QualiGapNormalized** | Quali lap time as % of pole lap. |
-| **AvgPositionGainLast3** | Rolling avg positions gained/lost over last 3 races. |
-| **FinishStdLast5** | Finish position variance — consistency signal. |
-| **DNFRateLast5** | Retirement rate over last 5 races. |
-| **AvgFinishLast3** | Rolling average finish position. |
+| **MidfieldFlag** | Binary flag for cars starting between P6 and P12. |
+| **AvgFinishLast3** | Rolling average finish position (recent form). |
 | **PodiumRateLast5** | Podium frequency in recent history. |
-| **BeatTeammateRate** | How often driver out-finishes their teammate. |
-| **CurrentSeasonAvgFinish** | Season-to-date average finish. |
-| **ConstructorPodiumRate** | Constructor's podium rate. |
-| **ConstructorAvgFinish** | Constructor's average finish. |
-| **ConstructorDevelopmentRate** | Constructor improvement trend. |
 | **TrackType_street** | Street circuit flag. |
 | **TrackType_permanent** | Permanent circuit flag. |
-| **RainFlag** | Wet/mixed conditions flag. |
 
 ### Model Specs
--   **Algorithm**: LightGBM (`LGBMClassifier`) with Optuna hyperparameter tuning.
+-   **Algorithm**: Gradient Boosting (`GradientBoostingClassifier`) with Optuna hyperparameter tuning.
 -   **Calibration**: `CalibratedClassifierCV` for reliable probability scoring.
--   **Dual model**: Podium model + dedicated winner model; outputs merged into `CombinedScore`.
 -   **Training Set**: 2023–2026 historical data with time-decay weighting (factor 0.38).
 -   **Accuracy**: Evaluated via Brier Score Loss, ROC AUC, and Average Precision.
 
@@ -144,7 +137,7 @@ Model artifacts are saved to `models/` and excluded from git (`*.pkl`).
 .
 ├── main.py              # FastAPI entry point & orchestration
 ├── predict.py           # Feature engineering & inference logic
-├── train.py             # ML training pipeline CLI (LightGBM v8)
+├── train.py             # ML training pipeline CLI (GradientBoosting v5)
 ├── db.py                # Database abstraction layer (PostgreSQL + SQLite)
 ├── routers/
 │   └── results.py       # Jolpica/Ergast race results integration

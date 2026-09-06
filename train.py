@@ -1,5 +1,5 @@
 """
-F1 Podium Predictor — Training Script (v8)
+F1 Podium Predictor — Training Script (v5)
 ------------------------------------------
 Usage:
     python train.py --year 2026 --round 4
@@ -16,7 +16,7 @@ import pandas as pd
 import fastf1
 import optuna
 from optuna.samplers import TPESampler
-from lightgbm import LGBMClassifier
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.calibration import CalibratedClassifierCV
 from sklearn.metrics import average_precision_score, brier_score_loss, roc_auc_score
 
@@ -24,8 +24,7 @@ optuna.logging.set_verbosity(optuna.logging.WARNING)
 
 BASE_DIR          = os.path.dirname(os.path.abspath(__file__))
 DATA_PATH         = os.path.join(BASE_DIR, "data",   "f1_dataset_clean.csv")
-MODEL_PATH        = os.path.join(BASE_DIR, "models", "model_v8.pkl")
-WINNER_MODEL_PATH = os.path.join(BASE_DIR, "models", "model_v8_winner.pkl")
+MODEL_PATH        = os.path.join(BASE_DIR, "models", "model_v5.pkl")
 CACHE_PATH        = os.path.join(BASE_DIR, "cache")
 
 DECAY_FACTOR     = 0.38
@@ -34,20 +33,14 @@ HISTORICAL_YEARS = [2023, 2024, 2025, 2026]
 
 FEATURE_COLS = [
     "GridPosition",
+    "GridPositionSquared",
+    "QualiGapToPole",
     "QualiGapNormalized",
-    "AvgPositionGainLast3",
-    "FinishStdLast5",
-    "DNFRateLast5",
+    "MidfieldFlag",
     "AvgFinishLast3",
     "PodiumRateLast5",
-    "BeatTeammateRate",
-    "CurrentSeasonAvgFinish",
-    "ConstructorPodiumRate",
-    "ConstructorAvgFinish",
-    "ConstructorDevelopmentRate",
     "TrackType_street",
     "TrackType_permanent",
-    "RainFlag",
 ]
 
 RAW_COLS = [
@@ -145,44 +138,29 @@ def clean(df):
     df["GridPosition"] = df["GridPosition"].fillna(20).astype(int)
     worst_per_round    = df.groupby(["Year", "Round"])["BestQualiTime"].transform("max")
     df["BestQualiTime"] = df["BestQualiTime"].fillna(worst_per_round + 5.0)
+    
+    # Global fallback if an entire round was missing quali
+    global_worst = df["BestQualiTime"].max()
+    df["BestQualiTime"] = df["BestQualiTime"].fillna(global_worst + 5.0)
+
     return df.sort_values(["Year", "Round", "Position"]).reset_index(drop=True)
-
-
-def other_driver_mean(df, by, column):
-    counts    = df.groupby(by)[column].transform("count")
-    totals    = df.groupby(by)[column].transform("sum")
-    peer_mean = (totals - df[column]) / (counts - 1)
-    return peer_mean.where(counts > 1, df[column])
 
 
 def engineer_features(df):
     df = df.copy()
-    round_key      = ["Year", "Round"]
-    team_round_key = ["Year", "Round", "TeamName"]
+    round_key = ["Year", "Round"]
 
-    df["QualiGapNormalized"]  = df.groupby(round_key)["BestQualiTime"].transform(
+    df["QualiGapToPole"] = df.groupby(round_key)["BestQualiTime"].transform(
+        lambda x: x - x.min()
+    )
+    df["QualiGapNormalized"] = df.groupby(round_key)["BestQualiTime"].transform(
         lambda x: (x - x.min()) / x.min() * 100
     )
     df["GridPositionSquared"] = df["GridPosition"] ** 2
+    df["MidfieldFlag"] = ((df["GridPosition"] >= 6) & (df["GridPosition"] <= 12)).astype(int)
 
-    teammate_grid          = other_driver_mean(df, team_round_key, "GridPosition")
-    teammate_quali         = other_driver_mean(df, team_round_key, "BestQualiTime")
-    df["TeammateGridDelta"] = df["GridPosition"] - teammate_grid
-    df["TeammateQualiGap"]  = df["BestQualiTime"] - teammate_quali
-
-    df["PositionGain"] = df["GridPosition"] - df["Position"]
     df = df.sort_values(["FullName", "Year", "Round"])
 
-    df["AvgPositionGainLast3"] = (
-        df.groupby(["FullName", "Year"])["PositionGain"]
-        .transform(lambda x: x.shift(1).rolling(3, min_periods=1).mean())
-        .fillna(0.0)
-    )
-    df["FinishStdLast5"] = (
-        df.groupby(["FullName", "Year"])["Position"]
-        .transform(lambda x: x.shift(1).rolling(5, min_periods=2).std())
-        .fillna(5.0)
-    )
     df["AvgFinishLast3"] = (
         df.groupby(["FullName", "Year"])["Position"]
         .transform(lambda x: x.shift(1).rolling(3, min_periods=1).mean())
@@ -193,90 +171,13 @@ def engineer_features(df):
         .transform(lambda x: x.shift(1).rolling(5, min_periods=1).mean())
         .fillna(0.15)
     )
-    df["DNF"] = df["Status"].isin(
-        ["Retired", "Accident", "Collision damage", "Undertray", "Withdrew"]
-    ).astype(int)
-    df["DNFRateLast5"] = (
-        df.groupby(["FullName", "Year"])["DNF"]
-        .transform(lambda x: x.shift(1).rolling(5, min_periods=1).mean())
-        .fillna(0.1)
-    )
 
-    teammate_position      = other_driver_mean(df, team_round_key, "Position")
-    df["BeatTeammate"]     = (df["Position"] < teammate_position).astype(int)
-    df["BeatTeammateRate"] = (
-        df.groupby(["FullName", "Year"])["BeatTeammate"]
-        .transform(lambda x: x.shift(1).rolling(5, min_periods=2).mean())
-        .fillna(0.5)
-    )
-
-    team_round = (
-        df.groupby(["TeamName", "Year", "Round"], as_index=False)
-        .agg(TeamPodiumCurrent=("Podium", "mean"), TeamAvgFinishCurrent=("Position", "mean"))
-        .sort_values(["TeamName", "Year", "Round"])
-    )
-    team_round["ConstructorPodiumRate"] = (
-        team_round.groupby(["TeamName", "Year"])["TeamPodiumCurrent"]
-        .transform(lambda x: x.shift(1).rolling(5, min_periods=2).mean())
-        .fillna(0.1)
-    )
-    team_round["ConstructorAvgFinish"] = (
-        team_round.groupby(["TeamName", "Year"])["TeamAvgFinishCurrent"]
-        .transform(lambda x: x.shift(1).rolling(3, min_periods=1).mean())
-        .fillna(10.0)
-    )
-
-    df = df.merge(
-        team_round[["TeamName", "Year", "Round", "ConstructorPodiumRate", "ConstructorAvgFinish"]],
-        on=["TeamName", "Year", "Round"], how="left",
-    )
     df = df.sort_values(["Year", "Round", "GridPosition"]).reset_index(drop=True)
-    df = df.drop(columns=["PositionGain", "DNF", "BeatTeammate"])
-    return df
-
-
-def add_constructor_development(df):
-    df = df.sort_values(["Year", "Round"])
-    constructor_round_avg = (
-        df.groupby(["Year", "Round", "TeamName"])["Position"]
-        .mean()
-        .reset_index()
-        .rename(columns={"Position": "ConstructorRoundAvgFinish"})
-        .drop_duplicates(subset=["Year", "Round", "TeamName"])
-    )
-    constructor_round_avg = constructor_round_avg.sort_values(["Year", "TeamName", "Round"])
-    constructor_round_avg["ConstructorFirst3Avg"] = (
-        constructor_round_avg.groupby(["Year", "TeamName"])["ConstructorRoundAvgFinish"]
-        .transform(lambda x: x.iloc[:3].mean())
-    )
-    constructor_round_avg["ConstructorLast3Avg"] = (
-        constructor_round_avg.groupby(["Year", "TeamName"])["ConstructorRoundAvgFinish"]
-        .transform(lambda x: x.shift(1).rolling(3, min_periods=1).mean())
-    )
-    constructor_round_avg["ConstructorDevelopmentRate"] = (
-        constructor_round_avg["ConstructorLast3Avg"] - constructor_round_avg["ConstructorFirst3Avg"]
-    )
-    df = df.merge(
-        constructor_round_avg[["Year", "Round", "TeamName", "ConstructorDevelopmentRate"]],
-        on=["Year", "Round", "TeamName"], how="left",
-    )
-    df["ConstructorDevelopmentRate"] = df["ConstructorDevelopmentRate"].fillna(0)
-    return df
-
-
-def add_current_season_avg(df):
-    df = df.sort_values(["Year", "Round"])
-    df["CurrentSeasonAvgFinish"] = (
-        df.groupby(["Year", "FullName"])["Position"]
-        .transform(lambda x: x.shift(1).expanding().mean())
-        .fillna(11.0)
-    )
     return df
 
 
 def build_model_frame(df):
     df_model = pd.get_dummies(df, columns=["TrackType"], dtype=int)
-    df_model["Winner"] = (df_model["Position"] == 1).astype(int)
     for col in ["TrackType_street", "TrackType_permanent"]:
         if col not in df_model.columns:
             df_model[col] = 0
@@ -310,47 +211,34 @@ def train(df_model):
 
     def objective(trial):
         params = {
-            "n_estimators":      trial.suggest_int("n_estimators", 100, 600),
-            "max_depth":         trial.suggest_int("max_depth", 3, 7),
-            "learning_rate":     trial.suggest_float("learning_rate", 0.01, 0.1, log=True),
-            "num_leaves":        trial.suggest_int("num_leaves", 15, 63),
-            "min_child_samples": trial.suggest_int("min_child_samples", 10, 30),
-            "subsample":         trial.suggest_float("subsample", 0.6, 1.0),
-            "colsample_bytree":  trial.suggest_float("colsample_bytree", 0.6, 1.0),
-            "scale_pos_weight":  trial.suggest_float("scale_pos_weight", 4, 10),
+            "n_estimators":      trial.suggest_int("n_estimators", 100, 300),
+            "max_depth":         trial.suggest_int("max_depth", 3, 5),
+            "learning_rate":     trial.suggest_float("learning_rate", 0.01, 0.2, log=True),
+            "min_samples_leaf":  trial.suggest_int("min_samples_leaf", 5, 20),
+            "subsample":         trial.suggest_float("subsample", 0.7, 1.0),
             "random_state": 42,
-            "verbose": -1,
         }
-        mdl = CalibratedClassifierCV(LGBMClassifier(**params), cv=3, method="isotonic")
+        mdl = CalibratedClassifierCV(GradientBoostingClassifier(**params), cv=3, method="isotonic")
         mdl.fit(tune_df[FEATURE_COLS], tune_df[TARGET], sample_weight=tune_weights)
         proba = mdl.predict_proba(val_df[FEATURE_COLS])[:, 1]
         return average_precision_score(val_df[TARGET], proba)
 
     study = optuna.create_study(direction="maximize", sampler=TPESampler(seed=42))
-    study.optimize(objective, n_trials=100, show_progress_bar=True)
+    study.optimize(objective, n_trials=50, show_progress_bar=True)
     print(f"\nBest AP (val):  {study.best_value:.4f}")
     print(f"Best params:    {study.best_params}")
 
-    best_params   = study.best_params | {"random_state": 42, "verbose": -1}
+    best_params   = study.best_params | {"random_state": 42}
     train_weights = (DECAY_FACTOR ** (2025 - train_df["Year"])).values
 
-    podium_model = CalibratedClassifierCV(LGBMClassifier(**best_params), cv=3, method="isotonic")
+    podium_model = CalibratedClassifierCV(GradientBoostingClassifier(**best_params), cv=3, method="isotonic")
     podium_model.fit(train_df[FEATURE_COLS], train_df[TARGET], sample_weight=train_weights)
-
-    winner_params = best_params.copy()
-    winner_params["scale_pos_weight"] = (
-        (train_df["Winner"] == 0).sum() / (train_df["Winner"] == 1).sum()
-    )
-    winner_model = CalibratedClassifierCV(LGBMClassifier(**winner_params), cv=3, method="isotonic")
-    winner_model.fit(train_df[FEATURE_COLS], train_df["Winner"], sample_weight=train_weights)
 
     if len(test_df) > 0 and test_df[TARGET].nunique() > 1:
         podium_proba = podium_model.predict_proba(test_df[FEATURE_COLS])[:, 1]
-        winner_proba = winner_model.predict_proba(test_df[FEATURE_COLS])[:, 1]
-        combined     = 0.6 * podium_proba + 0.4 * winner_proba
 
         eval_df = test_df.reset_index(drop=True).copy()
-        eval_df["ranking_score"] = combined
+        eval_df["ranking_score"] = podium_proba
 
         print(f"\n── 2026 holdout ──")
         print(f"ROC AUC:           {roc_auc_score(eval_df[TARGET], podium_proba):.4f}")
@@ -364,17 +252,14 @@ def train(df_model):
 
     os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     joblib.dump(podium_model, MODEL_PATH)
-    joblib.dump(winner_model, WINNER_MODEL_PATH)
-    print(f"\nModels saved → {MODEL_PATH}")
-    return podium_model, winner_model
+    print(f"\nModel saved → {MODEL_PATH}")
+    return podium_model, None
 
 
 def _pipeline(df_raw):
     df_raw   = df_raw[[c for c in RAW_COLS if c in df_raw.columns]].copy()
     df_clean = clean(df_raw)
     df_feat  = engineer_features(df_clean)
-    df_feat  = add_constructor_development(df_feat)
-    df_feat  = add_current_season_avg(df_feat)
     os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
     df_feat.to_csv(DATA_PATH, index=False)
     print(f"Dataset saved → {DATA_PATH} ({len(df_feat)} rows)")
@@ -383,7 +268,7 @@ def _pipeline(df_raw):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="F1 Podium Predictor — Training Script (v8)")
+    parser = argparse.ArgumentParser(description="F1 Podium Predictor — Training Script (v5)")
     parser.add_argument("--year",         type=int, help="Year of new round to fetch")
     parser.add_argument("--round",        type=int, help="Round number to fetch")
     parser.add_argument("--retrain-only", action="store_true", help="Retrain on existing CSV without fetching")

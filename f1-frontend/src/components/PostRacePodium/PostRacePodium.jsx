@@ -52,7 +52,7 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
           <div className="vs-side">
             <div className="vs-header">
               <span className="vs-title">Predicted Podium</span>
-              <span className="vs-sub">ML Model v8</span>
+              <span className="vs-sub">ML Model v5</span>
             </div>
             <div className="vs-podium">
               {top3.slice(0, 3).map((d, i) => {
