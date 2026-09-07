@@ -56,13 +56,14 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
             </div>
             <div className="vs-podium">
               {top3.slice(0, 3).map((d, i) => {
-                const drv = gd(d.FullName);
+                const fullName = d.FullName || d.driver_name || "";
+                const drv = gd(fullName);
                 const medalColor = MEDALS[i];
                 const actualIndex = raceResults.slice(0, 3).findIndex(r => {
                   const actualName = r.FullName || r.driver_name || "";
-                  const rLastName = actualName.split(" ").slice(-1)[0].toUpperCase();
-                  const dLastName = d.FullName.split(" ").slice(-1)[0].toUpperCase();
-                  return rLastName.includes(dLastName) || dLastName.includes(rLastName);
+                  const rLastName = actualName ? actualName.split(" ").slice(-1)[0].toUpperCase() : "";
+                  const dLastName = fullName ? fullName.split(" ").slice(-1)[0].toUpperCase() : "";
+                  return rLastName && dLastName && (rLastName.includes(dLastName) || dLastName.includes(rLastName));
                 });
 
                 let matchStatus = "miss";
@@ -78,17 +79,17 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
                 return (
                   <div
                     className={`vs-row ${matchStatus}`}
-                    key={d.FullName}
+                    key={d.FullName || i}
                     style={{ borderLeftColor: drv.color }}
                     tabIndex={0}
                     role="group"
-                    aria-label={`Predicted P${i + 1}: ${d.FullName}, ${matchStatus}`}
+                    aria-label={`Predicted P${i + 1}: ${fullName}, ${matchStatus}`}
                   >
                     <div className="vs-pos" style={{ color: medalColor }}>P{i + 1}</div>
                     <div className="vs-code" style={{ color: drv.color }}>{drv.short}</div>
                     <div className="vs-name">
-                      <span className="vs-fn">{fn(d.FullName)}</span>
-                      <span className="vs-ln">{ln(d.FullName)}</span>
+                      <span className="vs-fn">{fn(fullName)}</span>
+                      <span className="vs-ln">{ln(fullName)}</span>
                     </div>
                     <div className={`vs-status ${matchStatus}`}>{matchIcon}</div>
                   </div>
@@ -107,22 +108,23 @@ export default function PostRacePodium({ raceResults, race, top3 }) {
           </div>
           <div className="vs-podium">
             {raceResults.slice(0, 3).map((r, i) => {
-              const drv = gd(r.FullName);
+              const fullName = r.FullName || r.driver_name || "";
+              const drv = gd(fullName);
               const medalColor = MEDALS[i];
               return (
                 <div
                   className="vs-row hit"
-                  key={r.FullName}
+                  key={r.FullName || i}
                   style={{ borderLeftColor: drv.color }}
                   tabIndex={0}
                   role="group"
-                  aria-label={`Actual P${r.RacePosition}: ${r.FullName}`}
+                  aria-label={`Actual P${r.RacePosition}: ${fullName}`}
                 >
                   <div className="vs-pos" style={{ color: medalColor }}>P{r.RacePosition}</div>
                   <div className="vs-code" style={{ color: drv.color }}>{drv.short}</div>
                   <div className="vs-name">
-                    <span className="vs-fn">{fn(r.FullName)}</span>
-                    <span className="vs-ln">{ln(r.FullName)}</span>
+                    <span className="vs-fn">{fn(fullName)}</span>
+                    <span className="vs-ln">{ln(fullName)}</span>
                   </div>
                 </div>
               );

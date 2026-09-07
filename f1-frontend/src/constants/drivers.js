@@ -1,18 +1,19 @@
 export const DRIVERS = {
   // Mercedes
-  "George Russell":    { team: "Mercedes", color: "#00D2BE", short: "RUS", number: 63 },
-  "Kimi Antonelli":    { team: "Mercedes", color: "#00D2BE", short: "ANT", number: 12 },
+  "George Russell":        { team: "Mercedes", color: "#00D2BE", short: "RUS", number: 63 },
+  "Kimi Antonelli":        { team: "Mercedes", color: "#00D2BE", short: "ANT", number: 12 },
+  "Andrea Kimi Antonelli": { team: "Mercedes", color: "#00D2BE", short: "ANT", number: 12 },
 
   // Ferrari
   "Lewis Hamilton":    { team: "Ferrari", color: "#DC0000", short: "HAM", number: 44 },
   "Charles Leclerc":   { team: "Ferrari", color: "#DC0000", short: "LEC", number: 16 },
 
   // Red Bull
-  "Max Verstappen":    { team: "Red Bull", color: "#3671C6", short: "VER", number: 1 },
+  "Max Verstappen":    { team: "Red Bull", color: "#3671C6", short: "VER", number: 3 },
   "Isack Hadjar":      { team: "Red Bull", color: "#3671C6", short: "HAD", number: 6 },
 
   // McLaren
-  "Lando Norris":      { team: "McLaren", color: "#FF8000", short: "NOR", number: 4 },
+  "Lando Norris":      { team: "McLaren", color: "#FF8000", short: "NOR", number: 1 },
   "Oscar Piastri":     { team: "McLaren", color: "#FF8000", short: "PIA", number: 81 },
 
   // Aston Martin
@@ -21,6 +22,7 @@ export const DRIVERS = {
 
   // Alpine
   "Pierre Gasly":      { team: "Alpine", color: "#0093CC", short: "GAS", number: 10 },
+  "Franco Colapinto":  { team: "Alpine", color: "#0093CC", short: "COL", number: 43 },
 
   // Williams
   "Carlos Sainz":      { team: "Williams", color: "#005AFF", short: "SAI", number: 55 },
@@ -51,19 +53,22 @@ export const API_BASE = import.meta.env.VITE_API_URL
 // export const API_BASE = "http://127.0.0.1:8000";
 
 // Get driver info, fallback for unknowns
-export const gd = (n) =>
-  DRIVERS[n] || {
+export const gd = (n) => {
+  if (!n) return { team: "Unknown", color: "#555", short: "UNK", number: "?" };
+  return DRIVERS[n] || {
     team: "Unknown",
     color: "#555",
     short: n.split(" ").map((w) => w[0]).join("").slice(0, 3).toUpperCase(),
     number: "?",
   };
+};
 
 // First name
-export const fn = (n) => n.split(" ")[0];
+export const fn = (n) => (n ? n.split(" ")[0] : "");
 
 // Last name (everything after first word)
 export const ln = (n) => {
+  if (!n) return "";
   const p = n.split(" ");
   return p.slice(1).join(" ") || p[0];
 };
