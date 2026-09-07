@@ -11,7 +11,6 @@ import argparse
 import os
 import time
 import joblib
-import numpy as np
 import pandas as pd
 import fastf1
 import optuna
