@@ -141,7 +141,17 @@ export default function App() {
   ), [data]);
 
   const top3 = useMemo(() => sorted.slice(0, 3), [sorted]);
-  const raceResults = data?.results || [];
+  // Stored results may come from FastF1 (FullName/RacePosition) or Jolpica
+  // (driver_name/position) — normalize so components can rely on one shape.
+  const raceResults = useMemo(() => (
+    (data?.results || [])
+      .map((r, i) => ({
+        ...r,
+        FullName: r.FullName || r.driver_name || "",
+        RacePosition: Number(r.RacePosition ?? r.position ?? r.Position ?? i + 1),
+      }))
+      .sort((a, b) => a.RacePosition - b.RacePosition)
+  ), [data]);
   const maxProb = sorted[0]?.CombinedScore || 1;
 
   const accuracyStats = useMemo(() => {

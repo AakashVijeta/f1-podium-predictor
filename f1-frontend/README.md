@@ -1,6 +1,6 @@
 # F1 Podium Predictor — Frontend
 
-React + Vite frontend for the F1 Podium Predictor. Deployed to GitHub Pages at [f1.aakashvijeta.me](https://f1.aakashvijeta.me).
+React + Vite frontend for the F1 Podium Predictor. Deployed to Vercel at [f1.aakashvijeta.me](https://f1.aakashvijeta.me).
 
 ## Dev
 

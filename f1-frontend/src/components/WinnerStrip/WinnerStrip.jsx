@@ -45,7 +45,7 @@ export default function WinnerStrip({ winner }) {
 
         <div>
           <div className="winner-meta-lbl">Constructor</div>
-          <div className="winner-meta-val">{drv.team}</div>
+          <div className="winner-meta-val">{drv.team !== "Unknown" ? drv.team : winner.constructor || drv.team}</div>
         </div>
 
         <div className="winner-divider" />
