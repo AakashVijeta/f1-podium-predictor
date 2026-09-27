@@ -14,7 +14,14 @@ export default function Footer() {
         <div className="footer-bar" />
         <div>
           <div className="footer-built">Built by</div>
-          <div className="footer-name">Aakash Vijeta</div>
+          <a
+            className="footer-name"
+            href="https://aakashvijeta.me"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Aakash Vijeta
+          </a>
         </div>
       </div>
       <div className="footer-right">F1 Podium Predictor · {currentYear}</div>
