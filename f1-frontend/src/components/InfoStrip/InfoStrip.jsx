@@ -41,7 +41,7 @@ function InfoStrip({ race, round, schedule }) {
       </div>
       <div className="istat">
         <div className="istat-lbl">Round</div>
-        <div className="istat-val">{String(round).padStart(2, "0")} / 22</div>
+        <div className="istat-val">{String(round).padStart(2, "0")} / 23</div>
         <div className="istat-sub">2026 Season</div>
       </div>
       <div className="istat">
