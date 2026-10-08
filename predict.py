@@ -39,6 +39,7 @@ track_type = {
     "Baku":          "street",
     "Miami":         "street",
     "Monaco":        "street",
+    "Monte Carlo":   "street",
     "Marina Bay":    "street",
     "Las Vegas":     "street",
     "Melbourne":     "street",
@@ -59,8 +60,11 @@ track_type = {
     "Mexico City":       "permanent",
     "São Paulo":         "permanent",
     "Yas Island":        "permanent",
+    "Yas Marina":        "permanent",
+    "Madrid":            "street",
     "Shanghai":          "permanent",
     "Imola":             "permanent",
+    "Kuala Lumpur":      "permanent",
 }
 
 _schedule_cache  = {}

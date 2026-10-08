@@ -53,6 +53,7 @@ TRACK_TYPE = {
     "Baku":          "street",
     "Miami":         "street",
     "Monaco":        "street",
+    "Monte Carlo":   "street",
     "Marina Bay":    "street",
     "Las Vegas":     "street",
     "Melbourne":     "street",
@@ -73,8 +74,11 @@ TRACK_TYPE = {
     "Mexico City":       "permanent",
     "São Paulo":         "permanent",
     "Yas Island":        "permanent",
+    "Yas Marina":        "permanent",
+    "Madrid":            "street",
     "Shanghai":          "permanent",
     "Imola":             "permanent",
+    "Kuala Lumpur":      "permanent",
 }
 
 
@@ -161,12 +165,12 @@ def engineer_features(df):
     df = df.sort_values(["FullName", "Year", "Round"])
 
     df["AvgFinishLast3"] = (
-        df.groupby(["FullName", "Year"])["Position"]
+        df.groupby("FullName")["Position"]
         .transform(lambda x: x.shift(1).rolling(3, min_periods=1).mean())
         .fillna(10.0)
     )
     df["PodiumRateLast5"] = (
-        df.groupby(["FullName", "Year"])["Podium"]
+        df.groupby("FullName")["Podium"]
         .transform(lambda x: x.shift(1).rolling(5, min_periods=1).mean())
         .fillna(0.15)
     )
