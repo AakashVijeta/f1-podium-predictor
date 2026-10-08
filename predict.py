@@ -73,7 +73,7 @@ _team_latest     = {}
 _history_mtime   = 0.0
 
 
-def load_history():
+def load_history(target_year: int = None, target_round: int = None):
     """Load latest per-driver and per-team rolling features from the engineered CSV."""
     global _driver_latest, _team_latest, _history_mtime
     if not os.path.exists(DATA_PATH):
@@ -89,16 +89,29 @@ def load_history():
             print("[PREDICT] Warning: CSV lacks engineered columns — using defaults for all drivers")
             return
         hist_sorted = hist.sort_values(["Year", "Round"])
-        driver_last = hist_sorted.groupby("FullName").last().reset_index()
-        _driver_latest = {
-            row["FullName"]: {c: row[c] for c in avail_driver}
-            for _, row in driver_last.iterrows()
-        }
-        team_last = hist_sorted.groupby("TeamName").last().reset_index()
-        _team_latest = {
-            row["TeamName"]: {c: row[c] for c in avail_team}
-            for _, row in team_last.iterrows()
-        }
+        
+        # Prevent data leakage when predicting past races retroactively
+        if target_year is not None and target_round is not None:
+            hist_sorted = hist_sorted[
+                (hist_sorted["Year"] < target_year) |
+                ((hist_sorted["Year"] == target_year) & (hist_sorted["Round"] < target_round))
+            ]
+        
+        _driver_latest = {}
+        for driver, grp in hist_sorted.groupby("FullName"):
+            pos_hist = grp["Position"].tail(3)
+            pod_hist = grp["Podium"].tail(5)
+            
+            _driver_latest[driver] = {
+                "AvgFinishLast3": pos_hist.mean() if len(pos_hist) > 0 else 10.0,
+                "PodiumRateLast5": pod_hist.mean() if len(pod_hist) > 0 else 0.15
+            }
+
+        _team_latest = {}
+        for team, grp in hist_sorted.groupby("TeamName"):
+            # Future-proofing: add team rolling features here if needed in later models
+            _team_latest[team] = {}
+            
         _history_mtime = mtime
     except Exception as e:
         print(f"[PREDICT] load_history failed: {e}")
@@ -169,7 +182,9 @@ def fetch_qualifying_data(year, round):
 
 
 def predict_podium(df, circuit_name, podium_model, winner_model=None):
-    load_history()
+    target_year = int(df["Year"].iloc[0]) if "Year" in df.columns else None
+    target_round = int(df["Round"].iloc[0]) if "Round" in df.columns else None
+    load_history(target_year, target_round)
     df = df.copy()
 
     if df["GridPosition"].isna().any():
