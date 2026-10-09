@@ -24,15 +24,10 @@ FEATURE_COLS = [
     "TrackType_permanent",
 ]
 
-_DRIVER_FEATURE_COLS = [
-    "AvgFinishLast3", "PodiumRateLast5",
-]
-_TEAM_FEATURE_COLS = []
 _DRIVER_DEFAULTS = {
     "AvgFinishLast3":         10.0,
     "PodiumRateLast5":        0.15,
 }
-_TEAM_DEFAULTS = {}
 
 track_type = {
     "Jeddah":        "street",
@@ -68,56 +63,53 @@ track_type = {
 }
 
 _schedule_cache  = {}
-_driver_latest   = {}
-_team_latest     = {}
+_history_df      = None
 _history_mtime   = 0.0
 
 
-def load_history(target_year: int = None, target_round: int = None):
-    """Load latest per-driver and per-team rolling features from the engineered CSV."""
-    global _driver_latest, _team_latest, _history_mtime
+def _read_history():
+    """Return the dataset sorted by (Year, Round), re-reading only when the CSV changes."""
+    global _history_df, _history_mtime
     if not os.path.exists(DATA_PATH):
-        return
+        return None
     try:
         mtime = os.path.getmtime(DATA_PATH)
-        if mtime == _history_mtime:
-            return
-        hist = pd.read_csv(DATA_PATH)
-        avail_driver = [c for c in _DRIVER_FEATURE_COLS if c in hist.columns]
-        avail_team   = [c for c in _TEAM_FEATURE_COLS   if c in hist.columns]
-        if not avail_driver:
-            print("[PREDICT] Warning: CSV lacks engineered columns — using defaults for all drivers")
-            return
-        hist_sorted = hist.sort_values(["Year", "Round"])
-        
-        # Prevent data leakage when predicting past races retroactively
-        if target_year is not None and target_round is not None:
-            hist_sorted = hist_sorted[
-                (hist_sorted["Year"] < target_year) |
-                ((hist_sorted["Year"] == target_year) & (hist_sorted["Round"] < target_round))
-            ]
-        
-        _driver_latest = {}
-        for driver, grp in hist_sorted.groupby("FullName"):
-            pos_hist = grp["Position"].tail(3)
-            pod_hist = grp["Podium"].tail(5)
-            
-            _driver_latest[driver] = {
-                "AvgFinishLast3": pos_hist.mean() if len(pos_hist) > 0 else 10.0,
-                "PodiumRateLast5": pod_hist.mean() if len(pod_hist) > 0 else 0.15
-            }
-
-        _team_latest = {}
-        for team, grp in hist_sorted.groupby("TeamName"):
-            # Future-proofing: add team rolling features here if needed in later models
-            _team_latest[team] = {}
-            
-        _history_mtime = mtime
+        if _history_df is None or mtime != _history_mtime:
+            hist = pd.read_csv(DATA_PATH)
+            if not {"FullName", "Position", "Podium"}.issubset(hist.columns):
+                print("[PREDICT] Warning: CSV lacks FullName/Position/Podium — using defaults for all drivers")
+                return None
+            _history_df    = hist.sort_values(["Year", "Round"])
+            _history_mtime = mtime
     except Exception as e:
-        print(f"[PREDICT] load_history failed: {e}")
+        print(f"[PREDICT] _read_history failed: {e}")
+    return _history_df
 
 
-load_history()
+def load_history(target_year=None, target_round=None):
+    """Per-driver rolling features using only races before (target_year, target_round)."""
+    hist = _read_history()
+    if hist is None:
+        return {}
+
+    # Prevent data leakage when predicting past races retroactively
+    if target_year is not None and target_round is not None:
+        hist = hist[
+            (hist["Year"] < target_year) |
+            ((hist["Year"] == target_year) & (hist["Round"] < target_round))
+        ]
+
+    # Mirrors train.py: shift(1).rolling(n) at the next race == tail(n) of prior races
+    return {
+        driver: {
+            "AvgFinishLast3":  grp["Position"].tail(3).mean(),
+            "PodiumRateLast5": grp["Podium"].tail(5).mean(),
+        }
+        for driver, grp in hist.groupby("FullName")
+    }
+
+
+_read_history()
 
 
 def get_session_status(year, round):
@@ -184,7 +176,7 @@ def fetch_qualifying_data(year, round):
 def predict_podium(df, circuit_name, podium_model, winner_model=None):
     target_year = int(df["Year"].iloc[0]) if "Year" in df.columns else None
     target_round = int(df["Round"].iloc[0]) if "Round" in df.columns else None
-    load_history(target_year, target_round)
+    driver_latest = load_history(target_year, target_round)
     df = df.copy()
 
     if df["GridPosition"].isna().any():
@@ -213,16 +205,8 @@ def predict_podium(df, circuit_name, podium_model, winner_model=None):
 
     for feat, default in _DRIVER_DEFAULTS.items():
         df[feat] = df["FullName"].map(
-            lambda name, f=feat, d=default: _driver_latest.get(name, {}).get(f, d)
+            lambda name, f=feat, d=default: driver_latest.get(name, {}).get(f, d)
         )
-
-    for feat, default in _TEAM_DEFAULTS.items():
-        if "TeamName" in df.columns:
-            df[feat] = df["TeamName"].map(
-                lambda name, f=feat, d=default: _team_latest.get(name, {}).get(f, d)
-            )
-        else:
-            df[feat] = default
 
     for col in FEATURE_COLS:
         if col not in df.columns:

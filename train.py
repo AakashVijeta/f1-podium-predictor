@@ -111,11 +111,6 @@ def fetch_round(year, round_num):
 
     df = race.merge(q, on="FullName", how="left")
     df["Podium"]    = (df["Position"] <= 3).astype(int)
-    df["TrackType"] = df["Location"].map(TRACK_TYPE)
-
-    if df["TrackType"].isnull().any():
-        unknown = df[df["TrackType"].isnull()]["Location"].unique()
-        print(f"  ⚠ Unknown locations — add to TRACK_TYPE: {unknown}")
 
     time.sleep(1)
     return df
@@ -137,6 +132,13 @@ def fetch_all_historical():
 def clean(df):
     df = df.copy()
     df = df.dropna(subset=["Position"])
+
+    # Re-derive on every run so TRACK_TYPE edits reach rows already in the CSV
+    df["TrackType"] = df["Location"].map(TRACK_TYPE)
+    if df["TrackType"].isnull().any():
+        unknown = df[df["TrackType"].isnull()]["Location"].unique()
+        print(f"  ⚠ Unknown locations — add to TRACK_TYPE: {unknown}")
+
     df["Position"]     = df["Position"].astype(int)
     df["GridPosition"] = df["GridPosition"].fillna(20).astype(int)
     worst_per_round    = df.groupby(["Year", "Round"])["BestQualiTime"].transform("max")
@@ -208,7 +210,7 @@ def train(df_model):
     train_df = df_model[df_model["Year"] < 2026].copy()
     test_df  = df_model[df_model["Year"] == 2026].copy()
 
-    print(f"Tune: {len(tune_df)}  Val: {len(val_df)}  Train: {len(train_df)}  Test: {len(test_df)}")
+    print(f"Tune: {len(tune_df)}  Val: {len(val_df)}  Train: {len(train_df)}  Test: {len(test_df)}  Final: {len(df_model)}")
 
     tune_weights = (DECAY_FACTOR ** (2024 - tune_df["Year"])).values
 
@@ -253,6 +255,14 @@ def train(df_model):
         print(f"Grid baseline:     {gc}/{gt} ({gr:.1%})")
         print(f"Edge vs grid:      {mr - gr:+.1%}")
 
+    # Holdout above scores a model that never saw 2026; the deployed model is
+    # refit on every year (incl. current season) with the same hyperparameters.
+    latest_year   = int(df_model["Year"].max())
+    final_weights = (DECAY_FACTOR ** (latest_year - df_model["Year"])).values
+    podium_model  = CalibratedClassifierCV(GradientBoostingClassifier(**best_params), cv=3, method="isotonic")
+    podium_model.fit(df_model[FEATURE_COLS], df_model[TARGET], sample_weight=final_weights)
+    print(f"\nFinal model refit on {df_model['Year'].min()}–{latest_year} ({len(df_model)} rows)")
+
     os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
     joblib.dump(podium_model, MODEL_PATH)
     print(f"\nModel saved → {MODEL_PATH}")
@@ -286,8 +296,7 @@ def main():
         print(f"Loading existing dataset from {DATA_PATH}...")
         df = pd.read_csv(DATA_PATH)
         print(f"Loaded {df.shape[0]} rows.")
-        df_model = build_model_frame(df)
-        train(df_model)
+        _pipeline(df)
         return
 
     if args.rebuild:
@@ -304,8 +313,7 @@ def main():
         already = ((df_raw["Year"] == args.year) & (df_raw["Round"] == args.round)).any()
         if already:
             print(f"⚠ {args.year} R{args.round} already in dataset. Retraining on existing data.")
-            df_model = build_model_frame(df_raw)
-            train(df_model)
+            _pipeline(df_raw)
             return
 
     new_df = fetch_round(args.year, args.round)
